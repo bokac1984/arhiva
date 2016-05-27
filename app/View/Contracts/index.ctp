@@ -1,4 +1,4 @@
-<section class="wrapper padding50">
+<section class="wrapper">
     <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
     <div class="container">
         <div class="row">

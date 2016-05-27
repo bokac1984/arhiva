@@ -6,7 +6,7 @@ echo $this->Html->scriptBlock("inst.init(1);", array('block' => 'scriptBottom'))
 
 echo $this->Html->css('/plugins/fancytree/dist/skin-win8/ui.fancytree.min', array('block' => 'css'));
 ?>
-<section class="wrapper padding50">
+<section class="wrapper">
     <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
     <div class="container">
         <div class="row">

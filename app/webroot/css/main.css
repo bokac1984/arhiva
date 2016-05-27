@@ -2218,9 +2218,7 @@ div.testimonial-author p {
 /* ---------------------------------------------------------------------- */
 footer {
 	background: #363839;
-	border-top: 4px solid #1F1F1F;
 	font-size: 0.9em;
-	padding: 40px 0 0;
 	position: relative;
 }
 footer h4 {
@@ -3002,4 +3000,9 @@ label {
 }
 #style_selector .clear_style {
 	margin-right: 20px;
+}
+
+/** dodao bokac */
+.main-container {
+    min-height: 450px;
 }

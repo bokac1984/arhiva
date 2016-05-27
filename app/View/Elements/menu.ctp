@@ -1,8 +1,8 @@
 <?php
-echo $url = $this->request->here;
+$url = $this->request->here;
 ?>
 <ul class="nav navbar-nav navbar-right">
-    <li class="<?php echo (preg_match("/\\\\/", $url))? 'active' : ''?>">
+    <li class="<?php echo (preg_match("~^/$~", $url))? 'active' : ''?>">
         <a href="/">
             Home
         </a>

@@ -42,7 +42,7 @@ class UploadComponent extends Component {
         
         $fileName = $this->createFileName($fileData['filename']) 
                 . "_" . $this->changeNameOfFile($fileData['filename']);
-        $uploadLocation = WWW_ROOT . 'uploads' . $location . $fileName . ".pdf";
+        $uploadLocation = WWW_ROOT . 'uploads' . DS . $location . $fileName . ".pdf";
         $this->fileLocation = $uploadLocation;
 
         if (move_uploaded_file($uploadedPdf['tmp_name'], $uploadLocation )) {
