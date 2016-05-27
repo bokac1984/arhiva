@@ -1,10 +1,13 @@
+<?php
+echo $url = $this->request->here;
+?>
 <ul class="nav navbar-nav navbar-right">
-    <li class="active">
+    <li class="<?php echo (preg_match("/\\\\/", $url))? 'active' : ''?>">
         <a href="/">
             Home
         </a>
     </li>
-    <li>
+    <li class="<?php echo (preg_match("/\/institutions/", $url))? 'active' : ''?>">
         <a href="/institutions">
             Institucije
         </a>
