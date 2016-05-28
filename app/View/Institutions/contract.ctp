@@ -8,12 +8,15 @@ echo $this->Html->scriptBlock("contracts.init(1);", array('block' => 'scriptBott
 echo $this->Html->css('/plugins/dropzone/downloads/css/dropzone', array('block' => 'css'));
 echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch', array('block' => 'css'));
 echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal', array('block' => 'css'));
-
-///debug($institution);
 ?>
-<section class="wrapper padding50">
+<section class="wrapper">
     <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?php echo $institution['Institution']['name']; ?></h2>
+            </div>
+        </div>        
         <div class="row">
             <div class="col-sm-12">							
                 <button type="button" id="btn-add-photos" class="btn btn-primary btn-sm">

@@ -33,13 +33,13 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
     public $components = array(
-//        'Auth' => array(
-//            'authenticate' => array(
-//                'Form' => array(
-//                    'passwordHasher' => 'Blowfish'
-//                )
-//            )
-//        ),
+        'Auth' => array(
+            'authenticate' => array(
+                'Form' => array(
+                    'passwordHasher' => 'Blowfish'
+                )
+            )
+        ),
         'Flash',
         'Session',
         'RequestHandler',
@@ -50,26 +50,24 @@ class AppController extends Controller {
 
     public function beforeFilter() {
         //Configure AuthComponent
-//        $this->Auth->autoRedirect = false;
-//        $this->Auth->authorize = array('Controller');
-//        $this->Auth->loginAction = array(
-//            'prefix' => null,
-//            'plugin' => null,
-//            'controller' => 'users',
-//            'action' => 'login'
-//        );
-//        $this->Auth->logoutRedirect = array(
-//            'prefix' => null,
-//            'plugin' => null,
-//            'controller' => 'users',
-//            'action' => 'login'
-//        );
-//        $this->Auth->authError = __('Nemate dozvolu da vidite tu stranicu.');
-//        $this->Auth->loginError = __('Korisničko ime ili lozinaka nisu validni.');
-//        $this->Auth->flash['element'] = "flash_error";
+        $this->Auth->autoRedirect = false;
+        $this->Auth->loginAction = array(
+            'prefix' => null,
+            'plugin' => null,
+            'controller' => 'users',
+            'action' => 'login'
+        );
+        $this->Auth->logoutRedirect = array(
+            'prefix' => null,
+            'plugin' => null,
+            'controller' => 'pages',
+            'action' => 'display'
+        );
+        $this->Auth->authError = __('Nemate dozvolu da vidite tu stranicu.');
+        $this->Auth->loginError = __('Korisničko ime ili lozinaka nisu validni.');
+        $this->Auth->flash['element'] = "flash_error";
 
 
         $this->layout = 'arhiva';
     }
-
 }

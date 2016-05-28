@@ -63,42 +63,28 @@
                         </div>
                         <div class="col-sm-6">
                             <!-- start: TOP BAR SOCIAL ICONS -->
-                            <div class="social-icons">
+                            <div class="moj-meni">
                                 <ul>
-                                    <li class="social-twitter tooltips" data-original-title="Twitter" data-placement="bottom">
-                                        <a target="_blank" href="http://www.twitter.com">
-                                            Twitter
-                                        </a>
-                                    </li>
-                                    <li class="social-dribbble tooltips" data-original-title="Dribbble" data-placement="bottom">
-                                        <a target="_blank" href="http://dribbble.com">
-                                            Dribbble
-                                        </a>
-                                    </li>
-                                    <li class="social-facebook tooltips" data-original-title="Facebook" data-placement="bottom">
-                                        <a target="_blank" href="http://facebook.com">
-                                            Facebook
-                                        </a>
-                                    </li>
-                                    <li class="social-google tooltips" data-original-title="Google" data-placement="bottom">
-                                        <a target="_blank" href="http://google.com">
-                                            Google+
-                                        </a>
-                                    </li>
-                                    <li class="social-linkedin tooltips" data-original-title="LinkedIn" data-placement="bottom">
-                                        <a target="_blank" href="http://linkedin.com">
-                                            LinkedIn
-                                        </a>
-                                    </li>
-                                    <li class="social-youtube tooltips" data-original-title="YouTube" data-placement="bottom">
-                                        <a target="_blank" href="http://youtube.com/">
-                                            YouTube
-                                        </a>
-                                    </li>
-                                    <li class="social-rss tooltips" data-original-title="RSS" data-placement="bottom">
-                                        <a target="_blank" href="#" >
-                                            RSS
-                                        </a>
+                                    <li>
+                                        <?php
+                                        if ($this->Session->read('Auth.User')) {
+                                            if ($this->Session->read('Auth.User')) {
+                                                echo '<div>Prijavljen kao: ' . $this->Session->read('Auth.User.username');
+                                                echo '&nbsp' . $this->Html->link('Odjavi se', 
+                                                    array(
+                                                        'controller' => 'users',
+                                                        'action' => 'logout'
+                                                    ), 
+                                                    array(
+                                                        'class' => 'item'
+                                                    )
+                                                );
+                                                echo " </div>";
+                                            }
+                                        } else {
+                                            echo $this->Html->link('Prijavi se', array('controller' => 'users', 'action' => 'login'), array('class' => 'item'));
+                                        }
+                                        ?>
                                     </li>
                                 </ul>
                             </div>
@@ -136,9 +122,9 @@
         <!-- end: HEADER -->
         <!-- start: MAIN CONTAINER -->
         <div class="main-container">
-            <?php echo $this->Flash->render(); ?>
+<?php echo $this->Flash->render(); ?>
 
-            <?php echo $this->fetch('content'); ?>
+<?php echo $this->fetch('content'); ?>
         </div>
         <!-- end: MAIN CONTAINER -->
         <!-- start: FOOTER -->
@@ -200,7 +186,7 @@
         <script src="/plugins/blockUI/jquery.blockUI.js"></script>
         <script src="/plugins/jquery-cookie/jquery.cookie.js"></script>
         <script src="/js/main.js"></script>
-        <?php echo $this->fetch('scriptBottom'); ?>
+<?php echo $this->fetch('scriptBottom'); ?>
         <!-- end: MAIN JAVASCRIPTS -->
         <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
         <script src="/plugins/revolution_slider/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>

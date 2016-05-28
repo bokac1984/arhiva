@@ -261,7 +261,7 @@ hr.fade-left {
 	color: #999999;
 }
 
-#topbar .social-icons ul {
+#topbar .social-icons ul, .moj-meni ul {
 	float: right !important;
 }
 .colored-top-bar #topbar .callus, .colored-top-bar #topbar .callus a {
@@ -273,7 +273,7 @@ hr.fade-left {
 /* ---------------------------------------------------------------------- */
 /*	Social Icons
 /* ---------------------------------------------------------------------- */
-.social-icons ul {
+.social-icons ul, .moj-meni ul {
 	float: left;
 	list-style: none;
 	margin: 0 0 -1px 0;
@@ -281,7 +281,7 @@ hr.fade-left {
 	height: 40px;
 	overflow: hidden;
 }
-.social-icons ul li {
+.social-icons ul li, .moj-meni ul li  {
 	display: block;
 	float: left;
 	margin: 0;
@@ -307,6 +307,19 @@ hr.fade-left {
 	-ms-transition: all ease 0.3s;
 	transition: all ease 0.3s;
 }
+
+.moj-meni ul li a {
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	height: 80px;
+	opacity: 0.6;
+	width: 40px;
+	top: 0;
+        line-height: 40px;
+	position: relative;
+        color: #999999;
+}
+
 .social-icons ul li a:hover {
 	top: -40px;
 }
