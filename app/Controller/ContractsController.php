@@ -20,7 +20,7 @@ class ContractsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.
-        $this->Auth->allow('index');
+        $this->Auth->allow('sendFile');
     }
     /**
      * index method
