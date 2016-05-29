@@ -85,7 +85,7 @@ class UploadComponent extends Component {
             $replacment = '***';
             $filename = preg_replace("/$datum/", $replacment, $filename);
         }
-        if(preg_match("/\d*,\d{2}(KM| KM)/", $filename, $match2))
+        if(preg_match("/(\d+(?:[\.\,]\d{2})?[KM| KM])/", $filename, $match2))
         {
             $price = $match2[0];
             $extractedData['price'] = $price;
