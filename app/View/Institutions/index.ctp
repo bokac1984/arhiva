@@ -18,7 +18,7 @@ echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal', array('blo
         <div class="row">
             <div class="col-sm-12">
                 <h2>Pregled arhive</h2>
-                <p><i>Da bi ste skinuli neki fajl, <b>dvoklkiknite</b> na naziv fajla.</i></p>
+                <p><i>Da bi ste skinuli neki fajl, <b>dvokliknite</b> na naziv fajla.</i></p>
             </div>
         </div>        
         <div class="row">
