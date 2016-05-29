@@ -402,7 +402,7 @@ var Main = function () {
                 animationDuration = animationDuration / 1000 * 2 + 's';
                 animationDelay = animationDelay / 1000 * 2 + 's';
                 element.css({
-                    opacity: 1,
+                    opacity: 0.5,
                     'animation-fill-mode': 'both',
                     'animation-duration': animationDuration,
                     'animation-delay': animationDelay,
