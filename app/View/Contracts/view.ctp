@@ -18,7 +18,7 @@
 		</dd>
 		<dt><?php echo __('Date'); ?></dt>
 		<dd>
-			<?php echo h($contract['Contract']['date']); ?>
+			<?php echo h($contract['Contract']['datum']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Price'); ?></dt>

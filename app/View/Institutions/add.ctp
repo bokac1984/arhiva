@@ -9,27 +9,41 @@
             </div>
         </div>        
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="institutions form">
-                    <?php echo $this->Form->create('Institution'); ?>
-                    <fieldset>
-                        <legend><?php echo __('Add Institution'); ?></legend>
-                        <?php
-                        echo $this->Form->input('name');
-                        echo $this->Form->input('description');
-                        echo $this->Form->input('disk_location');
-                        ?>
-                    </fieldset>
-                    <?php echo $this->Form->end(__('Submit')); ?>
-                </div>
-                <div class="actions">
-                    <h3><?php echo __('Actions'); ?></h3>
-                    <ul>
-
-                        <li><?php echo $this->Html->link(__('List Institutions'), array('action' => 'index')); ?></li>
-                        <li><?php echo $this->Html->link(__('List Contracts'), array('controller' => 'contracts', 'action' => 'index')); ?> </li>
-                        <li><?php echo $this->Html->link(__('New Contract'), array('controller' => 'contracts', 'action' => 'add')); ?> </li>
-                    </ul>
+                    <?php
+                    echo $this->Form->create('Institution');
+                    $this->Form->inputDefaults(array(
+                        'error' => array(
+                            'attributes' => array(
+                                'wrap' => 'div',
+                                'class' => 'label label-warning'
+                            )
+                        ),
+                        'div' => 'form-group',
+                        'class' => 'form-control'
+                            )
+                    );
+                    ?>
+                    <?php
+                    echo $this->Form->input('name', array(
+                        'label' => 'Naziv institucije',
+                        'class' => 'form-control'
+                    ));
+                    echo $this->Form->input('description', array(
+                        'label' => 'Korisničko ime',
+                        'class' => 'form-control',
+                        'type' => 'textarea'
+                    ));
+                    ?>
+                    <div class="form-group">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <button class="btn btn-blue btn-block" type="submit"> 
+                                Unesi <i class="fa fa-arrow-circle-right"></i> 
+                            </button>
+                        </div>
+                    </div>                    
+                    <?php echo $this->Form->end(); ?>
                 </div>
             </div>
         </div>

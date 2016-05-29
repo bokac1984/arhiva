@@ -47,6 +47,8 @@ class AppController extends Controller {
         'Upload',
         'Paginator'
     );
+    
+    public $helpers = array('Time');
 
     public function beforeFilter() {
         //Configure AuthComponent

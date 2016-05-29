@@ -28,6 +28,12 @@ class UploadComponent extends Component {
         $this->controller = $controller;
     }
 
+    /**
+     * 
+     * @param type $uploadedPdf
+     * @param type $location
+     * @return boolean|string
+     */
     public function uploadFile($uploadedPdf, $location = '/uploads/') {
         $fileName = '';
         if (empty($uploadedPdf) && $uploadedPdf['size'] === 0) {
@@ -42,7 +48,7 @@ class UploadComponent extends Component {
         
         $fileName = $this->createFileName($fileData['filename']) 
                 . "_" . $this->changeNameOfFile($fileData['filename']);
-        $uploadLocation = WWW_ROOT . 'uploads' . DS . $location . $fileName . ".pdf";
+        $uploadLocation = WWW_ROOT . 'uploads' . DS . $location . DS .  $fileName . ".pdf";
         $this->fileLocation = $uploadLocation;
 
         if (move_uploaded_file($uploadedPdf['tmp_name'], $uploadLocation )) {
@@ -68,7 +74,11 @@ class UploadComponent extends Component {
     
     public function createFileName($filename = '') {
         $extractedData = array();
-        if(preg_match("/\d{2}.\d{2}.\d{4}./", $filename, $match))
+        $datum = '';
+        $price = '';
+        
+        // nadji datum, ali pazi na sve kombinacije
+        if(preg_match("/(\d{2}(\.)?\d{2}(\.)?\d{4}\.)/", $filename, $match))
         {
             $datum = $match[0];
             $extractedData['date'] = $datum;
@@ -82,6 +92,11 @@ class UploadComponent extends Component {
             $replacment = '***';
             $filename = preg_replace("/$price/", $replacment, $filename);    
         }
+        
+        if (preg_match("/(\d{2}\.|\d{3}\.)/i", $filename, $match3)) {
+            $replacable = $match3[0];
+            $filename = preg_replace("/$replacable/", '', $filename);  
+        }
 
         $nameString = explode("***", $filename);
         $extractedData['name'] = trim($nameString[0]);
@@ -89,7 +104,7 @@ class UploadComponent extends Component {
         $extractedData['name'] = str_replace(array(':', '\\', '/', ','), '', $extractedData['name']);
         
         $this->name = $extractedData['name'];
-        $this->date = $datum;
+        $this->date = $this->prepareDate($datum);
         $this->price = $price;
         $search = array('š','đ','ž','č','ć', ' ');
         $replace = array('s','dj','z','c','c', '_');
@@ -97,5 +112,14 @@ class UploadComponent extends Component {
         
         return $nameForFile;
     }    
+    
+    public function prepareDate($datum = '') {
+        $dateWitoutDots = str_replace(".", "", $datum);
+        $dateArray = str_split($dateWitoutDots);
+        $day = $dateArray[0].$dateArray[1];
+        $month = $dateArray[2].$dateArray[3];
+        $year = $dateArray[4].$dateArray[5].$dateArray[6].$dateArray[7];
+        return date("d.m.Y", strtotime("$day.$month.$year"));
+    }
 
 }

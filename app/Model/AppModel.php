@@ -33,4 +33,11 @@ class AppModel extends Model {
     
     public $recursive = -1;
     public $actsAs = array('Containable'); 
+    
+    public function changeSerbianLetters($location = '') {
+        $search = array('š','đ','ž','č','ć', ' ', ',');
+        $replace = array('s','dj','z','c','c', '_', '');
+        $location = strtolower(rtrim($location));
+        return str_replace($search, $replace, $location);
+    }
 }

@@ -48,7 +48,14 @@ class InstitutionsController extends AppController {
         if (!$this->Institution->exists($id)) {
             throw new NotFoundException(__('Invalid institution'));
         }
-        $options = array('conditions' => array('Institution.' . $this->Institution->primaryKey => $id));
+        $options = array(
+            'conditions' => array(
+                'Institution.' . $this->Institution->primaryKey => $id
+            ),
+            'contain' => array(
+                'Contract'
+            )
+        );
         $this->set('institution', $this->Institution->find('first', $options));
     }
 
@@ -62,7 +69,7 @@ class InstitutionsController extends AppController {
             $this->Institution->create();
             if ($this->Institution->save($this->request->data)) {
                 $this->Flash->success(__('The institution has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('action' => 'pregled'));
             } else {
                 $this->Flash->error(__('The institution could not be saved. Please, try again.'));
             }
@@ -129,8 +136,10 @@ class InstitutionsController extends AppController {
         $this->set(compact('id', 'institution'));
     }
     
-    public function adding() {
+    public function viewer() {
+        $institutions = $this->Institution->find('list');
         
+        $this->set(compact('institutions'));
     }
     
     public function getFolders() {

@@ -43,7 +43,14 @@ class ContractsController extends AppController {
         if (!$this->Contract->exists($id)) {
             throw new NotFoundException(__('Invalid contract'));
         }
-        $options = array('conditions' => array('Contract.' . $this->Contract->primaryKey => $id));
+        $options = array('conditions' => array('Contract.' . $this->Contract->primaryKey => $id),
+            'contain' => array(
+                'Institution' => array(
+                    'fields' => array(
+                        'Institution.name', 'Institution.id'
+                    )
+                )
+            ));
         $this->set('contract', $this->Contract->find('first', $options));
     }
 
@@ -124,9 +131,12 @@ class ContractsController extends AppController {
             'Contract' => array(
                 'file_location' => $this->Upload->fileLocation,
                 'name' => $this->Upload->name,
-                'date' => $this->Upload->date,
+                'datum' => $this->Upload->date,
                 'price' => $this->Upload->price,
-                'institution_id' => $this->request->data['institution_id']
+                'institution_id' => $this->request->data['institution_id'],
+                'original_name' => $this->request->params['form']['file']['name'],
+                'file_size' => $this->request->params['form']['file']['size'],
+                'new_file_name' => $filenameToSave
             )
         );
         
@@ -135,6 +145,20 @@ class ContractsController extends AppController {
         } else {
             echo 'ne mozee';
         }
+    }
+    
+    public function sendFile($filename = '') {
+        $file = $this->Contract->getFile($filename);
+        $this->response->type(array('pdf' => 'application/pdf'));
+        $this->response->type('pdf');
+        $this->response->file(
+            $file,
+            array('download' => false, 'name' => $filename.'.pdf')
+        );
+
+        // Return response object to prevent controller from trying to render
+        // a view
+        return $this->response;
     }
 
 }

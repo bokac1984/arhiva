@@ -35,9 +35,9 @@ class Institution extends AppModel {
     public function beforeSave($options = array()) {
         parent::beforeSave($options);
         
-        $name = str_replace(" ", "_", $this->data['Institution']['name']);
+        $name = $this->changeSerbianLetters($this->data['Institution']['name']);
         $dir = new Folder(WWW_ROOT . '/uploads/' . $name, true, 0755);
-        
+        $this->data['Institution']['disk_location'] = $name;
     }
 
 }

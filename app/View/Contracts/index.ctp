@@ -9,9 +9,9 @@
                             <th><?php echo $this->Paginator->sort('id'); ?></th>
                             <th><?php echo $this->Paginator->sort('institution_id'); ?></th>
                             <th><?php echo $this->Paginator->sort('name'); ?></th>
-                            <th><?php echo $this->Paginator->sort('date'); ?></th>
+                            <th><?php echo $this->Paginator->sort('datum'); ?></th>
                             <th><?php echo $this->Paginator->sort('price'); ?></th>
-                            <th><?php echo $this->Paginator->sort('file_location'); ?></th>
+                            <th><?php echo $this->Paginator->sort('original_name'); ?></th>
                             <th><?php echo $this->Paginator->sort('created'); ?></th>
                             <th><?php echo $this->Paginator->sort('modified'); ?></th>
                             <th class="actions"><?php echo __('Actions'); ?></th>
@@ -25,9 +25,9 @@
                                     <?php echo $this->Html->link($contract['Institution']['name'], array('controller' => 'institutions', 'action' => 'view', $contract['Institution']['id'])); ?>
                                 </td>
                                 <td><?php echo h($contract['Contract']['name']); ?>&nbsp;</td>
-                                <td><?php echo h($contract['Contract']['date']); ?>&nbsp;</td>
+                                <td><?php echo h($contract['Contract']['datum']); ?>&nbsp;</td>
                                 <td><?php echo h($contract['Contract']['price']); ?>&nbsp;</td>
-                                <td><?php echo h($contract['Contract']['file_location']); ?>&nbsp;</td>
+                                <td><?php echo h($contract['Contract']['original_name']); ?>&nbsp;</td>
                                 <td><?php echo h($contract['Contract']['created']); ?>&nbsp;</td>
                                 <td><?php echo h($contract['Contract']['modified']); ?>&nbsp;</td>
                                 <td class="actions">

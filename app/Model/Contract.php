@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppModel', 'Model');
+App::uses('File', 'Utility');
 
 /**
  * Contract Model
@@ -8,6 +9,8 @@ App::uses('AppModel', 'Model');
  * @property Institution $Institution
  */
 class Contract extends AppModel {
+    
+    public $locationToDelete;
 
     /**
      * Validation rules
@@ -43,4 +46,43 @@ class Contract extends AppModel {
             'order' => ''
         )
     );
+    
+    public function beforeDelete($cascade = true) {        
+        $data = $this->find('first', array(
+            'conditions' => array(
+                'Contract.id' => $this->id
+            ),
+            'fields' => array(
+                'Contract.file_location'
+            )
+        ));
+        
+        $this->locationToDelete = $data['Contract']['file_location'];
+        parent::beforeDelete($cascade);
+    }
+    
+    public function afterDelete($cascade = true) {
+        parent::afterDelete($cascade);
+        
+        $file = new File($this->locationToDelete);
+        if ($file->delete()) {
+            $this->locationToDelete = '';
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function getFile($name = null) {
+        $file = $this->find('first', array(
+            'conditions' => array(
+                'Contract.new_file_name' => $name
+            ),
+            'fields' => array(
+                'Contract.file_location'
+            )
+        ));
+        
+        return $file['Contract']['file_location'];
+    }
 }
