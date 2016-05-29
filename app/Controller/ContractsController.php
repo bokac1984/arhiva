@@ -153,7 +153,7 @@ class ContractsController extends AppController {
         $this->response->type('pdf');
         $this->response->file(
             $file,
-            array('download' => false, 'name' => $filename.'.pdf')
+            array('download' => true, 'name' => $filename.'.pdf')
         );
 
         // Return response object to prevent controller from trying to render
