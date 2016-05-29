@@ -69,7 +69,8 @@ class InstitutionsController extends AppController {
             $this->Institution->create();
             if ($this->Institution->save($this->request->data)) {
                 $this->Flash->success(__('The institution has been saved.'));
-                return $this->redirect(array('action' => 'pregled'));
+                $id = $this->Institution->getLastInsertID();
+                return $this->redirect(array('action' => 'contract', $id));
             } else {
                 $this->Flash->error(__('The institution could not be saved. Please, try again.'));
             }
