@@ -40,11 +40,13 @@
                     ));
                     echo $this->Form->input('original_name', array(
                         'label' => 'Originalni naziv fajla',
-                        'class' => 'form-control'
+                        'class' => 'form-control',
+                        'disabled' => true
                     ));
                     echo $this->Form->input('new_file_name', array(
                         'label' => 'Novi naziv fajla',
-                        'class' => 'form-control'
+                        'class' => 'form-control',
+                        'disabled' => true
                     ));
                     echo $this->Form->input('file_size', array(
                         'label' => 'Veličina fajal u bajtovima',
