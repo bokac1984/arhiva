@@ -1,25 +1,67 @@
-<div class="contracts form">
-<?php echo $this->Form->create('Contract'); ?>
-	<fieldset>
-		<legend><?php echo __('Edit Contract'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('institution_id');
-		echo $this->Form->input('name');
-		echo $this->Form->input('datum');
-		echo $this->Form->input('price');
-		echo $this->Form->input('file_location');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<section class="wrapper">
+    <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Contract.id')), array('confirm' => __('Are you sure you want to delete # %s?', $this->Form->value('Contract.id')))); ?></li>
-		<li><?php echo $this->Html->link(__('List Contracts'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Institutions'), array('controller' => 'institutions', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Institution'), array('controller' => 'institutions', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+            </div>
+        </div>        
+        <div class="row">
+            <div class="col-sm-12">
+                <?php 
+                    echo $this->Form->create('Contract'); 
+                    $this->Form->inputDefaults(array(
+                        'error' => array(
+                            'attributes' => array(
+                                'wrap' => 'div',
+                                'class' => 'label label-warning'
+                            )
+                        ),
+                        'div' => 'form-group',
+                        'class' => 'form-control'
+                            )
+                    );
+                ?>
+                <fieldset>
+                    <?php
+                    echo $this->Form->input('id');
+                    echo $this->Form->input('institution_id');
+                    echo $this->Form->input('name', array(
+                        'label' => 'Naziv fajla',
+                        'class' => 'form-control'
+                    ));
+                    echo $this->Form->input('datum', array(
+                        'label' => 'Datum',
+                        'class' => 'form-control'
+                    ));
+                    echo $this->Form->input('price', array(
+                        'label' => 'Visina ugovora (u KM)',
+                        'class' => 'form-control'
+                    ));
+                    echo $this->Form->input('original_name', array(
+                        'label' => 'Originalni naziv fajla',
+                        'class' => 'form-control'
+                    ));
+                    echo $this->Form->input('new_file_name', array(
+                        'label' => 'Novi naziv fajla',
+                        'class' => 'form-control'
+                    ));
+                    echo $this->Form->input('file_size', array(
+                        'label' => 'Veličina fajal u bajtovima',
+                        'class' => 'form-control',
+                        'disabled' => true
+                    ));
+                    ?>
+                    <div class="form-group">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <button class="btn btn-blue btn-block" type="submit"> 
+                                Sačuvaj <i class="fa fa-arrow-circle-right"></i> 
+                            </button>
+                        </div>
+                    </div>                      
+                </fieldset>
+                <?php echo $this->Form->end(); ?> 
+            </div>
+        </div>
+    </div>
+</section>
