@@ -33,7 +33,7 @@ echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal', array('blo
     <!-- end: BLOG POSTS AND COMMENTS CONTAINER -->
 </section>
 <!-- DIALOG -->
-<div id="ajax-modal" class="modal fade" tabindex="-1" data-width="760" data-backdrop="static" data-keyboard="false" style="display: none;">
+<div id="ajax-modal" class="modal fade" tabindex="-1" data-width="960" data-backdrop="static" data-keyboard="false" style="display: none;">
     <div class="modal-body" style="margin-bottom:0">
         <form action="/contracts/upload" class="dropzone" method="post" id="my-awesome-dropzone">
             <input name="idNews" type="hidden" value="<?php echo $id ?>">
