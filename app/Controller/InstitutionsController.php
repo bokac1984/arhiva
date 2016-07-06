@@ -207,7 +207,7 @@ class InstitutionsController extends AppController {
         $dataContract = array(
             'Contract' => array(
                 'file_location' => $this->Upload->fileLocation,
-                'name' => $data['author'],
+                'name' => str_replace(',', '', $data['author']),
                 'datum' => date("d.m.Y", strtotime($data['date'])),
                 'price' => $data['price'],
                 'institution_id' => $institution['Institution']['id'],
