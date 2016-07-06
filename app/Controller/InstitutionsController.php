@@ -114,7 +114,7 @@ class InstitutionsController extends AppController {
             throw new NotFoundException(__('Invalid institution'));
         }
         $this->request->allowMethod('post', 'delete');
-        if ($this->Institution->delete()) {
+        if ($this->Institution->delete($id, true)) {
             $this->Flash->success(__('The institution has been deleted.'));
         } else {
             $this->Flash->error(__('The institution could not be deleted. Please, try again.'));
@@ -122,6 +122,13 @@ class InstitutionsController extends AppController {
         return $this->redirect(array('action' => 'index'));
     }
     
+    public function removeAll() {
+        $this->Institution->daleteAll(array('Institution.id >= ' => 0), true);
+        
+        return $this->redirect(array('action' => 'index'));
+    }
+
+
     public function contract($id = null) {
         $this->Institution->id = $id;
         if (!$this->Institution->exists()) {
@@ -136,6 +143,9 @@ class InstitutionsController extends AppController {
         
         $this->set(compact('id', 'institution'));
     }
+    public function contracts($id = null) {
+
+    }    
     
     public function viewer() {
         $institutions = $this->Institution->find('list');
@@ -163,6 +173,55 @@ class InstitutionsController extends AppController {
         
         $this->set(compact('contracts'));
         
+    }   
+    
+    public function upload() {
+        $this->autoRender = false;
+        $fileData = pathinfo($this->request->params['form']['file']['name']);
+        
+        $data = $this->Institution->prepareData($fileData['filename']);
+        
+        
+        $institutionData = array(
+            'name' => $data['name'],
+            'description' => 'Added automatically ' . $data['name']
+        );
+
+        $this->Institution->createInstitution($institutionData);
+        
+        $institution = $this->Institution->find('first', array(
+            'conditions' => array(
+                'Institution.name' => $data['name']
+            ),
+            'fields' => array(
+                'Institution.disk_location',
+                'Institution.id'
+            )
+        ));
+
+        $filenameToSave = $this->Upload->uploadDigitalPDF(
+                $this->request->params['form']['file'], 
+                $data['author'], 
+                $institution['Institution']['disk_location']);
+        
+        $dataContract = array(
+            'Contract' => array(
+                'file_location' => $this->Upload->fileLocation,
+                'name' => $data['author'],
+                'datum' => date("d.m.Y", strtotime($data['date'])),
+                'price' => $data['price'],
+                'institution_id' => $institution['Institution']['id'],
+                'original_name' => $this->request->params['form']['file']['name'],
+                'file_size' => $this->request->params['form']['file']['size'],
+                'new_file_name' => $filenameToSave
+            )
+        );
+        //debug($dataContract);exit();
+        if ($this->Institution->Contract->save($dataContract)) {
+            echo 'usphe';
+        } else {
+            echo 'ne mozee';
+        }
     }    
 
 }

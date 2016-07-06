@@ -58,6 +58,31 @@ class UploadComponent extends Component {
         return '';
     }
     
+    public function uploadDigitalPDF($uploadedPdf, $author, $location = '/uploads/') {
+        $fileName = '';
+        if (empty($uploadedPdf) && $uploadedPdf['size'] === 0) {
+            return $fileName;
+        }
+        
+        $fileData = pathinfo($uploadedPdf['name']);
+        
+        if (!$this->checkExtension($fileData['extension'])) {
+            return $fileName;
+        }
+        
+        $fileName = $this->createDigitalName($author) 
+                . "_" . $this->changeNameOfFile($fileData['filename']);
+        $uploadLocation = WWW_ROOT . 'uploads' . DS . $location . DS .  $fileName . ".pdf";
+        $this->fileLocation = $uploadLocation;
+
+        if (move_uploaded_file($uploadedPdf['tmp_name'], $uploadLocation )) {
+            return $fileName;
+        }
+
+        return '';
+    }
+
+
     public function changeNameOfFile($originalName = '') {
         $temporalName = '';
         if ($originalName !== '') {
@@ -120,6 +145,13 @@ class UploadComponent extends Component {
         $month = $dateArray[2].$dateArray[3];
         $year = $dateArray[4].$dateArray[5].$dateArray[6].$dateArray[7];
         return date("d.m.Y", strtotime("$day.$month.$year"));
+    }
+    
+    public function createDigitalName($filename = '') {
+        $search = array('š','đ','ž','č','ć', ' ', ',', 'Š', 'Đ', 'Ž', 'Č', 'Ć');
+        $replace = array('s','dj','z','c','c', '_', '', 's', 'dj', 'z', 'c', 'c');
+        $filename = strtolower(rtrim($filename));
+        return str_replace($search, $replace, $filename);
     }
 
 }

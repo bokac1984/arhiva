@@ -16,6 +16,16 @@
                     'role' => 'button'
                 )); ?>
             </p>
+            <p>
+                <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                <?php echo $this->Html->link('Obriši sve', array(
+                    'controller' => 'institutions',
+                    'action' => 'removeAll'
+                ), array(
+                    'class' => 'btn btn-primary',
+                    'role' => 'button'
+                )); ?>
+            </p>            
             </div>
         </div>
         <div class="row">

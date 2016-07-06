@@ -122,7 +122,6 @@
         <div class="main-container">
             <?php echo $this->Flash->render(); ?>                           
 
-
             <?php echo $this->fetch('content'); ?>
         </div>
         <!-- end: MAIN CONTAINER -->

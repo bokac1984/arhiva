@@ -35,8 +35,8 @@ class AppModel extends Model {
     public $actsAs = array('Containable'); 
     
     public function changeSerbianLetters($location = '') {
-        $search = array('š','đ','ž','č','ć', ' ', ',');
-        $replace = array('s','dj','z','c','c', '_', '');
+        $search = array('š','đ','ž','č','ć', ' ', ',', 'Š', 'Đ', 'Ž', 'Č', 'Ć');
+        $replace = array('s','dj','z','c','c', '_', '', 's', 'dj', 'z', 'c', 'c');
         $location = strtolower(rtrim($location));
         return str_replace($search, $replace, $location);
     }
