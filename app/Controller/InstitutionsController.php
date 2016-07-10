@@ -179,7 +179,6 @@ class InstitutionsController extends AppController {
     
     public function getContractsForInstitution() {
         $this->viewClass = 'Json';
-        $this->request->data['id'] = 1;
         $contracts = $this->Institution->Contract->find('all', array(
             'conditions' => array(
                 'Contract.institution_id' => $this->request->data['id']
