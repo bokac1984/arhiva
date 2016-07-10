@@ -84,19 +84,21 @@ class Contract extends AppModel {
         ));
         
         if (!empty($file)) {
-            $this->updateDownloaded($file['Contract']['id'], (int)$file['Contract']['downloaded']);
+            $this->updateDownloaded($file['Contract']['id'], $file['Contract']['downloaded']);
             return $file['Contract']['file_location'];
         }
         return '';
     }
     
-    public function updateDownloaded($id = null, $downloaded) {
+    public function updateDownloaded($id = null, $downloaded = null) {
         $data = array(
             'Contract' => array(
                 'id' => $id,
-                'downloaded' => $downloaded++
+                'downloaded' => $downloaded+1
             )
         );
+        
+        //debug($data);exit();
         
         $this->save($data);
     }

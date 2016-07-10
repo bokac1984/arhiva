@@ -1,26 +1,31 @@
 <?php
-/**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.View.Errors
- * @since         CakePHP(tm) v 0.10.0.1076
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
+
 ?>
-<h2><?php echo $message; ?></h2>
-<p class="error">
-	<strong><?php echo __d('cake', 'Error'); ?>: </strong>
-	<?php echo __d('cake', 'An Internal Error Has Occurred.'); ?>
-</p>
+<section class="wrapper">
+    <div class="container">
+        <div class="row">
+            <!-- start: 500 -->
+            <div class="col-sm-12 page-error">
+                <div class="error-number bricky">
+                    500
+                </div>
+                <div class="error-details col-sm-6 col-sm-offset-3">
+                    <h3><?php echo $message; ?></h3>
+                    <p>
+                        Nešto nije u redu!
+                        <br>
+                        Čini se da se nešto slomilo unutar našeg sistema.
+                        <br>
+                        Bez panike, popravljamo! Molimo Vas dođite malo kasnije.
+                    </p>
+                </div>
+            </div>
+            <!-- end: 500 -->
+        </div>
+    </div>
+</section>
 <?php
 if (Configure::read('debug') > 0):
-	echo $this->element('exception_stack_trace');
+    echo $this->element('exception_stack_trace');
 endif;
 ?>
