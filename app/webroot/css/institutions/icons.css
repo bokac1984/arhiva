@@ -135,8 +135,8 @@
 }
 
 .filemanager .data.animated {
-    -webkit-animation: showSlowlyElement 700ms; /* Chrome, Safari, Opera */
-    animation: showSlowlyElement 700ms; /* Standard syntax */
+    -webkit-animation: showSlowlyElement 300ms; /* Chrome, Safari, Opera */
+    animation: showSlowlyElement 300ms; /* Standard syntax */
 }
 
 .filemanager .data li {
@@ -190,11 +190,11 @@
 
 .filemanager .data li .details {
     color: #b6c1c9;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 400;
     width: 55px;
     height: 10px;
-    top: 46px;
+    top: 55px;
     white-space: nowrap;
     position: absolute;
     display: inline-block;

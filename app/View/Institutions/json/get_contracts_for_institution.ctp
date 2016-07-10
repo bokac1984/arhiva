@@ -23,7 +23,7 @@ foreach ($contracts as $contract) {
 ?>
 
     <li class="files">
-        <a id="<?php echo $download; ?>" href="#" title="<?php echo $contract['Contract']['name']; ?>" class="files">
+        <a id="<?php echo $contract['Contract']['id']; ?>" href="<?php echo $download; ?>" title="<?php echo $contract['Contract']['name']; ?>" class="files">
             <span class="icon file f-pdf">.pdf</span>
             <span class="name"><?php echo $contract['Contract']['name']; ?></span> 
             <span class="details"><?php echo $datum; ?></span>

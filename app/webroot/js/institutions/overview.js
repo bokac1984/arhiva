@@ -8,16 +8,19 @@ var inst = function () {
         $("a.folders").click(function(){
             var nameFolder = $(this).attr('title');
             var brCrymb = '<span class="arrow">→</span> <span class="folderName">' + nameFolder + '</span>';
-            fileList.removeClass('animated');
+            
             jQuery.ajax({
                 url: '/institutions/getContractsForInstitution',
                 method: 'POST',
                 data: { id: $(this).attr('id') },
                 dataType: 'HTML'
             }).done(function (response) {
+                fileList.removeClass('animated');
+            
                 fileList.find('li.folders').hide();
+                fileList.addClass('slideRight');
                 breadcrumbs.append(brCrymb);
-                fileList.addClass('animated');
+                //fileList.addClass('animated');
                 
                 fileList.append(response);
                 
@@ -33,10 +36,10 @@ var inst = function () {
         });
         
         backButton.click(function(){
-            fileList.removeClass('animated');
+                fileList.removeClass('animated slideRight');
                 fileList.find('li.files').remove();
                 fileList.find('li.folders').show();
-                fileList.addClass('animated');
+                //fileList.addClass('animated');
                 fileList.animate({'display':'inline-block'}); 
                 $('.folderName').not('.back-btn').remove();
                 $('.arrow').remove();

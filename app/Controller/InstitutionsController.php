@@ -188,7 +188,7 @@ class InstitutionsController extends AppController {
                 'Contract.datum' => 'ASC'
             )
         ));
-        debug($contracts);exit();
+        
         $this->set(compact('contracts'));
         
     }    
@@ -257,7 +257,7 @@ class InstitutionsController extends AppController {
                 )
             )
         ));
-        //debug($institutions);exit();
+        
         $this->set(compact('institutions'));
     }
 

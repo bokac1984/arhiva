@@ -2,6 +2,7 @@
 echo $this->Html->script('/js/institutions/overview', array('block' => 'scriptBottom'));
 echo $this->Html->scriptBlock("inst.init(1);", array('block' => 'scriptBottom'));
 echo $this->Html->css('/css/institutions/icons', array('block' => 'css'));
+echo $this->Html->css('/css/institutions/overview', array('block' => 'css'));
 ?>
 <section class="wrapper">
     <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
@@ -18,7 +19,7 @@ echo $this->Html->css('/css/institutions/icons', array('block' => 'css'));
                                 <a id="<?php echo $institut['Institution']['id']; ?>" href="#" title="<?php echo $institut['Institution']['name']; ?>" class="folders">
                                     <span class="icon folder full"></span>
                                     <span class="name"><?php echo $institut['Institution']['name']; ?></span> 
-                    <!--                <span class="details"><?php echo $institut['Institution']['contract_count']; ?> ugovora</span>-->
+                                    <span class="details"><?php echo $institut['Institution']['contract_count']; ?> ugovora</span>
                                 </a>
                             </li>
                         <?php endforeach; ?>
