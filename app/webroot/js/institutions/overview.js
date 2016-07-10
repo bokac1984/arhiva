@@ -31,7 +31,7 @@ var inst = function () {
 
             if (!search.val().trim().length) {
                 //search.hide();
-                search.find('input').hide();
+                search.find('input').val('').hide();
             }
         });
         ;
