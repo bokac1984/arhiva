@@ -35,11 +35,13 @@ var inst = function () {
             }
         });
         ;
-
+/**
+ * kad se klikne na folder sakrij search
+ */
         $("a.folders").click(function () {
             var nameFolder = $(this).attr('title');
             var brCrymb = '<span class="arrow">→</span> <span class="folderName">' + nameFolder + '</span>';
-
+            filemanager.find('.search').hide();
             jQuery.ajax({
                 url: '/institutions/getContractsForInstitution',
                 method: 'POST',
@@ -70,6 +72,10 @@ var inst = function () {
             fileList.removeClass('animated slideRight');
             fileList.find('li.files').remove();
             fileList.find('li.folders').show();
+            
+            // ponovo prikazi ako se vrati na foldere
+            filemanager.find('.search').show();
+            
             //fileList.addClass('animated');
             fileList.animate({'display': 'inline-block'});
             $('.folderName').not('.back-btn').remove();
