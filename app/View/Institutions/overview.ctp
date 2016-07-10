@@ -18,8 +18,8 @@ echo $this->Html->css('/css/institutions/overview', array('block' => 'css'));
             </div>
             <div class="col-md-6">
                 <div class="preview-contracts-text">
-                    <p>
-                        Na ovoj stranici možete da pregledate dokumente o javnim ugovorima
+                    <p class="preview-text">
+                        Na ovoj stranici možete da pregledate dokumente o ugovorima o djelu javnih institucija u Bosni i Hercegovini. Bazu ugovora o djelu je sačinio Transparency International BiH.
                     </p>
                 </div>
             </div>            
