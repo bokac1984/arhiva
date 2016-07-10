@@ -22,7 +22,12 @@ class InstitutionsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.
-        $this->Auth->allow('index', 'getFolders', 'getContracts', 'overview');
+        $this->Auth->allow(
+                'index', 
+                'getFolders', 
+                'getContracts', 
+                'overview',
+                'getContractsForInstitution');
     }
     /**
      * index method
