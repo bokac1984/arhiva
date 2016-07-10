@@ -274,7 +274,7 @@
 }
 .icon.folder {
     display: inline-block;
-    margin: 18px;
+    margin: 18px 14px 0 14px;
     background-color: transparent;
     overflow: hidden;
 }
