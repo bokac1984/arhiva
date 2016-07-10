@@ -149,6 +149,11 @@ class ContractsController extends AppController {
     
     public function sendFile($filename = '') {
         $file = $this->Contract->getFile($filename);
+        
+        if ($file === '') {
+            throw new NotFoundException(__('Ne postoji fajl!'));
+        }
+        
         $this->response->type(array('pdf' => 'application/pdf'));
         $this->response->type('pdf');
         $this->response->file(
