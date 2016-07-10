@@ -17,6 +17,8 @@ class InstitutionsController extends AppController {
      */
     public $components = array('Paginator');
     
+    public $helpers = array('Link');    
+    
     public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.
@@ -123,9 +125,9 @@ class InstitutionsController extends AppController {
     }
     
     public function removeAll() {
-        $this->Institution->daleteAll(array('Institution.id >= ' => 0), true);
-        
-        return $this->redirect(array('action' => 'index'));
+        foreach ($this->request->data as $id ) {
+            $this->Institution->delete($id, true);
+        }
     }
 
 
@@ -173,7 +175,23 @@ class InstitutionsController extends AppController {
         
         $this->set(compact('contracts'));
         
-    }   
+    } 
+    
+    public function getContractsForInstitution() {
+        $this->viewClass = 'Json';
+        $this->request->data['id'] = 1;
+        $contracts = $this->Institution->Contract->find('all', array(
+            'conditions' => array(
+                'Contract.institution_id' => $this->request->data['id']
+            ),
+            'order' => array(
+                'Contract.datum' => 'ASC'
+            )
+        ));
+        debug($contracts);exit();
+        $this->set(compact('contracts'));
+        
+    }    
     
     public function upload() {
         $this->autoRender = false;
@@ -208,7 +226,7 @@ class InstitutionsController extends AppController {
             'Contract' => array(
                 'file_location' => $this->Upload->fileLocation,
                 'name' => str_replace(',', '', $data['author']),
-                'datum' => date("d.m.Y", strtotime($data['date'])),
+                'datum' => date('Y-m-d', strtotime(str_replace('-', '/', $data['date']))),
                 'price' => $data['price'],
                 'institution_id' => $institution['Institution']['id'],
                 'original_name' => $this->request->params['form']['file']['name'],
@@ -222,6 +240,25 @@ class InstitutionsController extends AppController {
         } else {
             echo 'ne mozee';
         }
-    }    
+    }   
+    
+    public function overview() {
+        $institutions = $this->Institution->find('all', array(
+            'fields' => array(
+                'Institution.id',
+                'Institution.name',
+                'Institution.contract_count'               
+            ),
+            'contain' => array(
+                'Contract' => array(
+                    'fields' => array(
+                        'Contract.name'
+                    )
+                )
+            )
+        ));
+        //debug($institutions);exit();
+        $this->set(compact('institutions'));
+    }
 
 }

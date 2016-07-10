@@ -41,9 +41,7 @@ class Contract extends AppModel {
         'Institution' => array(
             'className' => 'Institution',
             'foreignKey' => 'institution_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
+            'counterCache' => true
         )
     );
     

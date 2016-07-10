@@ -30,6 +30,11 @@ $url = $this->request->here;
                     Upravljanje
                 </a>
             </li>
+            <li>
+                <a href="/institutions/contracts">
+                    Novi ugovori
+                </a>
+            </li>            
         </ul>
     </li>
     <?php endif; ?>

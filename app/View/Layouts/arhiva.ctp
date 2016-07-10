@@ -184,7 +184,7 @@
         <script src="/plugins/blockUI/jquery.blockUI.js"></script>
         <script src="/plugins/jquery-cookie/jquery.cookie.js"></script>
         <script src="/js/main.js"></script>
-<?php echo $this->fetch('scriptBottom'); ?>
+        <?php echo $this->fetch('scriptBottom'); ?>
         <!-- end: MAIN JAVASCRIPTS -->
         <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
         <script src="/plugins/revolution_slider/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
@@ -201,5 +201,6 @@
                 $.stellar();
             });
         </script>
+        <?php //echo $this->element('sql_dump'); ?>
     </body>
 </html>
