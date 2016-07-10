@@ -183,7 +183,7 @@
     position: absolute;
     overflow: hidden;
     text-overflow: ellipsis;
-    top: 18px;
+    top: 9px;
 }
 
 .filemanager .data li.files .name {
