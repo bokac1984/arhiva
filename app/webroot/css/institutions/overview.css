@@ -38,3 +38,7 @@ and open the template in the editor.
 		-webkit-transform: translateX(0%);
 	}
 }
+
+.preview-contracts img {
+    width: 100%;
+}

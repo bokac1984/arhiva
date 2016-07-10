@@ -9,6 +9,23 @@ echo $this->Html->css('/css/institutions/overview', array('block' => 'css'));
     <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
     <div class="container">
         <div class="row">
+            <div class="col-md-6">
+                <div class="preview-contracts">
+                <?php echo $this->Html->image("ugovori.jpg", array(
+                    "alt" => "Ugovori od djelu"
+                )); ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="preview-contracts-text">
+                    <p>
+                        Na ovoj stranici možete da pregledate dokumente o javnim ugovorima
+                    </p>
+                </div>
+            </div>            
+        </div>
+        <hr class="">
+        <div class="row">
             <div class="col-md-12">
                 <div class="filemanager">
                     <div class="search">

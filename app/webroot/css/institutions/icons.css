@@ -133,6 +133,7 @@
 
 .filemanager .data {
     z-index: -3;
+    padding: 0;
 }
 
 .filemanager .data.animated {
