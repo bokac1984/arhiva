@@ -13,9 +13,9 @@ echo $this->Html->css('/css/institutions/overview', array('block' => 'css'));
                 <div class="filemanager">
                     <div class="search">
                         <input id="searchable_input" title="Pretražite institucije" type="search" placeholder="Pronadjite instituciju.." />
-                    </div>                      
+                    </div>   
                     <div class="breadcrumbs">
-                        <span class="folderName back-btn">Institucije</span>
+                            <span class="folderName back-btn">Institucije</span>
                     </div>                    
                     <ul class="data animated" style="">
                         <?php foreach ($institutions as $institut): ?>
