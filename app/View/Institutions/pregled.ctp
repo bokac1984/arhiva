@@ -43,22 +43,22 @@ echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
                     <table cellpadding="0" cellspacing="0" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th><input class="check-all" name="iCheckMain" type="checkbox" value="" /></th>
-                                <th><?php echo $this->Paginator->sort('id'); ?></th>
-                                <th><?php echo $this->Paginator->sort('name'); ?></th>
-                                <th><?php echo $this->Paginator->sort('description'); ?></th>
-                                <th><?php echo $this->Paginator->sort('created'); ?></th>
-                                <th><?php echo $this->Paginator->sort('modified'); ?></th>
+                                <th class="center"><input class="check-all" name="iCheckMain" type="checkbox" value="" /></th>
+                                <th class="center"><?php echo $this->Paginator->sort('id', '#'); ?></th>
+                                <th><?php echo $this->Paginator->sort('name', 'Naziv'); ?></th>
+                                <th><?php echo $this->Paginator->sort('contract_count', 'Broj ugovora'); ?></th>
+                                <th><?php echo $this->Paginator->sort('created', 'Kreiran'); ?></th>
+                                <th><?php echo $this->Paginator->sort('modified', 'Zadnja izmjena'); ?></th>
                                 <th class="actions"><?php echo __('Actions'); ?></th>
                             </tr>
                         </thead>
                         <tbody class='chekboksovi'>
                         <?php foreach ($institutions as $institution): ?>
                                 <tr>
-                                    <td><input name="iCheck" class="koji-id" type="checkbox" value="<?php echo h($institution['Institution']['id']); ?>" /></td>
-                                    <td><?php echo h($institution['Institution']['id']); ?>&nbsp;</td>
+                                    <td class="center"><input name="iCheck" class="koji-id" type="checkbox" value="<?php echo h($institution['Institution']['id']); ?>" /></td>
+                                    <td class="center"><?php echo h($institution['Institution']['id']); ?>&nbsp;</td>
                                     <td><?php echo h($institution['Institution']['name']); ?>&nbsp;</td>
-                                    <td><?php echo h($institution['Institution']['description']); ?>&nbsp;</td>
+                                    <td class="center"><?php echo h($institution['Institution']['contract_count']); ?>&nbsp;</td>
                                     <td><?php echo h($institution['Institution']['created']); ?>&nbsp;</td>
                                     <td><?php echo h($institution['Institution']['modified']); ?>&nbsp;</td>
                                     <td class="actions">
