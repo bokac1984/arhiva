@@ -17,7 +17,7 @@ class InstitutionsController extends AppController {
      */
     public $components = array('Paginator');
     
-    public $helpers = array('Link');    
+    public $helpers = array('Link', 'Text');    
     
     public function beforeFilter() {
         parent::beforeFilter();
