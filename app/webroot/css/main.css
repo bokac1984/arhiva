@@ -108,7 +108,7 @@ a.bricky:hover {
 .center {
 	text-align: center;
 }
-hr {
+/*hr {
 	background-image: -o-linear-gradient(left center , rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
 	background-image: -webkit-gradient(left center , rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
 	background-image: -ms-linear-gradient(left center , rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
@@ -118,7 +118,7 @@ hr {
 	border: 0 none;
 	height: 1px;
 	margin: 22px 0;
-}
+}*/
 hr.fade-right {
 	background-image: -o-linear-gradient(left center , rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
 	background-image: -webkit-gradient(left center , rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
