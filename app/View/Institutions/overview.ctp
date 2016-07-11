@@ -4,6 +4,7 @@ echo $this->Html->script('/js/institutions/overview', array('block' => 'scriptBo
 echo $this->Html->scriptBlock("inst.init(1);", array('block' => 'scriptBottom'));
 echo $this->Html->css('/css/institutions/icons', array('block' => 'css'));
 echo $this->Html->css('/css/institutions/overview', array('block' => 'css'));
+echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
 ?>
 <section class="wrapper">
     <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
@@ -59,7 +60,13 @@ echo $this->Html->css('/css/institutions/overview', array('block' => 'css'));
                     </div>   
                     <div class="breadcrumbs">
                             <span class="folderName back-btn">Institucije</span>
-                    </div>                    
+                    </div>
+                    <div class="sk-folding-cube" style="display: none;">
+                      <div class="sk-cube1 sk-cube"></div>
+                      <div class="sk-cube2 sk-cube"></div>
+                      <div class="sk-cube4 sk-cube"></div>
+                      <div class="sk-cube3 sk-cube"></div>
+                    </div>                  
                     <ul class="data animated" style="">
                         <?php foreach ($institutions as $institut): ?>
                             <li class="folders">

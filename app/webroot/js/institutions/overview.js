@@ -36,7 +36,7 @@ var inst = function () {
             var nameFolder = $(this).attr('title');
             var brCrymb = '<span class="arrow">→</span> <span class="folderName">' + nameFolder + '</span>';
             filemanager.find('.search').hide();
-
+            $('.sk-folding-cube').show();
             var element_to_scroll_to = $('#dokumenti')[0];
             element_to_scroll_to.scrollIntoView();
             
@@ -46,6 +46,7 @@ var inst = function () {
                 data: {id: $(this).attr('id')},
                 dataType: 'HTML'
             }).done(function (response) {
+                $('.sk-folding-cube').hide();
                 fileList.removeClass('animated');
                 fileList.find('li.folders').hide(); // sakrij foldere
                 fileList.addClass('slideRight'); // dodaj klasu za animaciju
@@ -54,6 +55,7 @@ var inst = function () {
                 fileList.animate({'display': 'inline-block'}); //animiraj fajlove
                 backButton.show(); // omoguci back button
             }).fail(function () {
+                $('.sk-folding-cube').hide();
                 console.log('fail');
             });
 
