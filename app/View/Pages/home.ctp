@@ -56,8 +56,8 @@
                 <img src="/img/arhiva.png" style="opacity: 0.5;" class="img-responsive animate-if-visible" data-animation-options='{"animation":"tada", "duration":"600"}'>
             </div>
             <div class="col-sm-6">
-                <h2>Arhiva Transparency Internationl</h2>
-                <hr class="fade-right">
+                <h2>Arhiva Transparency International</h2>
+                <hr>
                 <p>
                     Transparency International BiH Vam predstavlja arhivu ugovora u periodu od 2011. do 2013. godine u Bosni i Hercegovini.
                 </p>                
@@ -67,7 +67,7 @@
                     Arhiva sadrži PDF fajlove, koje lako možete da pregledate i pretražite.</p>
 
                 <hr class="fade-right">
-                <a class="btn btn-default" href="/institutions"><i class="fa fa-info"></i> Pretražite arhivu</a>
+                <a class="btn btn-default" href="/ugovori-o-djelu-javnih-institucija"><i class="fa fa-info"></i> Pretražite arhivu</a>
             </div>
         </div>
     </div>
