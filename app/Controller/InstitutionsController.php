@@ -184,14 +184,33 @@ class InstitutionsController extends AppController {
     
     public function getContractsForInstitution() {
         $this->viewClass = 'Json';
+        $this->Institution->id = $this->request->data['id'];
+        if (!$this->Institution->exists()) {
+            throw new NotFoundException(__('Ne postoji institucija!'));
+        }        
         $contracts = $this->Institution->Contract->find('all', array(
             'conditions' => array(
                 'Contract.institution_id' => $this->request->data['id']
             ),
             'order' => array(
                 'Contract.datum' => 'ASC'
+            ),
+            'contain' => array(
+                'Institution' => array(
+                    'fields' => array(
+                        'Institution.view_count',
+                        'Institution.id'
+                    )
+                )
             )
         ));
+        
+        //update ViewCoutn here but only if hasn't read item
+        if($this->Session->check('has_read_item.' . $this->request->data['id']) === false) {
+            $this->Institution->updateInstitutionViews($contracts[0]['Institution']['view_count'], 
+                    $contracts[0]['Institution']['id']);
+            $this->Session->write('has_read_item.' . $this->request->data['id'], true);
+        }
         
         $this->set(compact('contracts'));
         

@@ -56,11 +56,13 @@ class Institution extends AppModel {
     public function beforeSave($options = array()) {
         parent::beforeSave($options);
         
-        $name = $this->changeSerbianLetters($this->data['Institution']['name']);
-        if (!file_exists($this->realPathForLocation . $name)) {
-            $dir = new Folder( $this->realPathForLocation . $name, true, 0755);
+        if (isset($this->data['Institution']['name'])) {
+            $name = $this->changeSerbianLetters($this->data['Institution']['name']);
+            if (!file_exists($this->realPathForLocation . $name)) {
+                $dir = new Folder( $this->realPathForLocation . $name, true, 0755);
+            }
+            $this->data['Institution']['disk_location'] = $name;
         }
-        $this->data['Institution']['disk_location'] = $name;
     }
 
     public function beforeDelete($cascade = true) {
@@ -110,5 +112,15 @@ class Institution extends AppModel {
         );
         
         return $data;
+    }
+    
+    public function updateInstitutionViews($viewCount = null, $id = null) {
+        $data = array(
+            'Institution' => array(
+                'view_count' => $viewCount+1,
+                'id' => $id)
+        );
+        
+        return $this->save($data);
     }
 }
