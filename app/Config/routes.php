@@ -32,6 +32,8 @@ Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home
 Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 Router::connect('/contact', array('controller' => 'pages', 'action' => 'display', 'contact'));
 
+Router::connect('/ugovori-o-djelu-javnih-institucija', array('controller' => 'institutions', 'action' => 'overview'));
+
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.

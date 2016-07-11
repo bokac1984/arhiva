@@ -9,7 +9,7 @@ $url = $this->request->here;
     </li>
     <?php if (!$this->Session->read('Auth.User')) : ?>
     <li class="<?php echo (preg_match("/\/institutions/", $url))? 'active' : ''?>">
-        <a href="/institutions">
+        <a href="/ugovori-o-djelu-javnih-institucija">
             Institucije
         </a>
     </li>      
