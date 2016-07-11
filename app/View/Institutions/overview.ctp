@@ -33,7 +33,8 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                         <li>da se često potpisuju sa istim osobama;</li>
                         <li>da se često potpisuju sa istim osobama;</li>
                         <li>da ne postoje procedure praćena izvršenja zaključenih ugovora...</li>
-                    </ul>        
+                    </ul>  
+Više puta revizori su naglasili kako javnost ne posjeduje dovoljno informacija o ugovorima o djelu, a upravo prekomjerno sklapanje ovih ugovora pokazuju da vlasti nisu ispoštavale obećanje o smanjenju javne potrošnje.                    
                     </p>
                 </div>
             </div>            
@@ -41,7 +42,7 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    Više puta revizori su naglasili kako javnost ne posjeduje dovoljno informacija o ugovorima o djelu, a upravo prekomjerno sklapanje ovih ugovora pokazuju da vlasti nisu ispoštavale obećanje o smanjenju javne potrošnje. Prema podacima iz <a href="https://ti-bih.org/ti-bih_monitoring-transparentnost-odgovornosti-integritet-2016/">TI BiH Monitoringa rezultata reforme javne uprave u oblasti transparentnosti, odgovornosti i integriteta 2014-2015</a> većina institucija ne posjeduje Plan usluga koje će biti realizovane ugovorima o djelu, a upravo to im omogućava neplansko trošenje sredstava.
+                     Prema podacima iz <a href="https://ti-bih.org/ti-bih_monitoring-transparentnost-odgovornosti-integritet-2016/">TI BiH Monitoringa rezultata reforme javne uprave u oblasti transparentnosti, odgovornosti i integriteta 2014-2015</a> većina institucija ne posjeduje Plan usluga koje će biti realizovane ugovorima o djelu, a upravo to im omogućava neplansko trošenje sredstava.
                 </p>
                 <p>
                     Istraživanja i prijave građana su pokazala takođe da javne institucije veoma često vrše zapošljavanje putem ugovora o djelu, kako bi se izbjegli javni konkursi, što omogućava nepotizam i korupciju u zapošljavanju.
