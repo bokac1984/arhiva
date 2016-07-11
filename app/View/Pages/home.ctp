@@ -59,7 +59,7 @@
                 <h2>Arhiva Transparency Internationl</h2>
                 <hr class="fade-right">
                 <p>
-                    Transparency International BiH Vam predstavlja arhivu ugovora u periodu od 2012. do 2013. godine u Bosni i Hercegovini.
+                    Transparency International BiH Vam predstavlja arhivu ugovora u periodu od 2011. do 2013. godine u Bosni i Hercegovini.
                 </p>                
                 <p>
                     Dobro došli na sajt arhive. Ovdje možete da pronađete ugovore i skinete ih.</p>
