@@ -39,14 +39,15 @@ var inst = function () {
             fileList.find('li.folders').hide();
             $('.sk-folding-cube').show();
             
+            var element_to_scroll_to = $('#dokumenti')[0];
+            element_to_scroll_to.scrollIntoView(); 
+            
             jQuery.ajax({
                 url: '/institutions/getContractsForInstitution',
                 method: 'POST',
                 data: {id: $(this).attr('id')},
                 dataType: 'HTML'
-            }).done(function (response) {
-            var element_to_scroll_to = $('#dokumenti')[0];
-            element_to_scroll_to.scrollIntoView();                
+            }).done(function (response) {               
                 $('.sk-folding-cube').hide();
                 fileList.removeClass('animated');
                  // sakrij foldere
