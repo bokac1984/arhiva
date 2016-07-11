@@ -8,14 +8,14 @@ $url = $this->request->here;
         </a>
     </li>
     <?php if (!$this->Session->read('Auth.User')) : ?>
-    <li class="<?php echo (preg_match("/\/institutions/", $url))? 'active' : ''?>">
+    <li class="<?php echo (preg_match("/(\/institutions|institucija)/", $url))? 'active' : ''?>">
         <a href="/ugovori-o-djelu-javnih-institucija">
             Institucije
         </a>
     </li>      
     <?php endif; ?>
     <?php if ($this->Session->read('Auth.User')) : ?>
-    <li class="dropdown <?php echo (preg_match("/\/institutions/", $url))? 'active' : ''?>">
+    <li class="dropdown <?php echo (preg_match("/(\/institutions|institucija)/", $url))? 'active' : ''?>">
         <a class="dropdown-toggle" href="#" data-toggle="dropdown" data-hover="dropdown">
             Institucije <b class="caret"></b>
         </a>
