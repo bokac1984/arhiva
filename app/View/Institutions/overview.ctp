@@ -60,13 +60,7 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                     </div>   
                     <div class="breadcrumbs">
                             <span class="folderName back-btn">Institucije</span>
-                    </div>
-                    <div class="sk-folding-cube" style="display: none;">
-                      <div class="sk-cube1 sk-cube"></div>
-                      <div class="sk-cube2 sk-cube"></div>
-                      <div class="sk-cube4 sk-cube"></div>
-                      <div class="sk-cube3 sk-cube"></div>
-                    </div>                  
+                    </div>                 
                     <ul class="data animated" style="">
                         <?php foreach ($institutions as $institut): ?>
                             <li class="folders">
@@ -78,6 +72,12 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                             </li>
                         <?php endforeach; ?>
                     </ul>
+                    <div class="sk-folding-cube" style="display: none;">
+                      <div class="sk-cube1 sk-cube"></div>
+                      <div class="sk-cube2 sk-cube"></div>
+                      <div class="sk-cube4 sk-cube"></div>
+                      <div class="sk-cube3 sk-cube"></div>
+                    </div>                     
                 </div>
             </div>
         </div>

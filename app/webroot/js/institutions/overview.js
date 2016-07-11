@@ -36,9 +36,8 @@ var inst = function () {
             var nameFolder = $(this).attr('title');
             var brCrymb = '<span class="arrow">→</span> <span class="folderName">' + nameFolder + '</span>';
             filemanager.find('.search').hide();
+            fileList.find('li.folders').hide();
             $('.sk-folding-cube').show();
-            var element_to_scroll_to = $('#dokumenti')[0];
-            element_to_scroll_to.scrollIntoView();
             
             jQuery.ajax({
                 url: '/institutions/getContractsForInstitution',
@@ -46,15 +45,18 @@ var inst = function () {
                 data: {id: $(this).attr('id')},
                 dataType: 'HTML'
             }).done(function (response) {
+            var element_to_scroll_to = $('#dokumenti')[0];
+            element_to_scroll_to.scrollIntoView();                
                 $('.sk-folding-cube').hide();
                 fileList.removeClass('animated');
-                fileList.find('li.folders').hide(); // sakrij foldere
+                 // sakrij foldere
                 fileList.addClass('slideRight'); // dodaj klasu za animaciju
                 breadcrumbs.append(brCrymb); // prikazi breadcrumb
                 fileList.append(response);
                 fileList.animate({'display': 'inline-block'}); //animiraj fajlove
                 backButton.show(); // omoguci back button
             }).fail(function () {
+                fileList.find('li.folders').show();
                 $('.sk-folding-cube').hide();
                 console.log('fail');
             });
