@@ -29,8 +29,7 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                     <p>
                         Ugovori o djelu javnih institucija predstavljaju izvor mnogobrojnih nepravilnosti, a predmet su  kritike revizorskih izvještaja u kojima se obično ističe:
                     <ul>
-                        <li>kako nema provjere opravdanosti njihovog zaključivaja;</li>
-                        <li>da se često potpisuju sa istim osobama;</li>
+                        <li>kako nema provjere opravdanosti njihovog zaključivanja;</li>
                         <li>da se često potpisuju sa istim osobama;</li>
                         <li>da ne postoje procedure praćena izvršenja zaključenih ugovora...</li>
                     </ul>  
