@@ -208,9 +208,13 @@ class InstitutionsController extends AppController {
         //update ViewCoutn here but only if hasn't read item
         if($this->Session->check('has_read_item.' . $this->request->data['id']) === false) {
             Debugger::log($contracts[0]['Institution']['view_count']);
-            $this->Institution->updateInstitutionViews($contracts[0]['Institution']['view_count'], 
-                    $contracts[0]['Institution']['id']);
-            $this->Session->write('has_read_item.' . $this->request->data['id'], true);
+            if ($this->Institution->updateInstitutionViews($contracts[0]['Institution']['view_count'], 
+                    $contracts[0]['Institution']['id'])) {
+                $this->Session->write('has_read_item.' . $this->request->data['id'], true);
+            } else {
+                Debugger::log('Ne moze da snimi');
+            }
+            
         } else {
             
             Debugger::log($contracts[0]['Institution']['view_count'] . " ovaj je pogledan vec");
