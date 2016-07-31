@@ -212,6 +212,7 @@ class InstitutionsController extends AppController {
                     $contracts[0]['Institution']['id']);
             $this->Session->write('has_read_item.' . $this->request->data['id'], true);
         } else {
+            
             Debugger::log($contracts[0]['Institution']['view_count'] . " ovaj je pogledan vec");
         }
         
