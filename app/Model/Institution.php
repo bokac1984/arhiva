@@ -124,7 +124,7 @@ class Institution extends AppModel {
         
         $data = array(
             'Institution' => array(
-                'view_count' => $viewCount+1,
+                'view_count' => (int)$viewCount+1,
                 'id' => $id)
         );
         
