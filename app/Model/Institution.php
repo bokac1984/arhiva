@@ -115,6 +115,13 @@ class Institution extends AppModel {
     }
     
     public function updateInstitutionViews($viewCount = null, $id = null) {
+        $this->id = $id;
+        
+        if (!$this->exists()) {
+            Debugger::log("Ovaj id = $id ne postoji");
+            return;
+        }
+        
         $data = array(
             'Institution' => array(
                 'view_count' => $viewCount+1,
