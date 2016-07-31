@@ -54,11 +54,12 @@
                     <?php if (!empty($institution['Contract'])): ?>
                         <table cellpadding = "0" cellspacing = "0" class="table table-condensed">
                             <tr>
-                                <th><?php echo __('Name'); ?></th>
+                                <th><?php echo __('Ime'); ?></th>
                                 <th><?php echo __('Datum'); ?></th>
-                                <th><?php echo __('Price'); ?></th>
-                                <th><?php echo __('Created'); ?></th>
-                                <th><?php echo __('Modified'); ?></th>
+                                <th><?php echo __('Cijena'); ?></th>
+                                <th><?php echo __('# download'); ?></th>
+                                <th><?php echo __('Kreiran'); ?></th>
+                                <th><?php echo __('Modifikovan'); ?></th>
                                 <th class="actions"><?php echo __('Actions'); ?></th>
                             </tr>
                             <?php foreach ($institution['Contract'] as $contract): ?>
@@ -66,6 +67,7 @@
                                     <td><?php echo $contract['name']; ?></td>
                                     <td><?php echo $contract['datum']; ?></td>
                                     <td><?php echo $contract['price']; ?></td>
+                                    <td><?php echo $contract['downloaded']; ?></td>
                                     <td><?php echo $contract['created']; ?></td>
                                     <td><?php echo $contract['modified']; ?></td>
                                     <td class="actions">
