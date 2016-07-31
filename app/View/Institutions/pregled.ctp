@@ -47,6 +47,7 @@ echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
                                 <th class="center"><?php echo $this->Paginator->sort('id', '#'); ?></th>
                                 <th><?php echo $this->Paginator->sort('name', 'Naziv'); ?></th>
                                 <th><?php echo $this->Paginator->sort('contract_count', 'Broj ugovora'); ?></th>
+                                <th><?php echo $this->Paginator->sort('view_count', '# Pregleda'); ?></th>
                                 <th><?php echo $this->Paginator->sort('created', 'Kreiran'); ?></th>
                                 <th><?php echo $this->Paginator->sort('modified', 'Zadnja izmjena'); ?></th>
                                 <th class="actions"><?php echo __('Actions'); ?></th>
@@ -59,6 +60,7 @@ echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
                                     <td class="center"><?php echo h($institution['Institution']['id']); ?>&nbsp;</td>
                                     <td><?php echo h($institution['Institution']['name']); ?>&nbsp;</td>
                                     <td class="center"><?php echo h($institution['Institution']['contract_count']); ?>&nbsp;</td>
+                                    <td class="center"><?php echo h($institution['Institution']['view_count']); ?>&nbsp;</td>
                                     <td><?php echo h($institution['Institution']['created']); ?>&nbsp;</td>
                                     <td><?php echo h($institution['Institution']['modified']); ?>&nbsp;</td>
                                     <td class="actions">
