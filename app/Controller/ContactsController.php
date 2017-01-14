@@ -1,13 +1,14 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 
 /**
  * Contacts Controller
  *
  * @property PaginatorComponent $Paginator
  */
-class ContractsController extends AppController {
+class ContactsController extends AppController {
     
     public function index() {
         $Email = new CakeEmail();
