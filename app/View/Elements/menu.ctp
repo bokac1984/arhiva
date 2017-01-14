@@ -37,6 +37,28 @@ $url = $this->request->here;
             </li>            
         </ul>
     </li>
+    <li class="dropdown <?php echo (preg_match("/(\/agreements|Javnae nabavke)/", $url))? 'active' : ''?>">
+        <a class="dropdown-toggle" href="#" data-toggle="dropdown" data-hover="dropdown">
+            Javne Nabavke <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="/agreements">
+                    Pregled
+                </a>
+            </li>
+            <li>
+                <a href="/agreements/pregled">
+                    Upravljanje
+                </a>
+            </li>
+            <li>
+                <a href="/agreements/contracts">
+                    Novi ugovori
+                </a>
+            </li>            
+        </ul>
+    </li>    
     <?php endif; ?>
 <!--    <li class="menu-search">
          start: SEARCH BUTTON 
