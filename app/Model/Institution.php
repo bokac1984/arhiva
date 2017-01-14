@@ -64,6 +64,16 @@ class Institution extends AppModel {
             $this->data['Institution']['disk_location'] = $name;
         }
     }
+    
+    public function afterFind($results, $primary = false) {
+        parent::afterFind($results, $primary);
+        foreach ($results as $key => $val) {
+            if (empty($val['Contract'])) {
+                unset($results[$key]); // ako nema contracta onda ne prikazuj tu instituciju
+            }
+        }
+        return $results;
+    }
 
     public function beforeDelete($cascade = true) {
         parent::beforeDelete($cascade);

@@ -40,4 +40,44 @@ class AppModel extends Model {
         $locationLower = strtolower(rtrim($location));
         return str_replace($search, $replace, $locationLower);
     }
+    
+    /**
+     * Vraća zadnji kveri na bazu
+     * 
+     * @return string Kveri koji je zadnji iniciran
+     */
+    public function getLastQuery() {
+        $dbo = $this->getDatasource();
+        $logs = $dbo->getLog();
+        $lastLog = end($logs['log']);
+        return $lastLog['query'];
+    }    
+    
+    public function checkAndSave($name = '') {
+        $exist = $this->find('first', array(
+            'conditions' => array(
+                "{$this->alias}.name" => $name
+            ),
+            'fields' => array(
+                "{$this->alias}.id"
+            )
+        ));
+
+        if ($exist) {
+            return $exist[$this->alias]['id'];
+        } 
+        
+        $dataToSave = array(
+            "{$this->alias}" => array(
+                'name' => $name
+            )
+        ); 
+            
+        $this->create();
+        if ($this->save($dataToSave)) {
+            return $this->getLastInsertID();
+        }
+
+        return 0;
+    }
 }

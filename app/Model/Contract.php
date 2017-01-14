@@ -41,7 +41,10 @@ class Contract extends AppModel {
         'Institution' => array(
             'className' => 'Institution',
             'foreignKey' => 'institution_id',
-            'counterCache' => true
+            'counterCache' => array(
+                'contract_count',
+                'active_contract_count' => array('Contract.display' => 1)
+            )
         )
     );
     
