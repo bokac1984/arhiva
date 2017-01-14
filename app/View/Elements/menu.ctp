@@ -58,6 +58,11 @@ $url = $this->request->here;
                 </a>
             </li>            
         </ul>
+    </li> 
+    <li class="<?php echo (preg_match("/(\/settings)/", $url))? 'active' : ''?>">
+        <a href="/settings">
+            Podešavanja
+        </a>
     </li>    
     <?php endif; ?>
 <!--    <li class="menu-search">
