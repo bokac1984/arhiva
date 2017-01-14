@@ -37,8 +37,8 @@
 class EmailConfig {
 
 	public $default = array(
-		'transport' => 'Mail',
-		'from' => 'you@localhost',
+		'transport' => 'Smtp',
+		'from' => 'contact@tibih-database.org',
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
@@ -47,10 +47,10 @@ class EmailConfig {
 		'transport' => 'Smtp',
 		'from' => array('site@localhost' => 'My Site'),
 		'host' => 'localhost',
-		'port' => 25,
+		'port' => 465,
 		'timeout' => 30,
-		'username' => 'user',
-		'password' => 'secret',
+		'username' => 'contact@tibih-database.org',
+		'password' => '2bRXhEMfdwcI',
 		'client' => null,
 		'log' => false,
 		//'charset' => 'utf-8',
