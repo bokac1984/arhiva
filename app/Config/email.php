@@ -37,7 +37,7 @@
 class EmailConfig {
 
 	public $default = array(
-		'transport' => 'Smtp',
+		'transport' => 'Mail',
 		'from' => 'contact@tibih-database.org',
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
