@@ -42,13 +42,13 @@ echo $this->Html->script('https://www.google.com/recaptcha/api.js', array('block
                         'class' => 'form-control',
                         'type' => 'textarea'
                     ));
-                    
+                    echo $this->Recaptcha->display();                    
                     ?>
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         <div class="">
                             <div class="g-recaptcha" data-sitekey="6LcR2hEUAAAAAGxHQCLcGALqVE2KO3iyeP9ODF06"></div>
                         </div>
-                    </div>                      
+                    </div>                      -->
 
                     <div class="form-group">
                         <div class="col-sm-6 col-sm-offset-6">

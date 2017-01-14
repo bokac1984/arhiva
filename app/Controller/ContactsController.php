@@ -16,18 +16,7 @@ class ContactsController extends AppController {
      *
      * @var array
      */
-    public $components = array('Paginator');
-
-    private function checkCaptcha($url) {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 10);
-        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.16) Gecko/20110319 Firefox/3.6.16");
-        $curlData = curl_exec($curl);
-        curl_close($curl);
-        return $curlData;       
-    }
+    public $components = array('Paginator', 'Recaptcha.Recaptcha');
     
     public function beforeFilter() {
         parent::beforeFilter();
@@ -67,21 +56,17 @@ class ContactsController extends AppController {
      */
     public function add() {
         if ($this->request->is('post')) {
-            $google_url = "https://www.google.com/recaptcha/api/siteverify";
-            $secret = '6LcR2hEUAAAAAGLbxJx0g5oHn31YaiTLJHnVIDi5';
-            $ip = $this->request->clientIp();
-            $url = $google_url . "?secret=" . $secret . "&response=" . $recaptcha ."&remoteip=" . $ip;
-            $r = $this->checkCaptcha($url);
-            $res = json_decode($r, true);
-            
-            if (!empty($res)) {
+            if ($this->Recaptcha->verify()) {
                 $this->Contact->create();
                 if ($this->Contact->save($this->request->data)) {
                     $this->Flash->success(__('The contact has been saved.'));
                     return $this->redirect(array('action' => 'index'));
                 } else {
                     $this->Flash->error(__('The contact could not be saved. Please, try again.'));
-                }  
+                } 
+            } else {
+                // display the raw API error
+                $this->Flash->error($this->Recaptcha->error);
             }
         }
     }
