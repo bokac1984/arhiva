@@ -117,8 +117,12 @@ class Agreement extends AppModel {
         foreach ($data as $k => $v) {
             $ugovor = $this->dajJedanUgovor($v);
             
+            if (empty($ugovor)) {
+                break;
+            }
+            
             $cijena = $v['price'];
-            if ($ugovor['price'] !== $cijena) {
+            if ($ugovor['Agreement']['price'] !== $cijena) {
                 $i++;
             }
         }
