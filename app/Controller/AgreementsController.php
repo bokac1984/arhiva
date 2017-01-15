@@ -170,7 +170,7 @@ class AgreementsController extends AppController {
     }
     
     public function sendFile($filename = '') {
-        $file = $this->Agreement->getFile($filename.'.pdf');
+        $file = $this->Agreement->getFile($filename);
         
         if ($file === '') {
             throw new NotFoundException(__('Ne postoji fajl!'));
@@ -180,7 +180,7 @@ class AgreementsController extends AppController {
         $this->response->type('pdf');
         $this->response->file(
             $file,
-            array('download' => true, 'name' => $filename.'.pdf')
+            array('download' => true, 'name' => $filename)
         );
 
         // Return response object to prevent controller from trying to render
