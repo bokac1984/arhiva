@@ -33,7 +33,9 @@ class ManipulateComponent extends Component {
         parent::initialize($controller);
         $this->controller = $controller;
         $this->folderLocation = WWW_ROOT . 'uploads' . DS . 'javne_nabavke' . DS;
-        $this->tempFileLocation = "D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\DVD1" . DS;
+        $path1 = WWW_ROOT . DS . 'DVD1' . DS;
+        $path2 = WWW_ROOT . DS . 'DVD2' . DS;
+        $this->tempFileLocation = $path1;
     }
     public function changeNameOfFile($originalName = '') {
         $temporalName = '';
