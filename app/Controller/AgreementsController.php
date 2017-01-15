@@ -26,7 +26,8 @@ class AgreementsController extends AppController {
         parent::beforeFilter();
         // Allow users to register and logout.
         $this->Auth->allow(
-            'overview'
+            'overview',
+            'sendFile'
         );
     }    
 
