@@ -35,7 +35,7 @@ class ManipulateComponent extends Component {
         $this->folderLocation = WWW_ROOT . 'uploads' . DS . 'javne_nabavke' . DS;
         $path1 = WWW_ROOT . DS . 'DVD1' . DS;
         $path2 = WWW_ROOT . DS . 'DVD2' . DS;
-        $this->tempFileLocation = $path1;
+        $this->tempFileLocation = $path2;
     }
     public function changeNameOfFile($originalName = '') {
         $temporalName = '';
@@ -69,7 +69,7 @@ class ManipulateComponent extends Component {
         $file = new File($this->tempFileLocation . $path);
         $fileName = $this->prepareFilename($oldFileName);
         // Executing this inside a CakePHP class:
-        $this->log("Naziv fajla = $fileName", 'debug');
+        $this->log("Naziv fajla = $path -> $fileName", 'debug');
         
         if ($file->exists()) {
             $newFileName = $folder . DS . $fileName . '.pdf';
