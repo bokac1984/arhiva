@@ -111,7 +111,7 @@
                         <!-- end: LOGO -->
                     </div>
                     <div class="navbar-collapse collapse">
-<?php echo $this->element('menu'); ?>
+                        <?php echo $this->element('menu'); ?>
                     </div>
                 </div>
                 <!-- end: TOP NAVIGATION CONTAINER -->
@@ -120,9 +120,14 @@
         <!-- end: HEADER -->
         <!-- start: MAIN CONTAINER -->
         <div class="main-container">
-            <?php echo $this->Flash->render(); ?>                           
+            <section class="wrapper">
+                <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
+                <div class="container">            
+                <?php echo $this->Flash->render(); ?>                           
 
-            <?php echo $this->fetch('content'); ?>
+                <?php echo $this->fetch('content'); ?>
+                </div>
+            </section>                    
         </div>
         <!-- end: MAIN CONTAINER -->
         <!-- start: FOOTER -->
