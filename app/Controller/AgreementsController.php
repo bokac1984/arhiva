@@ -142,7 +142,11 @@ class AgreementsController extends AppController {
                 )
             )
         ));
-        
+        debug(count($data));
+        if (count($data) === 0) {
+            return;
+        }
+        exit();
         foreach ($data as $k => $v) {
             $fileLocation = $this->Manipulate->processIt($v['Agreement']['path'], 
                 $v['Purchase']['name'],
