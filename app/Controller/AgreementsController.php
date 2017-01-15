@@ -268,6 +268,7 @@ class AgreementsController extends AppController {
         echo (count($data)) ."<br/>";
         
         if (count($data) === 0) {
+            echo 'vracam se<br/>';
             return;
         }
         
