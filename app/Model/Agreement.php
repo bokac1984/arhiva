@@ -104,7 +104,7 @@ class Agreement extends AppModel {
                 'Agreement.path' => $koji['path']
             )
         ));
-        
+        debug($this->getLastQuery());
         if (count($data) > 0) {
             return $data;
         }
