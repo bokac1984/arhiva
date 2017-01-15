@@ -81,6 +81,7 @@ class Agreement extends AppModel {
             $ugovor['Agreement']['original_price'] = isset($v['price']) ? $v['price'] : '';
             $ugovor['Agreement']['contract_date'] = isset($v['datum']) ? $v['datum'] : '';
             $ugovor['Agreement']['path'] = $v['path'];
+            $ugovor['Agreement']['dvd'] = '1';
             
             $typeId = $this->AgreementType->checkAndSave(trim($v['vrsta']));
             //debug($typeId);
