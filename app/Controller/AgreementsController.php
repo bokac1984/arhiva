@@ -253,8 +253,8 @@ class AgreementsController extends AppController {
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
             'conditions' => array(
-                'Agreement.file_location' => '',
-                'Agreement.new_file_name' => ''
+                'Agreement.file_location' => null,
+                'Agreement.new_file_name' => null
             ),
             'limit' => '1000',
             'contain' => array(
