@@ -63,8 +63,6 @@ class Agreement extends AppModel {
                 break;
             }
             
-            //debug($purchase);exit();
-            //CakeLog::write('purchaseID', $purchase);
             $supplier = $this->Supplier->checkAndSave($v['dobavljac']);
             if ($supplier !== 0)
             {
@@ -74,9 +72,9 @@ class Agreement extends AppModel {
                 break;
             }
             
-            $ugovor['Agreement']['name'] = $v['predmet'];
-            $ugovor['Agreement']['price'] = $v['price'];
-            $ugovor['Agreement']['contract_date'] = $v['datum'];
+            $ugovor['Agreement']['name'] = isset($v['predmet']) ? $v['predmet'] : '';
+            $ugovor['Agreement']['price'] = isset($v['price']) ? $v['price'] : '';
+            $ugovor['Agreement']['contract_date'] = isset($v['datum']) ? $v['datum'] : '';
             $ugovor['Agreement']['path'] = $v['path'];
             
             $typeId = $this->AgreementType->checkAndSave($v['vrsta']);
