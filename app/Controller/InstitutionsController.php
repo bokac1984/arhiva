@@ -40,7 +40,7 @@ class InstitutionsController extends AppController {
     }
     
     public function pregled() {
-        $this->Institution->recursive = 0;
+        $this->Institution->recursive = 1;
         $this->set('institutions', $this->Paginator->paginate());
     }
 
