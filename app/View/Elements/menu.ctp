@@ -12,7 +12,12 @@ $url = $this->request->here;
         <a href="/ugovori-o-djelu-javnih-institucija">
             Ugovori o djelu
         </a>
-    </li>      
+    </li> 
+    <li class="<?php echo (preg_match("/(\/agreements|nabavkama)/", $url))? 'active' : ''?>">
+        <a href="/ugovori-o-nabavkama-javnih-preduzeca">
+            Javne nabavke
+        </a>
+    </li>    
     <?php endif; ?>
     <?php if ($this->Session->read('Auth.User')) : ?>
     <li class="dropdown <?php echo (preg_match("/(\/institutions|institucija)/", $url))? 'active' : ''?>">
@@ -20,11 +25,6 @@ $url = $this->request->here;
             Ugovori o djelu <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-            <li>
-                <a href="/institutions">
-                    Pregled
-                </a>
-            </li>
             <li>
                 <a href="/institutions/pregled">
                     Upravljanje
@@ -34,7 +34,12 @@ $url = $this->request->here;
                 <a href="/institutions/contracts">
                     Novi ugovori
                 </a>
-            </li>            
+            </li> 
+            <li>
+                <a href="/ugovori-o-djelu-javnih-institucija">
+                    Javni pregled
+                </a>
+            </li>             
         </ul>
     </li>
     <li class="dropdown <?php echo (preg_match("/(\/agreements|Javnae nabavke)/", $url))? 'active' : ''?>">
@@ -44,19 +49,14 @@ $url = $this->request->here;
         <ul class="dropdown-menu">
             <li>
                 <a href="/agreements">
-                    Pregled
-                </a>
-            </li>
-            <li>
-                <a href="/agreements/pregled">
                     Upravljanje
                 </a>
             </li>
             <li>
-                <a href="/agreements/contracts">
-                    Novi ugovori
+                <a href="/ugovori-o-nabavkama-javnih-preduzeca">
+                    Javni pregled
                 </a>
-            </li>            
+            </li> 
         </ul>
     </li> 
     <li class="<?php echo (preg_match("/(\/settings)/", $url))? 'active' : ''?>">
