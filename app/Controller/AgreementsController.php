@@ -133,7 +133,7 @@ class AgreementsController extends AppController {
             'conditions' => array(
                 'Agreement.disk_location' => null
             ),
-            'limit' => '200',
+            'limit' => '1000',
             'contain' => array(
                 'Purchase' => array(
                     'fields' => array(
@@ -142,7 +142,7 @@ class AgreementsController extends AppController {
                 )
             )
         ));
-        debug(count($data));
+        echo (count($data));
         
         if (count($data) === 0) {
             return;
