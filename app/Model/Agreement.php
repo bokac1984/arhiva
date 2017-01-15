@@ -118,6 +118,7 @@ class Agreement extends AppModel {
             $ugovor = $this->dajJedanUgovor($v);
             
             if (empty($ugovor)) {
+                echo 'breakam ovo';
                 break;
             }
             
