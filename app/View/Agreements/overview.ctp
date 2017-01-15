@@ -5,7 +5,7 @@ echo $this->Html->scriptBlock("inst.init(1);", array('block' => 'scriptBottom'))
 echo $this->Html->css('/css/institutions/icons', array('block' => 'css'));
 echo $this->Html->css('/css/institutions/overview', array('block' => 'css'));
 echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
-debug($agreements);
+//debug($agreements);
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -84,7 +84,7 @@ debug($agreements);
                         </td>
                         <td>
                             <?php
-                            echo $this->Link->cLink(__(''), array('action' => 'sendFile', $agreement['Agreement']['id']), 'fa fa-eye', array(
+                            echo $this->Link->cLink(__(''), array('action' => 'sendFile', $agreement['Agreement']['new_file_name']), 'fa fa-eye', array(
                                 'title' => 'Skini ugovor'
                             ));
                             ?>                            
