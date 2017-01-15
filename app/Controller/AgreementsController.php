@@ -19,6 +19,8 @@ class AgreementsController extends AppController {
      * @var array
      */
     public $components = array('Paginator', 'Flash', 'Session', 'Manipulate');
+    
+    public $helpers = array('Time');
 
     /**
      * index method
