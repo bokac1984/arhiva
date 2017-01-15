@@ -96,4 +96,32 @@ class Agreement extends AppModel {
             }
         }
     }
+    
+    public function dajJedanUgovor($koji = array()) {
+        $data = $this->find('first', array(
+            'conditions' => array(
+                'Agreement.name' => $koji['predmet'],
+                'Agreement.path' => $koji['path']
+            )
+        ));
+        
+        if (count($data) > 0) {
+            return $data;
+        }
+        
+        return array();
+    }
+    
+    public function fixMoneyProblem($data = array()) {
+        $i = 0;
+        foreach ($data as $k => $v) {
+            $ugovor = $this->dajJedanUgovor($v);
+            
+            $cijena = $v['price'];
+            if ($ugovor['price'] !== $cijena) {
+                $i++;
+            }
+        }
+        return $i;
+    }
 }

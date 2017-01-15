@@ -298,5 +298,21 @@ class AgreementsController extends AppController {
             }
         }
         echo 'DONE!';
-    }    
+    }   
+    
+    public function popravi() {
+        $this->autoRender = false;
+        // local file
+        $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
+        $path2 = WWW_ROOT . DS . 'DVD2' . DS . 'data2.xml';
+        $localPath = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\data1ispravljeno.xml';
+        
+        $xml = Xml::build($path1);
+        
+        $data = Xml::toArray($xml);
+        
+        //debug($data);
+        echo $this->Agreement->fixMoneyProblem($data['nabavke']['nabavka']);
+        echo '<br/>DONE!';
+    }   
 }
