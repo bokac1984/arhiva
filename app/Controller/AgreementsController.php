@@ -153,6 +153,9 @@ class AgreementsController extends AppController {
                 $v['Purchase']['name'],
                 $v['Agreement']['name']);  
             
+            if ($fileLocation === '' || empty($fileLocation)) {
+                break;
+            }
             
             $toSave = array(
                 'Agreement' => array(
@@ -170,4 +173,52 @@ class AgreementsController extends AppController {
         }
         echo 'DONE!';
     }
+    
+    public function copybackup() {
+        $this->autoRender = false;
+        $data = $this->Agreement->find('all', array(
+            'conditions' => array(
+                'Agreement.disk_location' => '',
+                'Agreement.new_filename' => ''
+            ),
+            'limit' => '200',
+            'contain' => array(
+                'Purchase' => array(
+                    'fields' => array(
+                        'Purchase.name'
+                    )
+                )
+            )
+        ));
+        echo (count($data)) ."<br/>";
+        
+        if (count($data) === 0) {
+            return;
+        }
+        
+        foreach ($data as $k => $v) {
+            $fileLocation = $this->Manipulate->processIt($v['Agreement']['path'], 
+                $v['Purchase']['name'],
+                $v['Agreement']['name']);  
+            
+            if ($fileLocation === '' || empty($fileLocation)) {
+                break;
+            }
+            
+            $toSave = array(
+                'Agreement' => array(
+                    'id' => $v['Agreement']['id'],
+                    'new_filename' => basename($fileLocation),
+                    'disk_location' => $fileLocation,
+                    'size' => filesize($fileLocation),
+                    'display' => '1'
+                )
+            );
+            
+            if (!$this->Agreement->save($toSave)) {
+                echo "NOT SAVED";
+            }
+        }
+        echo 'DONE!';
+    }    
 }
