@@ -143,11 +143,10 @@ class AgreementsController extends AppController {
             )
         ));
         debug(count($data));
+        
         if (count($data) === 0) {
             return;
         }
-        debug($this->Agreement->getLastQuery());
-        exit();
         
         foreach ($data as $k => $v) {
             $fileLocation = $this->Manipulate->processIt($v['Agreement']['path'], 
