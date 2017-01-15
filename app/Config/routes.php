@@ -34,6 +34,8 @@ Router::connect('/contact', array('controller' => 'contacts', 'action' => 'add')
 
 Router::connect('/ugovori-o-djelu-javnih-institucija', array('controller' => 'institutions', 'action' => 'overview'));
 
+Router::connect('/ugovori-o-nabavkama-javnih-preduzeca', array('controller' => 'agreements', 'action' => 'overview'));
+
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.
