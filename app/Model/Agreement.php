@@ -58,7 +58,7 @@ class Agreement extends AppModel {
         foreach ($data as $k => $v) {
             $ugovor = array();
             //debug($v);exit();
-            $purchase = $this->Purchase->checkAndSave($v['narucilac']);
+            $purchase = $this->Purchase->checkAndSave(trim($v['narucilac']));
             if ($purchase !== 0)
             {
                 $ugovor['Agreement']['purchase_id'] = $purchase;
@@ -67,7 +67,7 @@ class Agreement extends AppModel {
                 break;
             }
             
-            $supplier = $this->Supplier->checkAndSave($v['dobavljac']);
+            $supplier = $this->Supplier->checkAndSave(trim($v['dobavljac']));
             if ($supplier !== 0)
             {
                 $ugovor['Agreement']['supplier_id'] = $supplier;
@@ -78,10 +78,11 @@ class Agreement extends AppModel {
             
             $ugovor['Agreement']['name'] = isset($v['predmet']) ? $v['predmet'] : '';
             $ugovor['Agreement']['price'] = isset($v['price']) ? $v['price'] : '';
+            $ugovor['Agreement']['original_price'] = isset($v['price']) ? $v['price'] : '';
             $ugovor['Agreement']['contract_date'] = isset($v['datum']) ? $v['datum'] : '';
             $ugovor['Agreement']['path'] = $v['path'];
             
-            $typeId = $this->AgreementType->checkAndSave($v['vrsta']);
+            $typeId = $this->AgreementType->checkAndSave(trim($v['vrsta']));
             //debug($typeId);
             if ($typeId !== 0) {
                 $ugovor['Agreement']['agreement_type_id'] = $typeId;

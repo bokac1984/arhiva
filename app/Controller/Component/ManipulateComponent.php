@@ -35,7 +35,7 @@ class ManipulateComponent extends Component {
         $this->folderLocation = WWW_ROOT . 'uploads' . DS . 'javne_nabavke' . DS;
         $path1 = WWW_ROOT . DS . 'DVD1' . DS;
         $path2 = WWW_ROOT . DS . 'DVD2' . DS;
-        $this->tempFileLocation = $path2;
+        $this->tempFileLocation = $path1;
     }
     public function changeNameOfFile($originalName = '') {
         $temporalName = '';

@@ -187,7 +187,6 @@ class AgreementsController extends AppController {
     }
 
     public function obradi() {
-        return;
         $this->autoRender = false;
         // local file
         $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
@@ -252,12 +251,11 @@ class AgreementsController extends AppController {
     }
     
     public function copybackup() {
-        return;
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
             'conditions' => array(
-                'Agreement.disk_location' => '',
-                'Agreement.new_filename' => ''
+                'Agreement.file_location' => '',
+                'Agreement.new_file_name' => ''
             ),
             'limit' => '1000',
             'contain' => array(
@@ -286,8 +284,8 @@ class AgreementsController extends AppController {
             $toSave = array(
                 'Agreement' => array(
                     'id' => $v['Agreement']['id'],
-                    'new_filename' => basename($fileLocation),
-                    'disk_location' => $fileLocation,
+                    'new_file_name' => basename($fileLocation),
+                    'file_location' => $fileLocation,
                     'size' => filesize($fileLocation),
                     'display' => '1'
                 )
@@ -306,13 +304,17 @@ class AgreementsController extends AppController {
         $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
         $path2 = WWW_ROOT . DS . 'DVD2' . DS . 'data2.xml';
         $localPath = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\data1ispravljeno.xml';
-        
-        $xml = Xml::build($path1);
+        $localPath2 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\data2.xml';
+        $xml = Xml::build($localPath2);
         
         $data = Xml::toArray($xml);
         
-        debug($data);
-        echo $this->Agreement->fixMoneyProblem($data['nabavke']['nabavka']);
+        //debug($data);
+        
+        foreach ( $data['nabavke']['nabavka'] as $k => $v) {
+            echo floatval($v['price']) .'='. $v['price'] ."<br />";
+        }
+        //echo $this->Agreement->fixMoneyProblem($data['nabavke']['nabavka']);
         echo '<br/>DONE!';
     }   
 }
