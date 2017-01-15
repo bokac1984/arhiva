@@ -1,5 +1,5 @@
 <?php  
-echo $this->Html->script('https://www.google.com/recaptcha/api.js', array('block' => 'scriptBottom'));
+
 ?>
 <section class="wrapper">
     <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
@@ -42,7 +42,11 @@ echo $this->Html->script('https://www.google.com/recaptcha/api.js', array('block
                         'class' => 'form-control',
                         'type' => 'textarea'
                     ));
-                    echo $this->Recaptcha->display();                    
+                    echo $this->Recaptcha->display(array(
+                        'div' => array(
+                            'class' => 'form-group'
+                        )
+                    ));                    
                     ?>
 <!--                    <div class="form-group">
                         <div class="">
