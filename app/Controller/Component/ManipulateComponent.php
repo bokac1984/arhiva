@@ -68,9 +68,12 @@ class ManipulateComponent extends Component {
     public function copyFile($folder = '', $path = '', $oldFileName = '') {
         $file = new File($this->tempFileLocation . $path);
         $fileName = $this->prepareFilename($oldFileName);
+        // Executing this inside a CakePHP class:
+        $this->log("Naziv fajla = $fileName", 'debug');
         
         if ($file->exists()) {
             $newFileName = $folder . DS . $fileName . '.pdf';
+            $this->log("Naziv citave puitanje fajla = $newFileName", 'debug');
             if ($file->copy($newFileName)) {
                 return $newFileName;
             }
