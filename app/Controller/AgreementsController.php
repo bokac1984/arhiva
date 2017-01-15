@@ -148,6 +148,7 @@ class AgreementsController extends AppController {
         }
         debug($this->Agreement->getLastQuery());
         exit();
+        
         foreach ($data as $k => $v) {
             $fileLocation = $this->Manipulate->processIt($v['Agreement']['path'], 
                 $v['Purchase']['name'],
@@ -164,9 +165,8 @@ class AgreementsController extends AppController {
                 )
             );
             
-            $this->Agreement->create();
-            if ($this->Agreement->save($toSave)) {
-                debug('not saved');
+            if (!$this->Agreement->save($toSave)) {
+                echo "NOT SAVED";
             }
         }
         echo 'DONE!';
