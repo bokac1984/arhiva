@@ -114,6 +114,7 @@ class AgreementsController extends AppController {
     }
 
     public function obradi() {
+        return;
         $this->autoRender = false;
         // local file
         $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
@@ -130,6 +131,7 @@ class AgreementsController extends AppController {
     }
     
     public function kopiraj() {
+        return;
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
             'conditions' => array(
@@ -177,6 +179,7 @@ class AgreementsController extends AppController {
     }
     
     public function copybackup() {
+        return;
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
             'conditions' => array(
