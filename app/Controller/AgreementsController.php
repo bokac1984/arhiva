@@ -311,7 +311,7 @@ class AgreementsController extends AppController {
         
         $data = Xml::toArray($xml);
         
-        //debug($data);
+        debug($data);
         echo $this->Agreement->fixMoneyProblem($data['nabavke']['nabavka']);
         echo '<br/>DONE!';
     }   
