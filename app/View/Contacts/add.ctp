@@ -8,7 +8,7 @@
             <div class="col-sm-12">
                 <h2>Kontaktirajte nas</h2>
             </div>
-        </div>        
+        </div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="institutions form">
@@ -48,12 +48,13 @@
                         )
                     ));                    
                     ?>
-<!--                    <div class="form-group">
-                        <div class="">
-                            <div class="g-recaptcha" data-sitekey="6LcR2hEUAAAAAGxHQCLcGALqVE2KO3iyeP9ODF06"></div>
+                    <?php if (isset($this->validationErrors['Contact']['recaptcha'])): ?>
+                    <div class="form-group">
+                        <div class="label label-warning">
+                        <?php echo ($this->validationErrors['Contact']['recaptcha']);?>
                         </div>
-                    </div>                      -->
-
+                    </div>                      
+                    <?php endif; ?>
                     <div class="form-group">
                         <div class="col-sm-6 col-sm-offset-6">
                             <button class="btn btn-blue btn-block" type="submit"> 

@@ -57,6 +57,7 @@ class ContactsController extends AppController {
     public function add() {
         if ($this->request->is('post')) {
             if ($this->Recaptcha->verify()) {
+                unset($this->request->data['g-recaptcha-response']);
                 $this->Contact->create();
                 if ($this->Contact->save($this->request->data)) {
                     $this->Flash->success(__('The contact has been saved.'));
@@ -66,7 +67,7 @@ class ContactsController extends AppController {
                 } 
             } else {
                 // display the raw API error
-                $this->Flash->error($this->Recaptcha->error);
+                $this->Contact->validationErrors['recaptcha'] = $this->Recaptcha->error;
             }
         }
     }
