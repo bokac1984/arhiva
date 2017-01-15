@@ -20,8 +20,6 @@ class AgreementsController extends AppController {
      */
     public $components = array('Paginator', 'Flash', 'Session', 'Manipulate');
     
-    public $helpers = array('Time');
-    
     public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.

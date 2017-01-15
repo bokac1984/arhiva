@@ -84,7 +84,7 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                         </td>
                         <td>
                             <?php
-                            echo $this->Link->cLink(__(''), array('action' => 'sendFile', $agreement['Agreement']['new_file_name']), 'fa fa-eye', array(
+                            echo $this->Link->cLink(__(''), array('action' => 'sendFile', $agreement['Agreement']['new_file_name']), 'fa fa-download', array(
                                 'title' => 'Skini ugovor'
                             ));
                             ?>                            
