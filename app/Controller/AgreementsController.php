@@ -21,6 +21,14 @@ class AgreementsController extends AppController {
     public $components = array('Paginator', 'Flash', 'Session', 'Manipulate');
     
     public $helpers = array('Time');
+    
+    public function beforeFilter() {
+        parent::beforeFilter();
+        // Allow users to register and logout.
+        $this->Auth->allow(
+            'overview'
+        );
+    }    
 
     /**
      * index method
@@ -30,6 +38,53 @@ class AgreementsController extends AppController {
     public function index() {
         $this->Agreement->recursive = 0;
         $this->set('agreements', $this->Paginator->paginate());
+    }
+    
+
+    public function overview() {
+        $this->Agreement->recursive = 0;
+
+        $containOptions = array(
+            'AgreementType' => array(
+                'fields' => array(
+                    'id',
+                    'name'
+                )
+            ),
+            'Purchase' => array(
+                'fields' => array(
+                    'id', 'name'
+                )
+            ),
+            'Supplier' => array(
+                'fields' => array(
+                    'id', 'name'
+                )
+            ),
+        );
+
+        $fields = array(
+            'Agreement.id',
+            'Agreement.name',
+            'Agreement.price',
+            'Agreement.contract_date',
+            'Agreement.new_file_name',
+        );
+
+        $this->Paginator->settings = array(
+            'limit' => 25,
+            'contain' => $containOptions,
+            'order' => array(
+                'Agreement.contract_date' => 'DESC',
+                'Purchase.name'
+            ),
+            'conditions' => array(
+                'Agreement.display' => '1'
+            ),
+            'fields' => $fields
+        );
+       
+        $this->set('agreements', $this->Paginator->paginate());  
     }
 
     /**
@@ -112,7 +167,6 @@ class AgreementsController extends AppController {
         }
         return $this->redirect(array('action' => 'index'));
     }
-    
     
     public function sendFile($filename = '') {
         $file = $this->Agreement->getFile($filename.'.pdf');

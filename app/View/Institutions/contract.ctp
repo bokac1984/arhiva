@@ -9,29 +9,25 @@ echo $this->Html->css('/plugins/dropzone/downloads/css/dropzone', array('block' 
 echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch', array('block' => 'css'));
 echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal', array('block' => 'css'));
 ?>
-<section class="wrapper">
-    <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2><?php echo $institution['Institution']['name']; ?></h2>
-            </div>
-        </div>        
-        <div class="row">
-            <div class="col-sm-12">							
-                <button type="button" id="btn-add-photos" class="btn btn-primary btn-sm">
-                    Dodaj nove ugovore
-                </button>
-            </div>
-        </div>        
-        <div class="row">
-            <div class="col-md-12">
-                
-            </div>
-        </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2><?php echo $institution['Institution']['name']; ?></h2>
     </div>
-    <!-- end: BLOG POSTS AND COMMENTS CONTAINER -->
-</section>
+</div>        
+<div class="row">
+    <div class="col-sm-12">							
+        <button type="button" id="btn-add-photos" class="btn btn-primary btn-sm">
+            Dodaj nove ugovore
+        </button>
+    </div>
+</div>        
+<div class="row">
+    <div class="col-md-12">
+
+    </div>
+</div>
+
 <!-- DIALOG -->
 <div id="ajax-modal" class="modal fade" tabindex="-1" data-width="960" data-backdrop="static" data-keyboard="false" style="display: none;">
     <div class="modal-body" style="margin-bottom:0">

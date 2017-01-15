@@ -34,4 +34,20 @@ class Company extends AppModel {
         ),
     );
 
+    /**
+     * belongsTo associations
+     *
+     * @var array
+     */
+    public $hasMany = array(
+        'PurchaseAgreement' => array(
+            'className' => 'Agreement',
+            'foreignKey' => 'purchase_id',
+        ),
+        'SupplierAgreement' => array(
+            'className' => 'Agreement',
+            'foreignKey' => 'supplier_id',
+        ),
+    );    
+
 }

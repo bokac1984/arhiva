@@ -12,27 +12,24 @@ echo $this->Html->script('/plugins/bootstrap-modal/js/bootstrap-modalmanager', a
 echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch', array('block' => 'css'));
 echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal', array('block' => 'css'));
 ?>
-<section class="wrapper">
-    <!-- start: BLOG POSTS AND COMMENTS CONTAINER -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>Pregled baze podataka o ugovorima o djelu</h2>
-                <p><i>Da bi ste skinuli neki fajl, <b>dvokliknite</b> na naziv fajla.</i></p>
-            </div>
-        </div>        
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="tree"></div>
-            </div>
-        </div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Pregled baze podataka o ugovorima o djelu</h2>
+        <p><i>Da bi ste skinuli neki fajl, <b>dvokliknite</b> na naziv fajla.</i></p>
     </div>
-</section>
+</div>        
+<div class="row">
+    <div class="col-sm-12">
+        <div id="tree"></div>
+    </div>
+</div>
+
 <!-- DIALOG -->
 <div id="ajax-modal" class="modal fade" tabindex="-1" data-width="460" data-backdrop="static" data-keyboard="false" style="display: none;">
     <div class="modal-header" style="margin-bottom:0">
         <h4>Skidanje fajla</h4>
-        
+
     </div>    
     <div class="modal-body" style="margin-bottom:0">
         <div class="row">

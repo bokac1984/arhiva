@@ -19,6 +19,15 @@ class CompaniesController extends AppController {
      */
     public $components = array('Paginator', 'Flash', 'Session');
 
+    
+    public function beforeFilter() {
+        parent::beforeFilter();
+        // Allow users to register and logout.
+        $this->Auth->allow(
+            'view'
+        );
+    } 
+    
     /**
      * index method
      *
@@ -40,8 +49,22 @@ class CompaniesController extends AppController {
         if (!$this->Company->exists($id)) {
             throw new NotFoundException(__('Invalid company'));
         }
-        $options = array('conditions' => array('Company.' . $this->Company->primaryKey => $id));
-        $this->set('company', $this->Company->find('first', $options));
+        $options = array('conditions' => 
+            array(
+                'Company.' . $this->Company->primaryKey => $id
+            ),
+            'contain' => array(
+                'PurchaseAgreement' => array(
+                    'AgreementType'
+                ),
+                'SupplierAgreement' => array(
+                    'AgreementType'
+                )
+            )
+        );
+        $company = $this->Company->find('first', $options);
+        
+        $this->set(compact('company'));
     }
 
     /**
