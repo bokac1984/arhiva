@@ -122,8 +122,8 @@ class AgreementsController extends AppController {
         
         $data = Xml::toArray($xml);
         
-        debug($data);
-        //$this->Agreement->saveToDatabase($data['nabavke']['nabavka']);
+        //debug($data);
+        $this->Agreement->saveToDatabase($data['nabavke']['nabavka']);
         echo 'DONE!';
     }
     
@@ -133,7 +133,7 @@ class AgreementsController extends AppController {
             'conditions' => array(
                 'Agreement.disk_location' => null
             ),
-            'limit' => '1',
+            'limit' => '200',
             'contain' => array(
                 'Purchase' => array(
                     'fields' => array(
