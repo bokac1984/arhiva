@@ -114,11 +114,16 @@ class AgreementsController extends AppController {
     public function obradi() {
         $this->autoRender = false;
         // local file
-        $xml = Xml::build('D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\data1ispravljeno.xml');
+        $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
+        $path2 = WWW_ROOT . DS . 'DVD2' . DS . 'data2.xml';
+        $localPath = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\data1ispravljeno.xml';
+        
+        $xml = Xml::build(path1);
         
         $data = Xml::toArray($xml);
         
-        $this->Agreement->saveToDatabase($data['nabavke']['nabavka']);
+        debug($data);
+        //$this->Agreement->saveToDatabase($data['nabavke']['nabavka']);
         echo 'DONE!';
     }
     
