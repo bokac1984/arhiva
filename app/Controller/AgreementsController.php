@@ -118,7 +118,7 @@ class AgreementsController extends AppController {
         $path2 = WWW_ROOT . DS . 'DVD2' . DS . 'data2.xml';
         $localPath = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\data1ispravljeno.xml';
         
-        $xml = Xml::build(path1);
+        $xml = Xml::build($path1);
         
         $data = Xml::toArray($xml);
         
