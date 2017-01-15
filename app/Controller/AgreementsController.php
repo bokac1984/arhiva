@@ -112,6 +112,26 @@ class AgreementsController extends AppController {
         }
         return $this->redirect(array('action' => 'index'));
     }
+    
+    
+    public function sendFile($filename = '') {
+        $file = $this->Agreement->getFile($filename.'.pdf');
+        
+        if ($file === '') {
+            throw new NotFoundException(__('Ne postoji fajl!'));
+        }
+        
+        $this->response->type(array('pdf' => 'application/pdf'));
+        $this->response->type('pdf');
+        $this->response->file(
+            $file,
+            array('download' => true, 'name' => $filename.'.pdf')
+        );
+
+        // Return response object to prevent controller from trying to render
+        // a view
+        return $this->response;
+    }
 
     public function obradi() {
         return;

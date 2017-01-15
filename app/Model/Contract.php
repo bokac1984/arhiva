@@ -73,36 +73,4 @@ class Contract extends AppModel {
             return false;
         }
     }
-    
-    public function getFile($name = null) {
-        $file = $this->find('first', array(
-            'conditions' => array(
-                'Contract.new_file_name' => $name
-            ),
-            'fields' => array(
-                'Contract.file_location',
-                'Contract.id',
-                'Contract.downloaded'
-            )
-        ));
-        
-        if (!empty($file)) {
-            $this->updateDownloaded($file['Contract']['id'], $file['Contract']['downloaded']);
-            return $file['Contract']['file_location'];
-        }
-        return '';
-    }
-    
-    public function updateDownloaded($id = null, $downloaded = null) {
-        $data = array(
-            'Contract' => array(
-                'id' => $id,
-                'downloaded' => $downloaded+1
-            )
-        );
-        
-        //debug($data);exit();
-        
-        $this->save($data);
-    }
 }

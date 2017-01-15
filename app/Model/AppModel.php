@@ -80,4 +80,47 @@ class AppModel extends Model {
 
         return 0;
     }
+    
+    /**
+     * Metoda kojom se nalazi fajl u bazi
+     * Ove metode ce da koriste modeli
+     * 
+     * @param type $name
+     * @return string
+     */
+    public function getFile($name = null) {
+        $file = $this->find('first', array(
+            'conditions' => array(
+                "{$this->alias}.new_file_name" => $name
+            ),
+            'fields' => array(
+                "{$this->alias}.file_location",
+                "{$this->alias}.id",
+                "{$this->alias}.downloaded"
+            )
+        ));
+        
+        if (!empty($file)) {
+            $this->updateDownloaded($file[$this->alias]['id'], $file[$this->alias]['downloaded']);
+            return $file[$this->alias]['file_location'];
+        }
+        return '';
+    }    
+    
+    /**
+     * Povecaj broj downloada
+     * 
+     * @param type $id
+     * @param type $downloaded
+     */
+    public function updateDownloaded($id = null, $downloaded = null) {
+        $data = array(
+            "{$this->alias}" => array(
+                'id' => $id,
+                'downloaded' => $downloaded+1
+            )
+        );
+        
+        $this->save($data);
+    }    
 }

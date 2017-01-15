@@ -50,6 +50,10 @@ class Agreement extends AppModel {
         )
     );
 
+    /**
+     * Metoda kojom se snimaju podaci, ovo se koristi samo jednom.
+     * @param type $data
+     */
     public function saveToDatabase($data = array()) {
         foreach ($data as $k => $v) {
             $ugovor = array();
