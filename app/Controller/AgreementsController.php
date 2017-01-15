@@ -203,11 +203,10 @@ class AgreementsController extends AppController {
     }
     
     public function kopiraj() {
-        return;
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
             'conditions' => array(
-                'Agreement.disk_location' => null
+                'Agreement.file_location' => null
             ),
             'limit' => '1000',
             'contain' => array(
@@ -273,7 +272,8 @@ class AgreementsController extends AppController {
         }
         
         foreach ($data as $k => $v) {
-            $fileLocation = $this->Manipulate->processIt($v['Agreement']['path'], 
+            $fileLocation = $this->Manipulate->processIt(
+                $v['Agreement']['path'], 
                 $v['Purchase']['name'],
                 $v['Agreement']['name']);  
             
