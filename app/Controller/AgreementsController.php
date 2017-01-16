@@ -299,23 +299,86 @@ class AgreementsController extends AppController {
         echo 'DONE!';
     }   
     
-    public function popravi() {
+    public function cena() {
         $this->autoRender = false;
-        // local file
-        $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
-        $path2 = WWW_ROOT . DS . 'DVD2' . DS . 'data2.xml';
-        $localPath = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\data1ispravljeno.xml';
-        $localPath2 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\data2.xml';
-        $xml = Xml::build($localPath2);
+        $data = $this->Agreement->find('all', array(
+            'conditions' => array(
+                'Agreement.old_path' => null
+            ),
+            'limit' => '1000'
+            'fields' => array(
+                'Agreement.id',
+                'Agreement.price',
+                'Agreement.original_price'
+            )
+        ));
+        echo (count($data)) ."<br/>";
         
-        $data = Xml::toArray($xml);
-        
-        //debug($data);
-        
-        foreach ( $data['nabavke']['nabavka'] as $k => $v) {
-            echo floatval($v['price']) .'='. $v['price'] ."<br />";
+        if (count($data) === 0) {
+            echo 'vracam se<br/>';
+            return;
         }
-        //echo $this->Agreement->fixMoneyProblem($data['nabavke']['nabavka']);
-        echo '<br/>DONE!';
+        $i = 0;
+        foreach ($data as $k => $v) {
+
+            $zadnjeCifre = substr($v['Agreement']['original_price'], -3);
+            /**
+             * ako ima ovo onda je sa zarezom iz preostalog dijela ukloni
+             * sve zareze i tacke i onda formatiraj taj broj i zalijepi ovo ostalo
+             * 
+             */
+            if (
+                    strpos($zadnjeCifre, ',') === 0
+                    || 
+                    strpos($zadnjeCifre, '.') === 0
+                ) {
+                echo strpos($zadnjeCifre, ',')."<br>";
+                
+                // ako zadnje 2 cifer budu 00
+                // cemo da radimo drugacije
+                if ($zadnjeCifre === ',00'
+                        || $zadnjeCifre === '.00'
+                        ) {
+                    $cijeliDio = substr($v['Agreement']['original_price'], 0, -3);
+                } else {
+                    $cijeliDio = str_replace($zadnjeCifre, '', $v['Agreement']['original_price']);
+                }
+                
+                
+                $cijeliDioBezZnakova = str_replace(array(',','.', ' '), '', $cijeliDio);
+                $zadnjeCifreBezZnakova = str_replace(array(',', '.', ' '), '', $zadnjeCifre);
+                //debug($v);
+//                echo $v['Agreement']['price'] ."=".
+//                        $v['Agreement']['original_price'] 
+//                        ." = $cijeliDio"
+//                            . " = $cijeliDioBezZnakova"
+//                                . " = $zadnjeCifreBezZnakova"
+//                        . " ********** ";                
+//                echo $zadnjeCifre."<br />";
+                $i++;
+                
+                $krajnjiBroj = $cijeliDioBezZnakova . "." . $zadnjeCifreBezZnakova;
+                
+                
+                $flotBroj = number_format($krajnjiBroj, 2, '.', '');
+                //echo "*****$krajnjiBroj = $flotBroj****";
+                
+                $dataToSave = array(
+                    'Agreement' => array(
+                        'id' => $v['Agreement']['id'],
+                        'price' => $flotBroj,
+                        'old_path' => $v['Agreement']['price']
+                    )
+                );
+                
+                if (!$this->Agreement->save($dataToSave)) {
+                    echo "not saved {$v['id']}";
+                }
+                //
+
+            }
+                
+        }
+        echo "Ukupno je bilo $i";
     }   
 }
