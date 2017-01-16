@@ -305,7 +305,7 @@ class AgreementsController extends AppController {
             'conditions' => array(
                 'Agreement.old_path' => null
             ),
-            'limit' => '1000'
+            'limit' => '1000',
             'fields' => array(
                 'Agreement.id',
                 'Agreement.price',
