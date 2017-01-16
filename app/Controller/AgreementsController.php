@@ -305,6 +305,7 @@ class AgreementsController extends AppController {
             'conditions' => array(
                 'Agreement.old_path' => null
             ),
+            'limit' => '1000',
             'fields' => array(
                 'Agreement.id',
                 'Agreement.price',
@@ -320,7 +321,8 @@ class AgreementsController extends AppController {
         $i = 0;
         foreach ($data as $k => $v) {
 
-            $zadnjeCifre = substr($v['Agreement']['original_price'], -3);
+            echo $zadnjeCifre = substr($v['Agreement']['original_price'], -3);
+            echo "<br/>";
             /**
              * ako ima ovo onda je sa zarezom iz preostalog dijela ukloni
              * sve zareze i tacke i onda formatiraj taj broj i zalijepi ovo ostalo
