@@ -45,6 +45,14 @@ class Company extends AppModel {
             'foreignKey' => 'purchase_id',
             'conditions' => array(
                 'PurchaseAgreement.display' => '1'
+            ),
+            'fields' => array(
+                'PurchaseAgreement.id',
+                'PurchaseAgreement.name',
+                'PurchaseAgreement.price',
+                'PurchaseAgreement.contract_date',
+                'PurchaseAgreement.new_file_name',
+                'PurchaseAgreement.agreement_type_id'
             )
         ),
         'SupplierAgreement' => array(
@@ -52,7 +60,15 @@ class Company extends AppModel {
             'foreignKey' => 'supplier_id',
             'conditions' => array(
                 'SupplierAgreement.display' => '1'
-            )            
+            ),
+            'fields' => array(
+                'SupplierAgreement.id',
+                'SupplierAgreement.name',
+                'SupplierAgreement.price',
+                'SupplierAgreement.contract_date',
+                'SupplierAgreement.new_file_name',
+                'SupplierAgreement.agreement_type_id'
+            )
         ),
     );    
 

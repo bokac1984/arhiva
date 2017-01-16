@@ -36,6 +36,24 @@ Router::connect('/ugovori-o-djelu-javnih-institucija', array('controller' => 'in
 
 Router::connect('/ugovori-o-nabavkama-javnih-preduzeca', array('controller' => 'agreements', 'action' => 'overview'));
 
+Router::connect('/vrsta-postupka/:id', array(
+        'controller' => 'agreement_types', 
+        'action' => 'view'
+    ),
+    array(
+        'pass' => array('id')
+    )        
+);
+
+Router::connect('/preduzece/:id', array(
+        'controller' => 'companies', 
+        'action' => 'view'
+    ),
+    array(
+        'pass' => array('id')
+    )        
+);
+
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.

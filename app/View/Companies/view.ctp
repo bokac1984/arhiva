@@ -1,5 +1,5 @@
 <?php
-//debug($company);
+debug($company);
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -21,7 +21,7 @@
                             <td><?php echo $agreement['price']; ?></td>
                             <td><?php echo $this->Time->format($agreement['contract_date'], '%d.%m.%Y'); ?></td>
                             <td>
-                                <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', $agreement['AgreementType']['id'])); ?>
+                                <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', 'id' => $agreement['AgreementType']['id'])); ?>
                             </td>                          
                             <td>
                                 <?php

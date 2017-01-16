@@ -21,10 +21,18 @@
                             <td><?php echo $agreement['price']; ?></td>
                             <td><?php echo $this->Time->format($agreement['contract_date'], '%d.%m.%Y'); ?></td>
                             <td>
-                                <?php echo $this->Html->link($agreement['Purchase']['name'], array('controller' => 'companies', 'action' => 'view', $agreement['Purchase']['id'])); ?>
+                                <?php echo $this->Html->link($agreement['Purchase']['name'], 
+                                        array('controller' => 'companies', 
+                                            'action' => 'view', 
+                                            'id' => $agreement['Purchase']['id']
+                                        )); ?>
                             </td>
                             <td>
-                                <?php echo $this->Html->link($agreement['Supplier']['name'], array('controller' => 'companies', 'action' => 'view', $agreement['Supplier']['id'])); ?>
+                                <?php echo $this->Html->link($agreement['Supplier']['name'], 
+                                        array('controller' => 'companies', 
+                                            'action' => 'view', 
+                                            'id' => $agreement['Supplier']['id']
+                                        )); ?>
                             </td>
                             <td>
                                 <?php

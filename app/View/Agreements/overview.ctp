@@ -74,13 +74,13 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                         <td><?php echo h($agreement['Agreement']['price']); ?>&nbsp;</td>
                         <td><?php echo h($this->Time->format($agreement['Agreement']['contract_date'], '%d.%m.%Y')); ?>&nbsp;</td>                                    
                         <td>
-                            <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', $agreement['AgreementType']['id'])); ?>
+                            <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', 'id' => $agreement['AgreementType']['id'])); ?>
                         </td>
                         <td>
-                            <?php echo $this->Html->link($agreement['Purchase']['name'], array('controller' => 'companies', 'action' => 'view', $agreement['Purchase']['id'])); ?>
+                            <?php echo $this->Html->link($agreement['Purchase']['name'], array('controller' => 'companies', 'action' => 'view', 'id' => $agreement['Purchase']['id'])); ?>
                         </td>    
                         <td>
-                            <?php echo $this->Html->link($agreement['Supplier']['name'], array('controller' => 'companies', 'action' => 'view', $agreement['Purchase']['id'])); ?>
+                            <?php echo $this->Html->link($agreement['Supplier']['name'], array('controller' => 'companies', 'action' => 'view', 'id' => $agreement['Purchase']['id'])); ?>
                         </td>
                         <td>
                             <?php

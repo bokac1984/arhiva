@@ -47,7 +47,7 @@ class CompaniesController extends AppController {
      */
     public function view($id = null) {
         if (!$this->Company->exists($id)) {
-            throw new NotFoundException(__('Invalid company'));
+            throw new NotFoundException(__('Nepostojeći ID firme'));
         }
         $options = array('conditions' => 
             array(
