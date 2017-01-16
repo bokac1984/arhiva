@@ -43,10 +43,16 @@ class Company extends AppModel {
         'PurchaseAgreement' => array(
             'className' => 'Agreement',
             'foreignKey' => 'purchase_id',
+            'conditions' => array(
+                'PurchaseAgreement.display' => '1'
+            )
         ),
         'SupplierAgreement' => array(
             'className' => 'Agreement',
             'foreignKey' => 'supplier_id',
+            'conditions' => array(
+                'SupplierAgreement.display' => '1'
+            )            
         ),
     );    
 

@@ -154,10 +154,15 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/institutions">
-                                            Institucije
+                                        <a href="/ugovori-o-djelu-javnih-institucija">
+                                            Ugovori o djelu
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="/ugovori-o-nabavkama-javnih-preduzeca">
+                                            Javne nabavke
+                                        </a>
+                                    </li>                                    
                                     <li>
                                         <a href="/contact">
                                             Contact
