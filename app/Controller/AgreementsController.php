@@ -377,6 +377,17 @@ class AgreementsController extends AppController {
                 }
                 //
 
+            } else {
+                $dataToSave = array(
+                    'Agreement' => array(
+                        'id' => $v['Agreement']['id'],
+                        'old_path' => $v['Agreement']['price']
+                    )
+                );
+                
+                if (!$this->Agreement->save($dataToSave)) {
+                    echo "not saved {$v['id']}";
+                }
             }
                 
         }
