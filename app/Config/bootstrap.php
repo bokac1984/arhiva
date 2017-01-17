@@ -112,3 +112,4 @@ CakeLog::config('error', array(
 Configure::write('Recaptcha.publicKey', '6LcR2hEUAAAAAGxHQCLcGALqVE2KO3iyeP9ODF06');
 Configure::write('Recaptcha.privateKey', '6LcR2hEUAAAAAGLbxJx0g5oHn31YaiTLJHnVIDi5');
 CakePlugin::load('Recaptcha');
+date_default_timezone_set('Europe/Paris');
