@@ -1,5 +1,7 @@
 <?php
-
+echo $this->Html->css('/css/institutions/icons', array('block' => 'css'));
+echo $this->Html->css('/css/institutions/overview', array('block' => 'css'));
+echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
 //debug($agreements);
 ?>
 <div class="row">
