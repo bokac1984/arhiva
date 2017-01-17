@@ -1,10 +1,5 @@
 <?php
-echo $this->Html->script('/js/jquery.fastLiveFilter', array('block' => 'scriptBottom'));
-echo $this->Html->script('/js/institutions/overview', array('block' => 'scriptBottom'));
-echo $this->Html->scriptBlock("inst.init(1);", array('block' => 'scriptBottom'));
-echo $this->Html->css('/css/institutions/icons', array('block' => 'css'));
-echo $this->Html->css('/css/institutions/overview', array('block' => 'css'));
-echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
+
 //debug($agreements);
 ?>
 <div class="row">
