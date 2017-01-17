@@ -49,22 +49,66 @@ class CompaniesController extends AppController {
         if (!$this->Company->exists($id)) {
             throw new NotFoundException(__('Nepostojeći ID firme'));
         }
+        
+       // $this->Company->recursive = 2;
         $options = array('conditions' => 
             array(
                 'Company.' . $this->Company->primaryKey => $id
             ),
             'contain' => array(
                 'PurchaseAgreement' => array(
-                    'AgreementType'
+                    'AgreementType' => array(
+                        'fields' => array(
+                            'id', 'name'
+                        )
+                    ),
+                    'Supplier' => array(
+                        'fields' => array(
+                            'id', 'name'
+                        )
+                    )
                 ),
                 'SupplierAgreement' => array(
-                    'AgreementType'
+                    'AgreementType' => array(
+                        'fields' => array(
+                            'id', 'name'
+                        )
+                    ),
+                    'Purchase' => array(
+                        'fields' => array(
+                            'id', 'name'
+                        )
+                    )
                 )
             )
         );
         $company = $this->Company->find('first', $options);
         
-        $this->set(compact('company'));
+        $purchasePrice = $this->Company->PurchaseAgreement->find('all', array(
+            'conditions' => array(
+                'PurchaseAgreement.purchase_id' => $id,
+                'PurchaseAgreement.display' => 1
+            ),
+            'fields' => array(
+                'SUM(price) as Suma',
+                'COUNT(*) as brojUgovora'
+            ),
+            'group' => 'PurchaseAgreement.purchase_id'
+        ));
+        
+        $supplierPrice = $this->Company->SupplierAgreement->find('all', array(
+            'conditions' => array(
+                'SupplierAgreement.supplier_id' => $id,
+                'SupplierAgreement.display' => 1
+            ),
+            'fields' => array(
+                'SUM(price) as Suma',
+                'COUNT(*) as brojUgovora'
+            ),
+            'group' => 'SupplierAgreement.supplier_id'
+        ));
+        
+        $this->set(compact('company', 'purchasePrice', 'supplierPrice'));
     }
 
     /**

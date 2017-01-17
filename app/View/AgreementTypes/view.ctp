@@ -8,25 +8,25 @@
             <?php if (!empty($agreementType['Agreement'])): ?>
                 <table class="table" cellpadding = "0" cellspacing = "0">
                     <tr>
+                        <th><?php echo __('Naručilac'); ?></th>
                         <th><?php echo __('Ugovor'); ?></th>
                         <th><?php echo __('Iznos'); ?></th>
                         <th><?php echo __('Datum'); ?></th>
-                        <th><?php echo __('Naručilac'); ?></th>
                         <th><?php echo __('Dobavljač'); ?></th>
                         <th class="actions"></th>
                     </tr>
                     <?php foreach ($agreementType['Agreement'] as $agreement): ?>
                         <tr>
-                            <td><?php echo $agreement['name']; ?></td>
-                            <td><?php echo $agreement['price']; ?></td>
-                            <td><?php echo $this->Time->format($agreement['contract_date'], '%d.%m.%Y'); ?></td>
                             <td>
                                 <?php echo $this->Html->link($agreement['Purchase']['name'], 
                                         array('controller' => 'companies', 
                                             'action' => 'view', 
                                             'id' => $agreement['Purchase']['id']
                                         )); ?>
-                            </td>
+                            </td>                            
+                            <td><?php echo $agreement['name']; ?></td>
+                            <td><?php echo number_format($agreement['price'], 2, ',', '.'); ?></td>
+                            <td><?php echo $this->Time->format($agreement['contract_date'], '%d.%m.%Y'); ?></td>
                             <td>
                                 <?php echo $this->Html->link($agreement['Supplier']['name'], 
                                         array('controller' => 'companies', 

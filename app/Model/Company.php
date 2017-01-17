@@ -52,7 +52,8 @@ class Company extends AppModel {
                 'PurchaseAgreement.price',
                 'PurchaseAgreement.contract_date',
                 'PurchaseAgreement.new_file_name',
-                'PurchaseAgreement.agreement_type_id'
+                'PurchaseAgreement.agreement_type_id',
+                'PurchaseAgreement.supplier_id'
             )
         ),
         'SupplierAgreement' => array(
@@ -67,7 +68,8 @@ class Company extends AppModel {
                 'SupplierAgreement.price',
                 'SupplierAgreement.contract_date',
                 'SupplierAgreement.new_file_name',
-                'SupplierAgreement.agreement_type_id'
+                'SupplierAgreement.agreement_type_id',
+                'SupplierAgreement.purchase_id'
             )
         ),
     );    

@@ -55,11 +55,11 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
             <table class="table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
+                        <th><?php echo $this->Paginator->sort('purchase_id', 'Naručilac'); ?></th>
                         <th><?php echo $this->Paginator->sort('name', 'Ugovor'); ?></th>
                         <th><?php echo $this->Paginator->sort('price', 'Iznos (KM)'); ?></th>
                         <th><?php echo $this->Paginator->sort('contract_date', 'Datum'); ?></th>
                         <th><?php echo $this->Paginator->sort('agreement_type_id', 'Vrsta'); ?></th>
-                        <th><?php echo $this->Paginator->sort('purchase_id', 'Naručilac'); ?></th>
                         <th><?php echo $this->Paginator->sort('supplier_id', 'Dobavljač'); ?></th>
                         <th></th>
                     </tr>
@@ -67,15 +67,15 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                 <tbody>
                     <?php foreach ($agreements as $agreement): ?>
                     <tr>
+                        <td>
+                            <?php echo $this->Html->link($agreement['Purchase']['name'], array('controller' => 'companies', 'action' => 'view', 'id' => $agreement['Purchase']['id'])); ?>
+                        </td>                         
                         <td><?php echo h($agreement['Agreement']['name']); ?>&nbsp;</td>
-                        <td><?php echo h($agreement['Agreement']['price']); ?>&nbsp;</td>
+                        <td><?php echo number_format($agreement['Agreement']['price'], 2, ',', '.'); ?>&nbsp;</td>
                         <td><?php echo h($this->Time->format($agreement['Agreement']['contract_date'], '%d.%m.%Y')); ?>&nbsp;</td>                                    
                         <td>
                             <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', 'id' => $agreement['AgreementType']['id'])); ?>
-                        </td>
-                        <td>
-                            <?php echo $this->Html->link($agreement['Purchase']['name'], array('controller' => 'companies', 'action' => 'view', 'id' => $agreement['Purchase']['id'])); ?>
-                        </td>    
+                        </td>  
                         <td>
                             <?php echo $this->Html->link($agreement['Supplier']['name'], array('controller' => 'companies', 'action' => 'view', 'id' => $agreement['Purchase']['id'])); ?>
                         </td>

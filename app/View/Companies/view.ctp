@@ -1,14 +1,26 @@
 <?php
-debug($company);
+//debug($company);
 ?>
 <div class="row">
     <div class="col-md-12">
         <h2><?php echo h($company['Company']['name']); ?></h2>
+    </div>
+</div>
+<?php if (!empty($company['PurchaseAgreement'])): ?>
+<!--<div class="row">
+    <div class="col-md-4">
+        Ukupan iznos plaćenih ugovora: <?php debug($purchasePrice);echo $purchasePrice[0][0]['Suma']; ?>
+    </div>
+</div>-->
+<?php endif; ?>
+<div class="row">
+    <div class="col-md-12">
         <div class="related">
-            <h3><?php echo __('Naručilac'); ?></h3>
+            <h4>Ugovori gdje se <b><?php echo __($company['Company']['name']); ?></b> pojavljuje kao <i>naručilac</i></h4>
             <?php if (!empty($company['PurchaseAgreement'])): ?>
                 <table class="table" cellpadding = "0" cellspacing = "0">
                     <tr>
+                        <th><?php echo __('Dobavljač'); ?></th>
                         <th><?php echo __('Ugovor'); ?></th>
                         <th><?php echo __('Iznos'); ?></th>
                         <th><?php echo __('Datum'); ?></th>
@@ -17,8 +29,13 @@ debug($company);
                     </tr>
                     <?php foreach ($company['PurchaseAgreement'] as $agreement): ?>
                         <tr>
+                            <td>
+                                <?php echo $this->Html->link($agreement['Supplier']['name'], 
+                                        array('controller' => 'companies', 
+                                            'action' => 'view', 'id' => $agreement['Supplier']['id'])); ?>
+                            </td>                             
                             <td><?php echo $agreement['name']; ?></td>
-                            <td><?php echo $agreement['price']; ?></td>
+                            <td><?php echo number_format($agreement['price'], 2, ',', '.'); ?></td>
                             <td><?php echo $this->Time->format($agreement['contract_date'], '%d.%m.%Y'); ?></td>
                             <td>
                                 <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', 'id' => $agreement['AgreementType']['id'])); ?>
@@ -34,18 +51,20 @@ debug($company);
                     <?php endforeach; ?>
                 </table>
             <?php else: ?>
-                <h4><?php echo __('Nema ugovora kao naručilac'); ?></h4>
+                <h5><?php echo __('Nema ugovora kao naručilac'); ?></h5>
             <?php endif; ?>
         </div>
     </div>
 </div>
+<hr>
 <div class="row">
     <div class="col-md-12">
         <div class="related">
-            <h3><?php echo __('Dobavljač'); ?></h3>
+            <h4>Ugovori gdje se <b><?php echo __($company['Company']['name']); ?></b> pojavljuje kao <i>dobavljač</i></h4>
             <?php if (!empty($company['SupplierAgreement'])): ?>
                 <table  class="table" cellpadding = "0" cellspacing = "0">
                     <tr>
+                        <th><?php echo __('Naručilac'); ?></th>
                         <th><?php echo __('Ugovor'); ?></th>
                         <th><?php echo __('Iznos'); ?></th>
                         <th><?php echo __('Datum'); ?></th>
@@ -54,8 +73,13 @@ debug($company);
                     </tr>
                     <?php foreach ($company['SupplierAgreement'] as $agreement): ?>
                         <tr>
+                            <td>
+                                <?php echo $this->Html->link($agreement['Purchase']['name'], 
+                                        array('controller' => 'companies', 
+                                            'action' => 'view', 'id' => $agreement['Purchase']['id'])); ?>
+                            </td>                            
                             <td><?php echo $agreement['name']; ?></td>
-                            <td><?php echo $agreement['price']; ?></td>
+                            <td><?php echo number_format($agreement['price'], 2, ',', '.'); ?></td>
                             <td><?php echo $this->Time->format($agreement['contract_date'], '%d.%m.%Y'); ?></td>
                             <td>
                                 <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', $agreement['AgreementType']['id'])); ?>
@@ -71,7 +95,7 @@ debug($company);
                     <?php endforeach; ?>
                 </table>
             <?php else: ?>
-                <h4><?php echo __('Nema ugovora kao dobavljač'); ?></h4>
+                <h5><?php echo __('Nema ugovora kao dobavljač'); ?></h5>
             <?php endif; ?>
         </div>                
     </div>
