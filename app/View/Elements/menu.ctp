@@ -63,7 +63,8 @@ $url = $this->request->here;
         <a href="/settings">
             Podešavanja
         </a>
-    </li>    
+    </li>  
+    <li><?php echo $this->Link->cLink("Logovi", array('plugin' => 'error_manager', 'controller' => 'error_logs', 'action' => 'index')); ?></li>   
     <?php endif; ?>
 <!--    <li class="menu-search">
          start: SEARCH BUTTON 
