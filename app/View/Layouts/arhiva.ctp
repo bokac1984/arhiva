@@ -80,7 +80,7 @@
                                             if ($this->Session->read('Auth.User')) {
                                                 echo '<div>Prijavljen kao: ' . $this->Session->read('Auth.User.username');
                                                 echo '&nbsp' . $this->Html->link('Odjavi se', array(
-                                                    'plugin' => 'null',
+                                                    'plugin' => null,
                                                     'controller' => 'users',
                                                     'action' => 'logout'
                                                         ), array(
