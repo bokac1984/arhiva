@@ -20,7 +20,12 @@ class ErrorLogsController extends ErrorManagerAppController {
  */
 	public function index() {
         $this->set( 'title_for_layout', Configure::read('Website.title').' - Error Manager');
-		$this->ErrorLog->recursive = 2;
+        $this->ErrorLog->recursive = 2;
+        $this->Paginator->settings = array(
+            'order' => array(
+                'ErrorLog.created' => 'DESC'
+            )
+        );
         // try paginate
         try {
             $logs = $this->paginate('ErrorLog');
