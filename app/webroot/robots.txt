@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /outbound/
+Disallow: /js/
+Disallow: /css/
+Disallow: /files/
