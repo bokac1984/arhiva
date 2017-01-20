@@ -109,6 +109,14 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+// load plugin prior to using of logger
+CakePlugin::load('ErrorManager', array('bootstrap' => false, 'routes' => true));
+CakeLog::config('error', array(
+	'engine' => 'ErrorManager.DatabaseLog',
+    'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
+    'scopes' => array('error'),
+	'model' => 'ErrorLog',
+));
 Configure::write('Recaptcha.publicKey', '6LcR2hEUAAAAAGxHQCLcGALqVE2KO3iyeP9ODF06');
 Configure::write('Recaptcha.privateKey', '6LcR2hEUAAAAAGLbxJx0g5oHn31YaiTLJHnVIDi5');
 CakePlugin::load('Recaptcha');

@@ -85,6 +85,30 @@ class AgreementsController extends AppController {
        
         $this->set('agreements', $this->Paginator->paginate());  
     }
+    
+    /**
+     * ovo bi trebala biti metoda za javni pregled sumirano po naruciocima
+     */
+    public function pregled() {        
+        $options['joins'] =  array(
+                 array('table' => 'companies',
+                    'alias' => 'Company',
+                    'type' => 'INNER',
+                    'conditions' => array(
+                        'Agreement.purchase_id = Company.id'
+                    )
+                )
+            );
+        $options['fields'] = array(
+            'DISTINCT Company.id', 'Company.name'
+        );
+        $options['order'] = array(
+            'Company.name' => 'ASC'
+        );        
+        $agreements = $this->Agreement->find('all', $options);   
+        
+        $this->set(compact('agreements'));  
+    }
 
     /**
      * view method

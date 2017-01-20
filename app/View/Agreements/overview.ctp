@@ -59,7 +59,7 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                         <th><?php echo $this->Paginator->sort('name', 'Ugovor'); ?></th>
                         <th><?php echo $this->Paginator->sort('price', 'Iznos (KM)'); ?></th>
                         <th><?php echo $this->Paginator->sort('contract_date', 'Datum'); ?></th>
-                        <th><?php echo $this->Paginator->sort('agreement_type_id', 'Vrsta'); ?></th>
+                        <th><?php echo $this->Paginator->sort('agreement_type_id', 'Postupak'); ?></th>
                         <th><?php echo $this->Paginator->sort('supplier_id', 'Dobavljač'); ?></th>
                         <th></th>
                     </tr>

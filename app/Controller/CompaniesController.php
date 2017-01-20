@@ -66,6 +66,10 @@ class CompaniesController extends AppController {
                         'fields' => array(
                             'id', 'name'
                         )
+                    ),
+                    'order' => array(
+                        'PurchaseAgreement.contract_date' => 'desc',
+                        'PurchaseAgreement.price' => 'desc'
                     )
                 ),
                 'SupplierAgreement' => array(
@@ -78,36 +82,19 @@ class CompaniesController extends AppController {
                         'fields' => array(
                             'id', 'name'
                         )
-                    )
+                    ),
+                    'order' => array(
+                        'SupplierAgreement.contract_date' => 'desc'
+                    )                    
                 )
             )
         );
         $company = $this->Company->find('first', $options);
         
-        $purchasePrice = $this->Company->PurchaseAgreement->find('all', array(
-            'conditions' => array(
-                'PurchaseAgreement.purchase_id' => $id,
-                'PurchaseAgreement.display' => 1
-            ),
-            'fields' => array(
-                'SUM(price) as Suma',
-                'COUNT(*) as brojUgovora'
-            ),
-            'group' => 'PurchaseAgreement.purchase_id'
-        ));
+        $purchasePrice = $this->Company->PurchaseAgreement->getSumAndCount('purchase_id', $id);
         
-        $supplierPrice = $this->Company->SupplierAgreement->find('all', array(
-            'conditions' => array(
-                'SupplierAgreement.supplier_id' => $id,
-                'SupplierAgreement.display' => 1
-            ),
-            'fields' => array(
-                'SUM(price) as Suma',
-                'COUNT(*) as brojUgovora'
-            ),
-            'group' => 'SupplierAgreement.supplier_id'
-        ));
-        
+        $supplierPrice = $this->Company->SupplierAgreement->getSumAndCount('supplier_id', $id);
+
         $this->set(compact('company', 'purchasePrice', 'supplierPrice'));
     }
 

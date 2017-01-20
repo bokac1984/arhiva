@@ -35,7 +35,16 @@
         echo $this->Html->css('main-responsive');
         echo $this->Html->css('theme_blue');
         ?>
-        <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->      
+        <!-- start: CSS REQUIRED FOR THIS PAGE ONLY --> 
+        <!--[if lt IE 9]>
+        <script src="assets/plugins/respond.min.js"></script>
+        <script src="assets/plugins/excanvas.min.js"></script>
+        <script src="assets/plugins/html5shiv.js"></script>
+        <script type="text/javascript" src="assets/plugins/jQuery-lib/1.10.2/jquery.min.js"></script>
+        <![endif]-->
+        <!--[if gte IE 9]><!-->
+        <script src="/plugins/jQuery-lib/2.0.3/jquery.min.js"></script>
+        <!--<![endif]-->        
         <?php
         echo $this->fetch('meta');
         echo $this->fetch('css');
@@ -178,15 +187,7 @@
         <a id="scroll-top" href="#"><i class="fa fa-angle-up"></i></a>
         <!-- end: FOOTER -->
         <!-- start: MAIN JAVASCRIPTS -->
-        <!--[if lt IE 9]>
-        <script src="assets/plugins/respond.min.js"></script>
-        <script src="assets/plugins/excanvas.min.js"></script>
-        <script src="assets/plugins/html5shiv.js"></script>
-        <script type="text/javascript" src="assets/plugins/jQuery-lib/1.10.2/jquery.min.js"></script>
-        <![endif]-->
-        <!--[if gte IE 9]><!-->
-        <script src="/plugins/jQuery-lib/2.0.3/jquery.min.js"></script>
-        <!--<![endif]-->
+
         <script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
         <script src="/plugins/jquery.transit/jquery.transit.js"></script>
         <script src="/plugins/hover-dropdown/twitter-bootstrap-hover-dropdown.min.js"></script>

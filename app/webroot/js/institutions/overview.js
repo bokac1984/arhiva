@@ -42,25 +42,25 @@ var inst = function () {
             var element_to_scroll_to = $('#dokumenti')[0];
             element_to_scroll_to.scrollIntoView(); 
             
-            jQuery.ajax({
-                url: '/institutions/getContractsForInstitution',
-                method: 'POST',
-                data: {id: $(this).attr('id')},
-                dataType: 'HTML'
-            }).done(function (response) {               
-                $('.sk-folding-cube').hide();
-                fileList.removeClass('animated');
-                 // sakrij foldere
-                fileList.addClass('slideRight'); // dodaj klasu za animaciju
-                breadcrumbs.append(brCrymb); // prikazi breadcrumb
-                fileList.append(response);
-                fileList.animate({'display': 'inline-block'}); //animiraj fajlove
-                backButton.show(); // omoguci back button
-            }).fail(function () {
-                fileList.find('li.folders').show();
-                $('.sk-folding-cube').hide();
-                console.log('fail');
-            });
+//            jQuery.ajax({
+//                url: '/institutions/getContractsForInstitution',
+//                method: 'POST',
+//                data: {id: $(this).attr('id')},
+//                dataType: 'HTML'
+//            }).done(function (response) {               
+//                $('.sk-folding-cube').hide();
+//                fileList.removeClass('animated');
+//                 // sakrij foldere
+//                fileList.addClass('slideRight'); // dodaj klasu za animaciju
+//                breadcrumbs.append(brCrymb); // prikazi breadcrumb
+//                fileList.append(response);
+//                fileList.animate({'display': 'inline-block'}); //animiraj fajlove
+//                backButton.show(); // omoguci back button
+//            }).fail(function () {
+//                fileList.find('li.folders').show();
+//                $('.sk-folding-cube').hide();
+//                console.log('fail');
+//            });
 
         });
 
