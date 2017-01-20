@@ -1,0 +1,24 @@
+.red-globe {
+  cursor: pointer;
+  color: #bd362f;
+}
+
+.ip-results {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #0066cc;
+  padding: 10px;
+  background: #fff;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+.arrow-left {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -8px;
+  top: -1px;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 7px solid #0066cc;
+}

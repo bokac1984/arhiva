@@ -1,0 +1,12 @@
+table, tbody {
+  display: block;
+}
+
+tr.first-row {
+  display: inline-block;
+  width: 15%;
+}
+
+td, th {
+  display: block;
+}
