@@ -29,7 +29,7 @@ $url = $this->request->here;
                 <a href="/institutions/pregled">
                     Upravljanje
                 </a>
-            </li>
+            </li>           
             <li>
                 <a href="/institutions/contracts">
                     Novi ugovori
@@ -47,6 +47,11 @@ $url = $this->request->here;
             Javne Nabavke <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
+            <li>
+                <a href="/agreements/pravilnici">
+                    Pravilnici
+                </a>
+            </li>             
             <li>
                 <a href="/agreements">
                     Upravljanje
