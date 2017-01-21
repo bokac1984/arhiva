@@ -36,6 +36,8 @@ Router::connect('/ugovori-o-djelu-javnih-institucija', array('controller' => 'in
 
 Router::connect('/ugovori-o-nabavkama-javnih-preduzeca', array('controller' => 'agreements', 'action' => 'overview'));
 
+Router::connect('/pravilnici', array('controller' => 'agreements', 'action' => 'pravilnici'));
+
 Router::connect('/vrsta-postupka/:id', array(
         'controller' => 'agreement_types', 
         'action' => 'view'
@@ -51,6 +53,15 @@ Router::connect('/preduzece/:id', array(
     ),
     array(
         'pass' => array('id')
+    )        
+);
+
+Router::connect('/download/:filename', array(
+        'controller' => 'agreements', 
+        'action' => 'sendFile'
+    ),
+    array(
+        'pass' => array('filename')
     )        
 );
 

@@ -13,11 +13,23 @@ $url = $this->request->here;
             Ugovori o djelu
         </a>
     </li> 
-    <li class="<?php echo (preg_match("/(\/agreements|nabavkama)/", $url))? 'active' : ''?>">
-        <a href="/ugovori-o-nabavkama-javnih-preduzeca">
-            Javne nabavke
+    <li class="dropdown <?php echo (preg_match("/(\/agreements|preduzeca|pravilnici)/", $url))? 'active' : ''?>">
+        <a class="dropdown-toggle" href="#" data-toggle="dropdown" data-hover="dropdown">
+            Javne Nabavke <b class="caret"></b>
         </a>
-    </li>    
+        <ul class="dropdown-menu">
+            <li>
+                <a href="/ugovori-o-nabavkama-javnih-preduzeca">
+                    Ugovori javnih nabavki
+                </a>
+            </li>             
+            <li>
+                <a href="/pravilnici">
+                    Pravilnici
+                </a>
+            </li>
+        </ul>
+    </li>     
     <?php endif; ?>
     <?php if ($this->Session->read('Auth.User')) : ?>
     <li class="dropdown <?php echo (preg_match("/(\/institutions|institucija)/", $url))? 'active' : ''?>">

@@ -25,7 +25,8 @@ class AgreementsController extends AppController {
         // Allow users to register and logout.
         $this->Auth->allow(
             'overview',
-            'sendFile'
+            'sendFile',
+            'pravilnici'
         );
     }    
 
@@ -89,25 +90,58 @@ class AgreementsController extends AppController {
     /**
      * ovo bi trebala biti metoda za javni pregled sumirano po naruciocima
      */
-    public function pregled() {        
-        $options['joins'] =  array(
-                 array('table' => 'companies',
-                    'alias' => 'Company',
-                    'type' => 'INNER',
-                    'conditions' => array(
-                        'Agreement.purchase_id = Company.id'
-                    )
-                )
-            );
-        $options['fields'] = array(
-            'DISTINCT Company.id', 'Company.name'
-        );
-        $options['order'] = array(
-            'Company.name' => 'ASC'
-        );        
-        $agreements = $this->Agreement->find('all', $options);   
+    public function pregled() {    
+        
+        $agreements = $this->Agreement->vratiPodatkeZaPregled();   
         
         $this->set(compact('agreements'));  
+    }
+    
+    public function pravilnici() {
+        $this->Agreement->recursive = 0;
+
+        $containOptions = array(
+            'AgreementType' => array(
+                'fields' => array(
+                    'id',
+                    'name'
+                )
+            ),
+            'Purchase' => array(
+                'fields' => array(
+                    'id', 'name'
+                )
+            ),
+            'Supplier' => array(
+                'fields' => array(
+                    'id', 'name'
+                )
+            ),
+        );
+
+        $fields = array(
+            'Agreement.id',
+            'Agreement.name',
+            'Agreement.price',
+            'Agreement.contract_date',
+            'Agreement.new_file_name',
+        );
+
+        $this->Paginator->settings = array(
+            'limit' => 25,
+            'contain' => $containOptions,
+            'order' => array(
+                'Agreement.contract_date' => 'DESC',
+                'Purchase.name'
+            ),
+            'conditions' => array(
+                'Agreement.display' => '0',
+                'Agreement.name LIKE' => '%pravilnik%'
+            ),
+            'fields' => $fields
+        );
+       
+        $this->set('agreements', $this->Paginator->paginate());         
     }
 
     /**
@@ -191,6 +225,13 @@ class AgreementsController extends AppController {
         return $this->redirect(array('action' => 'index'));
     }
     
+    /**
+     * Metoda za skidanje fajlova
+     * 
+     * @param type $filename
+     * @return type
+     * @throws NotFoundException
+     */
     public function sendFile($filename = '') {
         $file = $this->Agreement->getFile($filename);
         
@@ -210,6 +251,9 @@ class AgreementsController extends AppController {
         return $this->response;
     }
 
+    /**
+     * Ucitavanje podataka u bazu iz XML fajlova
+     */
     public function obradi() {
         $this->autoRender = false;
         // local file
@@ -226,6 +270,13 @@ class AgreementsController extends AppController {
         echo 'DONE!';
     }
     
+    /**
+     * Prvobitna metoda ya kopiranje fajlova
+     * 
+     * NE KORISTI SE VISE
+     * 
+     * @return type
+     */
     public function kopiraj() {
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
@@ -273,6 +324,11 @@ class AgreementsController extends AppController {
         echo 'DONE!';
     }
     
+    /**
+     * Kreiranje foldera i kopiranje fajlova iy pomocnih diskova (DVD1, DVD2)
+     * 
+     * @return type
+     */
     public function copybackup() {
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
@@ -323,6 +379,11 @@ class AgreementsController extends AppController {
         echo 'DONE!';
     }   
     
+    /**
+     * Metoda koja se koristila da se cijena preuredi
+     * 
+     * @return type
+     */
     public function cena() {
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(

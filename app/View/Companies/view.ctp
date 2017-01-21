@@ -42,11 +42,18 @@
                             <td><?php echo $this->Time->format($agreement['contract_date'], '%d.%m.%Y'); ?></td>                         
                             <td>
                                 <?php
-                                echo $this->Link->cLink(__(''), array('controller' => 'agreements','action' => 'sendFile', $agreement['new_file_name']), 'fa fa-download', array(
-                                    'title' => 'Skini ugovor'
-                                ));
+                                echo $this->Link->cLink(__(''), 
+                                    array(
+                                        'controller' => 'agreements',
+                                        'action' => 'sendFile', 
+                                        'filename' => $agreement['new_file_name']), 
+                                    'fa fa-download', 
+                                    array(
+                                        'title' => 'Skini ugovor'
+                                    )
+                                );
                                 ?>                            
-                            </td>
+                            </td>                            
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -98,9 +105,16 @@
                             <td><?php echo $this->Time->format($agreement['contract_date'], '%d.%m.%Y'); ?></td>
                             <td>
                                 <?php
-                                echo $this->Link->cLink(__(''), array('controller' => 'agreements','action' => 'sendFile', $agreement['new_file_name']), 'fa fa-download', array(
-                                    'title' => 'Skini ugovor'
-                                ));
+                                echo $this->Link->cLink(__(''), 
+                                    array(
+                                        'controller' => 'agreements',
+                                        'action' => 'sendFile', 
+                                        'filename' => $agreement['new_file_name']), 
+                                    'fa fa-download', 
+                                    array(
+                                        'title' => 'Skini ugovor'
+                                    )
+                                );
                                 ?>                            
                             </td>
                         </tr>

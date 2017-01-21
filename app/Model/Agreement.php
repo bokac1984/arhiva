@@ -131,4 +131,35 @@ class Agreement extends AppModel {
         }
         return $i;
     }
+    
+    /**
+     * Pokusaj da se vrate podaci iz kesa za ovo da vidimo koliko ce brzo 
+     * da ide
+     * 
+     * @return type
+     */
+    public function vratiPodatkeZaPregled() {
+        $options['joins'] =  array(
+                 array('table' => 'companies',
+                    'alias' => 'Company',
+                    'type' => 'INNER',
+                    'conditions' => array(
+                        'Agreement.purchase_id = Company.id'
+                    )
+                )
+            );
+        $options['fields'] = array(
+            'DISTINCT Company.id', 'Company.name'
+        );
+        $options['order'] = array(
+            'Company.name' => 'ASC'
+        );
+        $result = Cache::read('pregled_podaci', 'default');
+        if (!$result) {
+            Debugger::log('Nema kesirano');
+            $result = $this->find('all', $options);
+            Cache::write('pregled_podaci', $result, 'default');
+        }
+        return $result;          
+    }
 }

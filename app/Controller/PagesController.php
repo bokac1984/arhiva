@@ -45,6 +45,13 @@ class PagesController extends AppController {
      * 	or MissingViewException in debug mode.
      */
     public function display() {
+        
+        /**
+         * Vidjecemo da li da cu uopste ovo da 
+         * pustim da se gleda
+         */
+        //$this->layout = 'home';
+        
         $path = func_get_args();
 
         $count = count($path);
