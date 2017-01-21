@@ -1,20 +1,26 @@
 $(document).ready(function() {
-    $(document).on('click', '#ip-address', function(e) {
+    $(document).on('click', '.ip-address', function(e) {
     e.preventDefault();
     var posClicked = $(this).position();
-    console.log(posClicked.left);
     var newPos = posClicked;
     newPos.left += 20;
     
+    var Ip = $(this).parent().find('.search-address').html();
+
+    
+    var newTop = newPos.top + 130;
+    
     $.ajax({
       type: 'POST',
-      url: 'http://api.hostip.info/get_json.php',
-      data: {ip: $('#search-address').html()},
+      url: '/error_manager/error_logs/getIpData',
+      data: {ip: Ip},
       dataType: "json",
       success: function(data) {
-        var resultDiv = "<div><dl><dt>Country Name</dt><dd>"+data.country_name+"</dd>\n\
-<dt>City</dt><dd>"+data.city+"</dd></dl>";
-$('body').append("<div class='ip-results' style='top: "+newPos.top+"px; left: "+newPos.left+"px;'><div class='arrow-left'></div>"+resultDiv+"</div>");
+          var info = JSON.parse(data);
+        var resultDiv = "<div><dl><dt>Hostname</dt><dd>"+info.hostname+"</dd>\n\
+<dt>Country</dt><dd>"+info.country+"</dd><dt>Region</dt><dd>"+info.region+"</dd><dt>City</dt><dd>"+info.city+"</dd>\n\
+<dt>Location</dt><dd>"+info.loc+"</dd><dt>Organisation</dt><dd>"+info.org+"</dd></dl>";
+$('body').append("<div class='ip-results' style='top: "+newTop+"px; left: "+newPos.left+"px;'><div class='arrow-left'></div>"+resultDiv+"</div>");
       }
     });
   });
