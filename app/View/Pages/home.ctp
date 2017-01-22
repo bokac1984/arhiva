@@ -1,17 +1,17 @@
-<section>
+<section class="wrapper">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
                 <div class="core-box">
                     <div class="heading">
                         <i class="clip-mobile circle-icon"></i>
-                        <h2>Responsive Design</h2>
+                        <h2>Ugovori o djelu</h2>
                     </div>
                     <div class="content">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                        Prva baza koju je Transparency International BiH objavio. Sadrži podatke o ugovorima javnih institucija u periodu od 2011. do 2013. godine.
                     </div>
-                    <a class="view-more" href="#">
-                        View More <i class="fa fa-angle-right"></i>
+                    <a class="view-more" href="ugovori-o-djelu-javnih-institucija">
+                        Pogledaj još <i class="fa fa-angle-right"></i>
                     </a>
                 </div>
             </div>
@@ -19,13 +19,13 @@
                 <div class="core-box">
                     <div class="heading">
                         <i class="clip-clip circle-icon"></i>
-                        <h2>Free updates &#038; support</h2>
+                        <h2>Javne nabavke</h2>
                     </div>
                     <div class="content">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                        Ovo je druga baza podataka objavljena od strane Transparency International BiH. Baza obuhvata podatke o nabavkama javnih preduzeća.
                     </div>
-                    <a class="view-more" href="#">
-                        View More <i class="fa fa-angle-right"></i>
+                    <a class="view-more" href="/ugovori-o-djelu-javnih-institucija">
+                        Pogledaj još <i class="fa fa-angle-right"></i>
                     </a>
                 </div>
             </div>
@@ -33,13 +33,13 @@
                 <div class="core-box">
                     <div class="heading">
                         <i class="clip-cogs circle-icon"></i>
-                        <h2>Incredibly Flexible</h2>
+                        <h2>Pravilnici</h2>
                     </div>
                     <div class="content">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                        U okviru baze podataka o javnim nabavkama preduzeća, postoje i podaci o pravilnicima ovih preduzeća. Ovo predstavlja poseban odjeljak baza podataka.
                     </div>
-                    <a class="view-more" href="#">
-                        View More <i class="fa fa-angle-right"></i>
+                    <a class="view-more" href="/pravilnici">
+                        Pogledaj još <i class="fa fa-angle-right"></i>
                     </a>
                 </div>
             </div>
@@ -49,7 +49,7 @@
 <?php //echo $this->element('pocetna'); ?>
 <section class="wrapper wrapper-grey padding50">
     <div class="container">
-<div class="row">
+        <div class="row">
     <div class="col-sm-6">
         <img src="/img/arhiva.png" style="opacity: 0.5;" class="img-responsive animate-if-visible" data-animation-options='{"animation":"tada", "duration":"600"}'>
     </div>

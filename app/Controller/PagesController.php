@@ -50,7 +50,7 @@ class PagesController extends AppController {
          * Vidjecemo da li da cu uopste ovo da 
          * pustim da se gleda
          */
-        //$this->layout = 'home';
+        $this->layout = 'home';
         
         $path = func_get_args();
 
