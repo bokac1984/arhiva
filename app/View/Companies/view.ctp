@@ -1,6 +1,11 @@
 <?php
 //print_r($company);
 ?>
+<div class="row hidden">
+    <div class="col-md-12">
+        <?php debug($company); ?>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <h2 class="center"><?php echo h($company['Company']['name']); ?></h2>
