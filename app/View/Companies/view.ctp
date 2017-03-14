@@ -1,6 +1,5 @@
 <?php
-
-//debug($company);
+//print_r($company);
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -9,7 +8,7 @@
 </div>
 <?php if (!empty($company['PurchaseAgreement'])): ?>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <h4>Ugovori gdje se <b><?php echo __($company['Company']['name']); ?></b> pojavljuje kao <i>naručilac</i></h4>
         <p>Ukupan iznos ugovora: <b><?php echo number_format($purchasePrice['Suma'], 2, ',', '.'); ?> KM</b></p>
         <p>Broj  ugovora: <b><?php echo $purchasePrice['brojUgovora']; ?></b></p>
@@ -72,7 +71,7 @@
 <hr>
 <?php if (!empty($company['SupplierAgreement'])): ?>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <h4>Ugovori gdje se <b><?php echo __($company['Company']['name']); ?></b> pojavljuje kao <i>dobavljač</i></h4>
         <p>Ukupan iznos ugovora: <b><?php echo number_format($supplierPrice['Suma'], 2, ',', '.'); ?> KM</b></p>
         <p>Broj  ugovora: <b><?php echo $supplierPrice['brojUgovora']; ?></b></p>

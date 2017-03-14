@@ -52,5 +52,18 @@ class Contact extends AppModel {
             ),
         ),
     );
-
+    
+    /**
+     * Find all unsent email
+     * 
+     * @return type
+     */
+    public function unsentEmails($limit = 1) {
+        return $this->findBySent('0', array(
+            'order' => array(
+                'Contact.modified' => 'ASC'
+            ),
+            'limit' => $limit
+        ));
+    }
 }

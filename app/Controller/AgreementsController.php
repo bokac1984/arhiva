@@ -24,9 +24,10 @@ class AgreementsController extends AppController {
         parent::beforeFilter();
         // Allow users to register and logout.
         $this->Auth->allow(
-            'overview',
+            'pregled',
             'sendFile',
-            'pravilnici'
+            'pravilnici',
+            'agreement'
         );
     }    
 
@@ -92,9 +93,12 @@ class AgreementsController extends AppController {
      */
     public function pregled() {    
         
-        $agreements = $this->Agreement->vratiPodatkeZaPregled();   
+        $agreements = $this->Agreement->vratiPodatkeZaPregled('A');
         
-        $this->set(compact('agreements'));  
+        $firstChar = $this->Agreement->allFirstLettersAndNumbers();
+        unset($firstChar[0]);
+        
+        $this->set(compact('agreements', 'firstChar'));  
     }
     
     public function pravilnici() {
@@ -202,6 +206,13 @@ class AgreementsController extends AppController {
         }
         $agreementTypes = $this->Agreement->AgreementType->find('list');
         $this->set(compact('agreementTypes'));
+    }
+    
+    public function agreement() {
+        $this->viewClass = 'Json';
+        $letter = $this->request->data['letter'];
+        $agreements = $this->Agreement->vratiPodatkeZaPregled($letter);
+        $this->set(compact('agreements'));
     }
 
     /**

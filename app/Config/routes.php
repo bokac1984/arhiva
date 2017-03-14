@@ -34,7 +34,7 @@ Router::connect('/contact', array('controller' => 'contacts', 'action' => 'add')
 
 Router::connect('/ugovori-o-djelu-javnih-institucija', array('controller' => 'institutions', 'action' => 'overview'));
 
-Router::connect('/ugovori-o-nabavkama-javnih-preduzeca', array('controller' => 'agreements', 'action' => 'overview'));
+Router::connect('/ugovori-o-nabavkama-javnih-preduzeca', array('controller' => 'agreements', 'action' => 'pregled'));
 
 Router::connect('/pravilnici', array('controller' => 'agreements', 'action' => 'pravilnici'));
 

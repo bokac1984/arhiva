@@ -72,6 +72,60 @@ class Company extends AppModel {
                 'SupplierAgreement.purchase_id'
             )
         ),
-    );    
+    ); 
+    
+    /**
+     * Daj sve ugovore ove kompanije
+     * 
+     * @param type $id
+     * @return type
+     */
+    public function companyAgreements($id) {
+        $options = array('conditions' => 
+            array(
+                'Company.' . $this->primaryKey => $id
+            ),
+            'contain' => array(
+                'PurchaseAgreement' => array(
+                    'AgreementType' => array(
+                        'fields' => array(
+                            'id', 'name'
+                        )
+                    ),
+                    'Supplier' => array(
+                        'fields' => array(
+                            'id', 'name'
+                        )
+                    ),
+                    'order' => array(
+                        'PurchaseAgreement.name' => 'asc'
+                    )
+                ),
+                'SupplierAgreement' => array(
+                    'AgreementType' => array(
+                        'fields' => array(
+                            'id', 'name'
+                        )
+                    ),
+                    'Purchase' => array(
+                        'fields' => array(
+                            'id', 'name'
+                        )
+                    ),
+                    'order' => array(
+                        'SupplierAgreement.name' => 'asc'
+                    )                    
+                )
+            )
+        );
+        
+        $result = Cache::read('pregled_kompanije_' . $id, 'default');
+        if (!$result) {
+            Debugger::log('Nema kesirano ' . $id);
+            $result = $this->find('first', $options);
+            Cache::write('pregled_kompanije' . $id, $result, 'default');
+        }
+        return $result;        
+    }
 
 }

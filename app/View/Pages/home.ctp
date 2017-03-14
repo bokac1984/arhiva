@@ -24,7 +24,7 @@
                     <div class="content">
                         Ovo je druga baza podataka objavljena od strane Transparency International BiH. Baza obuhvata podatke o nabavkama javnih preduzeća.
                     </div>
-                    <a class="view-more" href="/ugovori-o-djelu-javnih-institucija">
+                    <a class="view-more" href="/ugovori-o-nabavkama-javnih-preduzeca">
                         Pogledaj još <i class="fa fa-angle-right"></i>
                     </a>
                 </div>

@@ -1,8 +1,6 @@
 <?php
 
 App::uses('AppController', 'Controller');
-App::uses('CakeEmail', 'Network/Email');
-// secret Key: 6LcR2hEUAAAAAGLbxJx0g5oHn31YaiTLJHnVIDi5
 /**
  * Contacts Controller
  *

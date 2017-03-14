@@ -31,6 +31,10 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+    
+    public $uses = array(
+        'Setting'
+    );
 
     public $components = array(
         'Auth' => array(
@@ -68,8 +72,7 @@ class AppController extends Controller {
         $this->Auth->authError = __('Nemate dozvolu da vidite tu stranicu.');
         $this->Auth->loginError = __('Korisničko ime ili lozinaka nisu validni.');
         $this->Auth->flash['element'] = "flash_error";
-
-
+        
         $this->layout = 'arhiva';
     }
 }

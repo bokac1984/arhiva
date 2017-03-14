@@ -49,47 +49,8 @@ class CompaniesController extends AppController {
         if (!$this->Company->exists($id)) {
             throw new NotFoundException(__('Nepostojeći ID firme'));
         }
-        
-       // $this->Company->recursive = 2;
-        $options = array('conditions' => 
-            array(
-                'Company.' . $this->Company->primaryKey => $id
-            ),
-            'contain' => array(
-                'PurchaseAgreement' => array(
-                    'AgreementType' => array(
-                        'fields' => array(
-                            'id', 'name'
-                        )
-                    ),
-                    'Supplier' => array(
-                        'fields' => array(
-                            'id', 'name'
-                        )
-                    ),
-                    'order' => array(
-                        'PurchaseAgreement.contract_date' => 'desc',
-                        'PurchaseAgreement.price' => 'desc'
-                    )
-                ),
-                'SupplierAgreement' => array(
-                    'AgreementType' => array(
-                        'fields' => array(
-                            'id', 'name'
-                        )
-                    ),
-                    'Purchase' => array(
-                        'fields' => array(
-                            'id', 'name'
-                        )
-                    ),
-                    'order' => array(
-                        'SupplierAgreement.contract_date' => 'desc'
-                    )                    
-                )
-            )
-        );
-        $company = $this->Company->find('first', $options);
+
+        $company = $this->Company->companyAgreements($id);
         
         $purchasePrice = $this->Company->PurchaseAgreement->getSumAndCount('purchase_id', $id);
         

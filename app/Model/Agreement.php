@@ -138,13 +138,17 @@ class Agreement extends AppModel {
      * 
      * @return type
      */
-    public function vratiPodatkeZaPregled() {
+    public function vratiPodatkeZaPregled($letter = '') {
         $options['joins'] =  array(
                  array('table' => 'companies',
                     'alias' => 'Company',
                     'type' => 'INNER',
                     'conditions' => array(
-                        'Agreement.purchase_id = Company.id'
+                        'OR' => array(
+                            'Agreement.purchase_id = Company.id',
+                            'Agreement.supplier_id = Company.id'
+                        )
+                        
                     )
                 )
             );
@@ -154,12 +158,74 @@ class Agreement extends AppModel {
         $options['order'] = array(
             'Company.name' => 'ASC'
         );
-        $result = Cache::read('pregled_podaci', 'default');
-        if (!$result) {
-            Debugger::log('Nema kesirano');
-            $result = $this->find('all', $options);
-            Cache::write('pregled_podaci', $result, 'default');
+        
+        if ($letter !== '') {
+            if ($letter === '#') {
+                $options['conditions'] = array(
+                    'AND' => array(
+                        'Agreement.display' => '1',
+                        'LEFT(Company.name, 1)' => array(
+                            '1','2','3','4','5',
+                            '6','7','8','9', '0'
+                        )
+                    )
+                );
+            } else {
+               $options['conditions'] = array(
+                    'AND' => array(
+                        'Agreement.display' => '1',
+                        'LEFT(Company.name, 1)' => "$letter"
+                    )
+                );             
+            }
+
+        } else {
+            $options['conditions'] = array(
+                'Agreement.display' => '1'
+            ); 
         }
+
+        $options['order'] = array(
+            'Agreement.name'
+        );
+        
+        Cache::clear();
+        //$result = Cache::read('pregled_podaci', 'default');
+        //if (!$result) {
+            Debugger::log($options);
+            $result = $this->find('all', $options);
+            //Cache::write('pregled_podaci', $result, 'default');
+        //}
         return $result;          
+    }
+    
+    public function allFirstLettersAndNumbers() {
+        $options['joins'] =  array(
+                 array('table' => 'companies',
+                    'alias' => 'Company',
+                    'type' => 'INNER',
+                    'conditions' => array(
+                        'OR' => array(
+                            'Agreement.purchase_id = Company.id',
+                            'Agreement.supplier_id = Company.id'
+                        )
+                        
+                    )
+                )
+            );
+        $options['fields'] = array(
+            'DISTINCT LEFT(Company.name, 1) as firstLetter'
+        );
+        $options['order'] = array(
+            'Company.name' => 'ASC'
+        );
+        $options['conditions'] = array(
+            'Agreement.display' => '1',
+            'NOT' => array( // There's your problem! :)
+                'LEFT(Company.name, 1)' => array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
+            )
+        );
+        
+        return $this->find('all', $options);
     }
 }
