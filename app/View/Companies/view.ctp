@@ -3,7 +3,7 @@
 ?>
 <div class="row hidden">
     <div class="col-md-12">
-        <?php debug($company); ?>
+        <?php Debugger::dump($company); ?>
     </div>
 </div>
 <div class="row">
