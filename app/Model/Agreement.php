@@ -186,7 +186,7 @@ class Agreement extends AppModel {
         }
 
         $options['order'] = array(
-            'Agreement.name'
+            'Company.name'
         );
         
         Cache::clear();
