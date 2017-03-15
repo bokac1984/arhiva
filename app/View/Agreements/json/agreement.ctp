@@ -1,3 +1,4 @@
+<?php if ($agreements): ?>
 <?php foreach ($agreements as $agreement): ?>
     <li class="folders">
         <a id="<?php echo $agreement['Company']['id']; ?>" href="/preduzece/<?php echo $agreement['Company']['id']; ?>" title="<?php echo $agreement['Company']['name']; ?>" class="folders">
@@ -6,3 +7,6 @@
         </a>
     </li>
 <?php endforeach; ?>
+<?php else: ?>
+    Nema podataka  
+<?php endif; ?>
