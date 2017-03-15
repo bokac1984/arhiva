@@ -201,11 +201,7 @@ class Agreement extends AppModel {
                     'alias' => 'Company',
                     'type' => 'INNER',
                     'conditions' => array(
-                        'OR' => array(
-                            'Agreement.purchase_id = Company.id',
-                            'Agreement.supplier_id = Company.id'
-                        )
-                        
+                        'Agreement.purchase_id = Company.id'
                     )
                 )
             );
