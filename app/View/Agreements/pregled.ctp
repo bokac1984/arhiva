@@ -78,9 +78,9 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                     <div class="row">
                         <div class="col-md-12">
                             <div class="filemanager" id="A">
-                                <div class="search">
+<!--                                <div class="search">
                                     <input class="searchable_input" title="Pretražite institucije" type="search" placeholder="Pronadjite instituciju.." />
-                                </div>                   
+                                </div>                   -->
                                 <ul class="data animated" style="">
                                     <?php foreach ($agreements as $agreement): ?>
                                         <li class="folders">
@@ -106,9 +106,9 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="filemanager" id="<?php echo $znak['0']['firstLetter']; ?>">
-                                    <div class="search">
+<!--                                    <div class="search">
                                         <input class="searchable_input" title="Pretražite institucije" type="search" placeholder="Pronadjite instituciju.." />
-                                    </div>                
+                                    </div>                -->
                                     <ul class="data animated" style="">
 
                                     </ul>
@@ -123,13 +123,13 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                         </div>
                     </div>
                 <?php endforeach; ?>
-                <div role="tabpanel" class="tab-pane active" id="broj">
+                <div role="tabpanel" class="tab-pane" id="broj">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="filemanager" id="broj">
-                                <div class="search">
+<!--                                <div class="search">
                                     <input class="searchable_input" title="Pretražite institucije" type="search" placeholder="Pronadjite instituciju.." />
-                                </div>                   
+                                </div>                   -->
                                 <ul class="data animated" style="">
                                     
                                 </ul>
