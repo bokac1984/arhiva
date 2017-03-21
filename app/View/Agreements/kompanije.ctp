@@ -11,10 +11,10 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
 ?>
 <div class="row">
     <div class="col-md-12">
-        <h2>Baza podataka o nabavkama javnih preduzeća</h2>
+        <h2>Prikaz kompanija</h2>
     </div>
 </div>
-<div class="row">
+<!--<div class="row">
     <div class="col-md-5">
         <p>
         <div class="preview-contracts">
@@ -27,7 +27,7 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
         </p>
     </div>
     <div class="col-md-7">
-        <!--        <div class="preview-contracts-text">
+                <div class="preview-contracts-text">
                     <p>
                         Ugovori o djelu javnih institucija predstavljaju izvor mnogobrojnih nepravilnosti, a predmet su  kritike revizorskih izvještaja u kojima se obično ističe:
                     <ul>
@@ -37,9 +37,9 @@ echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));
                     </ul>  
                     Više puta revizori su naglasili kako javnost ne posjeduje dovoljno informacija o ugovorima o djelu, a upravo prekomjerno sklapanje ovih ugovora pokazuju da vlasti nisu ispoštavale obećanje o smanjenju javne potrošnje.                    
                     </p>
-                </div>-->
+                </div>
     </div>            
-</div>
+</div>-->
 <!--<div class="row">
     <div class="col-md-12">
         <p>
