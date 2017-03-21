@@ -138,13 +138,13 @@ class Agreement extends AppModel {
      * 
      * @return type
      */
-    public function vratiPodatkeZaPregled($letter = '') {
+    public function vratiPodatkeZaPregled($letter = '', $type = 'purchase_id') {
         $options['joins'] =  array(
                  array('table' => 'companies',
                     'alias' => 'Company',
                     'type' => 'INNER',
                     'conditions' => array(
-                        'Agreement.purchase_id = Company.id',
+                        "Agreement.$type = Company.id",
                     )
                 )
             );
@@ -195,13 +195,19 @@ class Agreement extends AppModel {
         return $result;          
     }
     
-    public function allFirstLettersAndNumbers() {
+    /**
+     * 
+     * @param string $type Tip ugovora, da li je supplier_id
+     * ili purchase_id
+     * @return type
+     */
+    public function allFirstLettersAndNumbers($type = 'purchase_id') {
         $options['joins'] =  array(
                  array('table' => 'companies',
                     'alias' => 'Company',
                     'type' => 'INNER',
                     'conditions' => array(
-                        'Agreement.purchase_id = Company.id'
+                        "Agreement.$type = Company.id"
                     )
                 )
             );

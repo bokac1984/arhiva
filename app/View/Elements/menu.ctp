@@ -22,6 +22,11 @@ $url = $this->request->here;
                 <a href="/ugovori-o-nabavkama-javnih-preduzeca">
                     Ugovori javnih nabavki
                 </a>
+            </li>  
+            <li>
+                <a href="/kompanije">
+                    Kompanije
+                </a>
             </li>             
             <li>
                 <a href="/pravilnici">

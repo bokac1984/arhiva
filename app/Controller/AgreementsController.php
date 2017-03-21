@@ -27,7 +27,8 @@ class AgreementsController extends AppController {
             'pregled',
             'sendFile',
             'pravilnici',
-            'agreement'
+            'agreement',
+            'kompanije'
         );
     }    
 
@@ -41,8 +42,19 @@ class AgreementsController extends AppController {
         $this->set('agreements', $this->Paginator->paginate());
     }
     
+    public function kompanije()
+    {
+        
+        $agreements = $this->Agreement->vratiPodatkeZaPregled('A', 'supplier_id');
+        
+        $firstChar = $this->Agreement->allFirstLettersAndNumbers('supplier_id');
+        unset($firstChar[0]);
+        
+        $this->set(compact('agreements', 'firstChar')); 
+    }
 
-    public function overview() {
+
+        public function overview() {
         $this->Agreement->recursive = 0;
 
         $containOptions = array(
@@ -135,7 +147,7 @@ class AgreementsController extends AppController {
             'limit' => 25,
             'contain' => $containOptions,
             'order' => array(
-                'Agreement.contract_date' => 'DESC',
+                //'Agreement.contract_date' => 'DESC',
                 'Purchase.name'
             ),
             'conditions' => array(
@@ -211,7 +223,9 @@ class AgreementsController extends AppController {
     public function agreement() {
         $this->viewClass = 'Json';
         $letter = $this->request->data['letter'];
-        $agreements = $this->Agreement->vratiPodatkeZaPregled($letter);
+        //debug($this->request);exit();
+        $supplier = isset($this->request->data['company']) ? 'supplier_id' : 'purchase_id';
+        $agreements = $this->Agreement->vratiPodatkeZaPregled($letter, $supplier);
         $this->set(compact('agreements'));
     }
 
