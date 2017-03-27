@@ -79,6 +79,11 @@ $url = $this->request->here;
                     Javni pregled
                 </a>
             </li> 
+            <li>
+                <a href="/companies">
+                    Upravljanje kompanijama/preduzecima
+                </a>
+            </li>             
         </ul>
     </li> 
     <li class="<?php echo (preg_match("/(\/settings)/", $url))? 'active' : ''?>">

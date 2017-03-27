@@ -72,8 +72,8 @@ class Company extends AppModel {
                 'SupplierAgreement.purchase_id'
             )
         ),
-    ); 
-    
+    );
+
     /**
      * Daj sve ugovore ove kompanije
      * 
@@ -81,7 +81,7 @@ class Company extends AppModel {
      * @return type
      */
     public function companyAgreements($id) {
-        $options = array('conditions' => 
+        $options = array('conditions' =>
             array(
                 'Company.' . $this->primaryKey => $id
             ),
@@ -114,18 +114,65 @@ class Company extends AppModel {
                     ),
                     'order' => array(
                         'SupplierAgreement.name' => 'asc'
-                    )                    
+                    )
                 )
             )
         );
-        
+
         $result = Cache::read('pregled_kompanije_' . $id, 'default');
         if (!$result) {
             Debugger::log('Nema kesirano ' . $id);
             $result = $this->find('first', $options);
             Cache::write('pregled_kompanije' . $id, $result, 'default');
         }
-        return $result;        
+        return $result;
+    }
+
+    public function mergeCompanies($main = 0, $toBeMerged = array()) {
+        $newIds = array();
+        /*
+         * sklonimo onaj ID koji necemo da mijenjamo iz niza za mijenjanje
+         */
+        foreach ($toBeMerged as $id) {
+            if ($id !== $main) {
+                $newIds[] = $id;
+            }
+        }
+
+        foreach ($newIds as $id) {
+            $purchase = $this->PurchaseAgreement->updateAll(
+                array(
+                    'purchase_id' => $main,
+                    'old_purchaser_id' => $id
+                ), 
+                array(
+                        'PurchaseAgreement.purchase_id' => $id
+                )
+            );
+            
+            $supplier = $this->SupplierAgreement->updateAll(
+                array(
+                    'supplier_id' => $main,
+                    'old_supplier_id' => $id
+                ), 
+                array(
+                        'SupplierAgreement.supplier_id' => $id
+                )
+            );
+            
+            if ($purchase && $supplier) {
+                $saved = $this->save(array(
+                    'Company' => array(
+                        'merged' => 1,
+                        'id' => $id
+                    )
+                ));
+                
+                if (!$saved) {
+                    echo 'nije sacuvao';
+                }
+            }
+        }
     }
 
 }
