@@ -46,10 +46,18 @@ echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
         </div>
     </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
 
         <p class="pull-right">
             <a id="merge-btn" href="#" class="btn btn-primary" role="button">Spoji u jednu</a>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+
+        <p class="pull-right">
+            Ukupno kandidata za spajanje: <?php print(count($newData)); ?>
         </p>
     </div>
 </div>
