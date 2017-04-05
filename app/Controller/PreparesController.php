@@ -25,5 +25,12 @@ class PreparesController extends AppController {
         
         $this->Prepare->prepareCompanies($names);
     }
+    
+    public function overview() {
+        $this->autoRender = false;
+        $prepared = $this->Prepare->find('all');
+        
+        debug($prepared);
+    }
 
 }

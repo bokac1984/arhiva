@@ -128,6 +128,14 @@ class Company extends AppModel {
         return $result;
     }
 
+    public function prepareIds($ids) {
+        foreach ($ids as $v) {
+            $temp[] = explode(',', $v);
+        }
+        
+        return $temp;
+    }
+    
     public function mergeCompanies($main = 0, $toBeMerged = array()) {
         $newIds = array();
         /*

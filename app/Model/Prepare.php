@@ -10,7 +10,7 @@ App::uses('Folder', 'Utility');
 class Prepare extends AppModel {
     
     private $goLeftRightMoves = 30;
-    private $percent = 90;
+    public $percent = 95;
     public $companies = array();
     public $sorted = array();
     
@@ -27,8 +27,9 @@ class Prepare extends AppModel {
             $prvaIter = str_replace(array(',', '.', '\n', '&', '-'), '', strtoupper($v['Company']['name']));
             $drugaIter = str_replace(array('doo'), ' doo ', $prvaIter);
             $trecaIter = str_replace(array('  '), ' ', $drugaIter);
+            $cetvrtiIter = preg_replace('!\s+!', ' ', $trecaIter);
             
-            $this->companies[$k][$v['Company']['id']] = trim($trecaIter);
+            $this->companies[$k][$v['Company']['id']] = trim($cetvrtiIter);
             
         }
         
