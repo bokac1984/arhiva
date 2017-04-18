@@ -64,7 +64,7 @@ class ContractsController extends AppController {
             $this->Contract->create();
             if ($this->Contract->save($this->request->data)) {
                 $this->Flash->success(__('The contract has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                //return $this->redirect(array('action' => 'index'));
             } else {
                 $this->Flash->error(__('The contract could not be saved. Please, try again.'));
             }

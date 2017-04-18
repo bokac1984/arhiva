@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 /**
  * Contacts Controller
  *
@@ -59,7 +60,12 @@ class ContactsController extends AppController {
                 $this->Contact->create();
                 if ($this->Contact->save($this->request->data)) {
                     $this->Flash->success(__('The contact has been saved.'));
-                    return $this->redirect(array('action' => 'index'));
+                    $Email = new CakeEmail();
+                    $Email->from(array('me@example.com' => 'My Site'));
+                    $Email->to('you@example.com');
+                    $Email->subject('About');
+                    $Email->send('My message');
+                    //return $this->redirect(array('action' => 'index'));
                 } else {
                     $this->Flash->error(__('The contact could not be saved. Please, try again.'));
                 } 
