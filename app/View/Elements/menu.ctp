@@ -91,7 +91,8 @@ $url = $this->request->here;
             Podešavanja
         </a>
     </li>  
-    <li><?php echo $this->Link->cLink("Logovi", array('plugin' => 'error_manager', 'controller' => 'error_logs', 'action' => 'index')); ?></li>   
+    <li><?php echo $this->Link->cLink("Logovi", array('plugin' => 'error_manager', 'controller' => 'error_logs', 'action' => 'index')); ?></li>
+    <li><?php echo $this->Link->cLink("Kontakti", array('plugin' => null, 'controller' => 'contacts', 'action' => 'index')); ?></li>
     <?php endif; ?>
 <!--    <li class="menu-search">
          start: SEARCH BUTTON 

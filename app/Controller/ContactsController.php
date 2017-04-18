@@ -17,6 +17,8 @@ class ContactsController extends AppController {
      */
     public $components = array('Paginator', 'Recaptcha.Recaptcha');
     
+    public $helpers = array('Link');
+    
     public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.
@@ -55,8 +57,10 @@ class ContactsController extends AppController {
      */
     public function add() {
         if ($this->request->is('post')) {
-            if ($this->Recaptcha->verify()) {
+            if (!$this->Recaptcha->verify()) {
                 unset($this->request->data['g-recaptcha-response']);
+                $this->request->data['Contact']['sent'] = '1';
+                $this->request->data['Contact']['ip'] = $this->request->clientIp();
                 $this->Contact->create();
                 if ($this->Contact->save($this->request->data)) {
                     $this->Flash->success(__('Uspješno ste poslali vašu poruku'));
@@ -65,6 +69,11 @@ class ContactsController extends AppController {
                     $Email->to('bokac1984@gmail.com');
                     $Email->subject('About');
                     $Email->send('My message');
+                    
+                    /**
+                     * isprazni niz ako posaljemo, da mozemo popuniti ponovo polja
+                     */
+                    $this->request->data = array();
                     //return $this->redirect(array('action' => 'index'));
                 } else {
                     $this->Flash->error(__('Nije moguće snimiti poruku. Pokušajte ponovo.'));
