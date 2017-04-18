@@ -59,15 +59,15 @@ class ContactsController extends AppController {
                 unset($this->request->data['g-recaptcha-response']);
                 $this->Contact->create();
                 if ($this->Contact->save($this->request->data)) {
-                    $this->Flash->success(__('The contact has been saved.'));
+                    $this->Flash->success(__('Uspješno ste poslali vašu poruku'));
                     $Email = new CakeEmail();
-                    $Email->from(array('me@example.com' => 'My Site'));
-                    $Email->to('you@example.com');
+                    $Email->from(array('tibihdb@tibih-database.org' => 'My Site'));
+                    $Email->to('bokac@ti-bih.org');
                     $Email->subject('About');
                     $Email->send('My message');
                     //return $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Flash->error(__('The contact could not be saved. Please, try again.'));
+                    $this->Flash->error(__('Nije moguće snimiti poruku. Pokušajte ponovo.'));
                 } 
             } else {
                 // display the raw API error
