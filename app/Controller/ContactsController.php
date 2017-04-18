@@ -61,8 +61,8 @@ class ContactsController extends AppController {
                 if ($this->Contact->save($this->request->data)) {
                     $this->Flash->success(__('Uspješno ste poslali vašu poruku'));
                     $Email = new CakeEmail();
-                    $Email->from(array('tibihdb@tibih-database.org' => 'My Site'));
-                    $Email->to('bokac@ti-bih.org');
+                    $Email->from(array('contact@tibih-database.org' => 'My Site'));
+                    $Email->to('bokac1984@gmail.com');
                     $Email->subject('About');
                     $Email->send('My message');
                     //return $this->redirect(array('action' => 'index'));
