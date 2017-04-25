@@ -328,6 +328,7 @@ class AgreementsController extends AppController {
                 $v['Agreement']['name']);  
             
             if ($fileLocation === '' || empty($fileLocation)) {
+                echo 'nema lokacije0';
                 break;
             }
             
