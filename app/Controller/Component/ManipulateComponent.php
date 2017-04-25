@@ -45,8 +45,8 @@ class ManipulateComponent extends Component {
         $path1 = WWW_ROOT . DS . 'DVD1' . DS;
         $path2 = WWW_ROOT . DS . 'DVD2' . DS;
         
-        debug($this->settings);
-        $this->tempFileLocation = $path1;        
+        $this->tempFileLocation = $path1; 
+        debug($this->tempFileLocation);
         parent::startup($controller);
     }
     
