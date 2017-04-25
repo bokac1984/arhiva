@@ -29,13 +29,19 @@ class ManipulateComponent extends Component {
     public $price;
     public $fileLocation;
     
+    public $settings = array (
+        'folderLocation' => WWW_ROOT . 'uploads' . DS . 'javne_nabavke_new' . DS,
+        'dvd1' => WWW_ROOT . DS . 'DVD1' . DS,
+        'dvd2' => WWW_ROOT . DS . 'DVD2' . DS,
+    );
+    
     public function initialize(Controller $controller) {
         parent::initialize($controller);
         $this->controller = $controller;
-        $this->folderLocation = WWW_ROOT . 'uploads' . DS . 'javne_nabavke' . DS;
-        $path1 = WWW_ROOT . DS . 'DVD1' . DS;
-        $path2 = WWW_ROOT . DS . 'DVD2' . DS;
-        $this->tempFileLocation = $path2;
+//        $this->folderLocation = WWW_ROOT . 'uploads' . DS . 'javne_nabavke_new' . DS;
+//        $path1 = WWW_ROOT . DS . 'DVD1' . DS;
+//        $path2 = WWW_ROOT . DS . 'DVD2' . DS;
+        $this->tempFileLocation = $this->settings['dvd1'];
     }
     
     /**
@@ -78,7 +84,7 @@ class ManipulateComponent extends Component {
     }
     
     public function copyFile($folder = '', $path = '', $oldFileName = '') {
-        $file = new File($this->tempFileLocation . $path);
+        $file = new File($this->settings['tempFileLocation'] . $path);
         $fileName = $this->prepareFilename($oldFileName);
         // Executing this inside a CakePHP class:
         $this->log("Naziv fajla = $path -> $fileName", 'debug');
@@ -100,7 +106,7 @@ class ManipulateComponent extends Component {
      */
     public function processIt($path = '', $contractor = '', $contractName = '') {
         $digitalName = $this->createDigitalName($contractor);
-        $folderName = $this->folderLocation . $digitalName;
+        $folderName = $this->settings['folderLocation'] . $digitalName;
         
         $digitalFolder = new Folder($folderName, true, 755);
         

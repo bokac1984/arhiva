@@ -299,7 +299,8 @@ class AgreementsController extends AppController {
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
             'conditions' => array(
-                'Agreement.created_new_name' => null
+                'Agreement.created_new_name' => null,
+                'Agreement.id' => 907
             ),
             'limit' => '1',
             'fields' => array(
