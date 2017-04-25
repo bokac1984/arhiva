@@ -1,5 +1,5 @@
 <?php
-//debug($company);
+debug($company);
 ?>
 <div class="row hidden">
     <div class="col-md-12">
@@ -39,7 +39,10 @@
                                         array('controller' => 'companies', 
                                             'action' => 'view', 'id' => $agreement['Supplier']['id'])); ?>
                             </td>                             
-                            <td><?php echo $agreement['name']; ?></td>
+                            <td><?php echo $this->Html->link($agreement['name'], 
+                                        array('controller' => 'agreements', 
+                                            'action' => 'view', $agreement['id'])); ?>                            
+                            </td>
                             <td>
                                 <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', 'id' => $agreement['AgreementType']['id'])); ?>
                             </td>                             
@@ -104,8 +107,10 @@
                                         array('controller' => 'companies', 
                                             'action' => 'view', 'id' => $agreement['Purchase']['id'])); ?>
                             </td>                            
-                            <td><?php echo $agreement['name']; ?></td>
-                            <td>
+                            <td><?php echo $this->Html->link($agreement['name'], 
+                                        array('controller' => 'agreements', 
+                                            'action' => 'view', $agreement['id'])); ?>                            
+                            </td><td>
                                 <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', $agreement['AgreementType']['id'])); ?>
                             </td>                            
                             <td><?php echo number_format($agreement['price'], 2, ',', '.'); ?></td>

@@ -171,7 +171,8 @@ class AgreementsController extends AppController {
         if (!$this->Agreement->exists($id)) {
             throw new NotFoundException(__('Invalid agreement'));
         }
-        $options = array('conditions' => array('Agreement.' . $this->Agreement->primaryKey => $id));
+        $options = array('conditions' => array('Agreement.' . $this->Agreement->primaryKey => $id),
+            'contain' => array('Purchase', 'Supplier', 'AgreementType'));
         $this->set('agreement', $this->Agreement->find('first', $options));
     }
 
