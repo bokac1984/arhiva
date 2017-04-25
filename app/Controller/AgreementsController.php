@@ -299,10 +299,9 @@ class AgreementsController extends AppController {
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
             'conditions' => array(
-                'Agreement.created_new_name' => null,
-                'Agreement.id' => 907
+                'Agreement.created_new_name' => null
             ),
-            'limit' => '1',
+            'limit' => '1000',
             'fields' => array(
                 'Agreement.id',
                 'Agreement.path',
@@ -329,7 +328,6 @@ class AgreementsController extends AppController {
                 $v['Agreement']['name']);  
             
             if ($fileLocation === '' || empty($fileLocation)) {
-                echo 'nema lokacije0';
                 break;
             }
             
@@ -342,8 +340,6 @@ class AgreementsController extends AppController {
                     'created_new_name' => '1'
                 )
             );
-            
-            debug($toSave);
             
             if (!$this->Agreement->save($toSave)) {
                 echo "NOT SAVED";

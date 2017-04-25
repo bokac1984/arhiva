@@ -45,8 +45,7 @@ class ManipulateComponent extends Component {
         $path1 = APP . 'uploaded_files' . DS . 'DVD1' . DS;
         $path2 = APP . 'uploaded_files' . DS . 'DVD2' . DS;
         
-        $this->tempFileLocation = $path1; 
-        debug($this->tempFileLocation);
+        $this->tempFileLocation = $path1;
         parent::startup($controller);
     }
     
@@ -67,7 +66,6 @@ class ManipulateComponent extends Component {
             $temporalNameHashed = hash('sha512', $originalName . $now);
             $temporalName = substr($temporalNameHashed, 0, 10);
         }
-        debug($temporalName);
         return $temporalName;
     }    
     
