@@ -336,7 +336,7 @@ class AgreementsController extends AppController {
             $toSave = array(
                 'Agreement' => array(
                     'id' => $v['Agreement']['id'],
-                    'new_filename' => basename($fileLocation),
+                    'new_file_name' => basename($fileLocation),
                     'file_location' => $fileLocation,
                     'old_file_location' => $v['Agreement']['file_location'],
                     'created_new_name' => '1'
