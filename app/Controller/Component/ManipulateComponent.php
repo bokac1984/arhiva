@@ -67,7 +67,7 @@ class ManipulateComponent extends Component {
             $temporalNameHashed = hash('sha512', $originalName . $now);
             $temporalName = substr($temporalNameHashed, 0, 10);
         }
-        
+        debug($temporalName);
         return $temporalName;
     }    
     
