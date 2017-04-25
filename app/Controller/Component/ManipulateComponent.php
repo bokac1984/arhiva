@@ -30,7 +30,7 @@ class ManipulateComponent extends Component {
     public $fileLocation;
     
     public $settings = array (
-        'folderLocation' => WWW_ROOT . 'uploads' . DS . 'javne_nabavke_new' . DS,
+        'folderLocation' => WWW_ROOT . 'uploaded_files' . DS . 'javne_nabavke_new' . DS,
         'dvd1' => WWW_ROOT . DS . 'DVD1' . DS,
         'dvd2' => WWW_ROOT . DS . 'DVD2' . DS,
     );
@@ -41,6 +41,8 @@ class ManipulateComponent extends Component {
 //        $this->folderLocation = WWW_ROOT . 'uploads' . DS . 'javne_nabavke_new' . DS;
 //        $path1 = WWW_ROOT . DS . 'DVD1' . DS;
 //        $path2 = WWW_ROOT . DS . 'DVD2' . DS;
+        
+        debug($this->settings);
         $this->tempFileLocation = $this->settings['dvd1'];
     }
     
