@@ -68,6 +68,27 @@ class CompaniesController extends AppController {
 
         $this->set(compact('company', 'purchasePrice', 'supplierPrice'));
     }
+    
+    /**
+     * view method
+     *
+     * @throws NotFoundException
+     * @param string $id
+     * @return void
+     */
+    public function overview($id = null) {
+        if (!$this->Company->exists($id)) {
+            throw new NotFoundException(__('Nepostojeći ID firme'));
+        }
+
+        $company = $this->Company->companyAgreements($id);
+        
+        $purchasePrice = $this->Company->PurchaseAgreement->getSumAndCount('purchase_id', $id);
+        
+        $supplierPrice = $this->Company->SupplierAgreement->getSumAndCount('supplier_id', $id);
+
+        $this->set(compact('company', 'purchasePrice', 'supplierPrice'));
+    }    
 
     /**
      * add method

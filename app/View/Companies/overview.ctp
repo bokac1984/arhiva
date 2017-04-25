@@ -1,80 +1,141 @@
 <?php
-echo $this->Html->script('/plugins/bootstrap-modal/js/bootstrap-modal', array('block' => 'scriptBottom'));
-echo $this->Html->script('/plugins/bootstrap-modal/js/bootstrap-modalmanager', array('block' => 'scriptBottom'));
-echo $this->Html->script('/plugins/iCheck/jquery.icheck.min', array('block' => 'scriptBottom'));
-echo $this->Html->script('/js/companies/index', array('block' => 'scriptBottom'));
-echo $this->Html->scriptBlock("inst.init();", array('block' => 'scriptBottom'));
-
-echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch', array('block' => 'css'));
-echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal', array('block' => 'css'));
-echo $this->Html->css('/plugins/iCheck/skins/square/blue', array('block' => 'css'));
-echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
+//debug($company);
 ?>
-<div class="row">
+<div class="row hidden">
     <div class="col-md-12">
-
-        <p class="pull-right">
-            <a id="merge-btn" href="#" class="btn btn-primary" role="button">Spoji u jednu</a>
-        </p>
-        <?php if (!empty($institutions)): ?>                
-            <p>
-                <a href="#" class="btn btn-bricky" role="button" id="deleteAll">Obriši</a>
-                <span class="error-delete text-danger" style="display: none;">Niste odabrali ni jednu instituciju!</span>
-            </p> 
-        <?php endif; ?>
+        <?php echo '<pre>';print_r($company);echo '</pre>'; ?>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <table class="table table-condensed" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th class="center"><input class="check-all" name="iCheckMain" type="checkbox" value="" /></th>
-                    <th class="center">Glavni</th>
-                    <th><?php echo $this->Paginator->sort('id'); ?></th>
-                    <th><?php echo $this->Paginator->sort('name'); ?></th>
-                    <th><?php echo $this->Paginator->sort('created'); ?></th>
-                    <th><?php echo $this->Paginator->sort('modified'); ?></th>
-                    <th class="actions"><?php echo __('Actions'); ?></th>
-                </tr>
-            </thead>
-            <tbody class='chekboksovi'>
-                <?php foreach ($companies as $company): ?>
+        <h2 class="center"><?php echo h($company['Company']['name']); ?></h2>
+    </div>
+</div>
+<?php if (!empty($company['PurchaseAgreement'])): ?>
+<div class="row">
+    <div class="col-md-12">
+        <h4>Ugovori gdje se <b><?php echo __($company['Company']['name']); ?></b> pojavljuje kao <i>naručilac</i></h4>
+        <p>Ukupan iznos ugovora: <b><?php echo number_format($purchasePrice['Suma'], 2, ',', '.'); ?> KM</b></p>
+        <p>Broj  ugovora: <b><?php echo $purchasePrice['brojUgovora']; ?></b></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="related">
+            <table id="narucilac" class="table table-hover table-condensed" cellpadding = "0" cellspacing = "0">
                     <tr>
-                        <td class="center">
-                            <input name="iCheck" class="koji-id" type="checkbox" value="<?php echo h($company['Company']['id']); ?>" /></td>
-                        <td class="center">
-                            <input name="iCheck[]" class="main" type="radio" value="<?php echo h($company['Company']['id']); ?>" /></td>
-                        <td><?php echo h($company['Company']['id']); ?>&nbsp;</td>
-                        <td><?php echo h($company['Company']['name']); ?>&nbsp;</td>
-                        <td><?php echo h($company['Company']['created']); ?>&nbsp;</td>
-                        <td><?php echo h($company['Company']['modified']); ?>&nbsp;</td>
-                        <td class="actions">
-                            <?php echo $this->Html->link(__('View'), array('action' => 'view', $company['Company']['id'])); ?>
-                            <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $company['Company']['id'])); ?>
-                            <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $company['Company']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $company['Company']['id']))); ?>
-                        </td>
+                        <th><?php echo __('Dobavljač'); ?></th>
+                        <th><?php echo __('Ugovor'); ?></th>
+                        <th><?php echo __('Postupak'); ?></th>                        
+                        <th><?php echo __('Iznos'); ?></th>
+                        <th><?php echo __('Datum'); ?></th>
+                        <th><?php echo __('Path'); ?></th>
+                        <th></th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <?php echo $this->element('pagination'); ?>
+                    <?php foreach ($company['PurchaseAgreement'] as $agreement): ?>
+                        <tr>
+                            <td>
+                                <?php echo $this->Html->link($agreement['Supplier']['name'], 
+                                        array('controller' => 'companies', 
+                                            'action' => 'view', 'id' => $agreement['Supplier']['id'])); ?>
+                            </td>                             
+                            <td><?php echo $agreement['name']; ?></td>
+                            <td>
+                                <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', 'id' => $agreement['AgreementType']['id'])); ?>
+                            </td>                             
+                            <td><?php echo number_format($agreement['price'], 2, ',', '.'); ?></td>
+                            <td><?php echo $this->Time->format($agreement['contract_date'], '%d.%m.%Y'); ?></td>                         
+                            <td><?php echo $agreement['path']; ?></td>
+                            <td>
+                                <?php
+                                echo $this->Link->cLink(__(''), 
+                                    array(
+                                        'controller' => 'agreements',
+                                        'action' => 'sendFile', 
+                                        'filename' => $agreement['new_file_name']), 
+                                    'fa fa-download', 
+                                    array(
+                                        'title' => 'Skini ugovor'
+                                    )
+                                );
+                                ?>                            
+                            </td>                            
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+
+        </div>
     </div>
 </div>
-<!-- DIALOG -->
-<div id="merge-modal" class="modal fade" tabindex="-1" data-width="460" data-backdrop="static" data-keyboard="false" style="display: none;">
-    <div class="modal-header" style="margin-bottom:0">
-        <h4>Spajanje</h4>
-    </div>
-    <div class="modal-body" style="margin-bottom:0">
-        <h5>Da li ste sigurni da želite spojiti odabrane kompanije?</h5>
-    </div>    
-    <div class="modal-footer" style="margin-top:0">       
-        <button id="btn-dialog-dismiss" class="btn btn-primary mergeConfirmed">
-            U redu
-        </button>
-        <button id="btn-dialog-dismiss" class="btn btn-default" data-dismiss="modal">
-            Odustani
-        </button>        
+<?php else: ?>
+<div class="row">
+    <div class="col-md-8">
+        <h5><i class="clip-info"></i> <?php echo __('Nema ugovora kao naručilac'); ?></h5>
     </div>
 </div>
+    
+<?php endif; ?>
+<hr>
+<?php if (!empty($company['SupplierAgreement'])): ?>
+<div class="row">
+    <div class="col-md-12">
+        <h4>Ugovori gdje se <b><?php echo __($company['Company']['name']); ?></b> pojavljuje kao <i>dobavljač</i></h4>
+        <p>Ukupan iznos ugovora: <b><?php echo number_format($supplierPrice['Suma'], 2, ',', '.'); ?> KM</b></p>
+        <p>Broj  ugovora: <b><?php echo $supplierPrice['brojUgovora']; ?></b></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="related">
+                <table  class="table" cellpadding = "0" cellspacing = "0">
+                    <tr>
+                        <th><?php echo __('Naručilac'); ?></th>
+                        <th><?php echo __('Ugovor'); ?></th>
+                        <th><?php echo __('Postupak'); ?></th>
+                        <th><?php echo __('Iznos'); ?></th>
+                        <th><?php echo __('Datum'); ?></th>
+                        <th><?php echo __('Path'); ?></th>
+                        <th></th>
+                    </tr>
+                    <?php foreach ($company['SupplierAgreement'] as $agreement): ?>
+                        <tr>
+                            <td>
+                                <?php echo $this->Html->link($agreement['Purchase']['name'], 
+                                        array('controller' => 'companies', 
+                                            'action' => 'view', 'id' => $agreement['Purchase']['id'])); ?>
+                            </td>                            
+                            <td><?php echo $agreement['name']; ?></td>
+                            <td>
+                                <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', $agreement['AgreementType']['id'])); ?>
+                            </td>                            
+                            <td><?php echo number_format($agreement['price'], 2, ',', '.'); ?></td>
+                            <td><?php echo $this->Time->format($agreement['contract_date'], '%d.%m.%Y'); ?></td>
+                            <td><?php echo $agreement['path']; ?></td>
+                            <td>
+                                <?php
+                                echo $this->Link->cLink(__(''), 
+                                    array(
+                                        'controller' => 'agreements',
+                                        'action' => 'sendFile', 
+                                        'filename' => $agreement['new_file_name']), 
+                                    'fa fa-download', 
+                                    array(
+                                        'title' => 'Skini ugovor'
+                                    )
+                                );
+                                ?>                            
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+        </div>                
+    </div>
+</div>
+<?php else: ?>
+<div class="row">
+    <div class="col-md-8">
+        <h5><i class="clip-info"></i> <?php echo __('Nema ugovora kao dobavljač'); ?></h5>
+    </div>
+</div>
+    
+<?php endif; ?>

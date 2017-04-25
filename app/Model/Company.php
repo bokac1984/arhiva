@@ -53,7 +53,8 @@ class Company extends AppModel {
                 'PurchaseAgreement.contract_date',
                 'PurchaseAgreement.new_file_name',
                 'PurchaseAgreement.agreement_type_id',
-                'PurchaseAgreement.supplier_id'
+                'PurchaseAgreement.supplier_id',
+                'PurchaseAgreement.path'
             )
         ),
         'SupplierAgreement' => array(
@@ -69,7 +70,8 @@ class Company extends AppModel {
                 'SupplierAgreement.contract_date',
                 'SupplierAgreement.new_file_name',
                 'SupplierAgreement.agreement_type_id',
-                'SupplierAgreement.purchase_id'
+                'SupplierAgreement.purchase_id',
+                'SupplierAgreement.path'
             )
         ),
     );
@@ -94,7 +96,7 @@ class Company extends AppModel {
                     ),
                     'Supplier' => array(
                         'fields' => array(
-                            'id', 'name'
+                            'id', 'name',
                         )
                     ),
                     'order' => array(
