@@ -45,7 +45,7 @@ class ManipulateComponent extends Component {
         $path1 = APP . 'uploaded_files' . DS . 'DVD1' . DS;
         $path2 = APP . 'uploaded_files' . DS . 'DVD2' . DS;
         
-        $this->tempFileLocation = $path1;
+        $this->tempFileLocation = $path2;
         parent::startup($controller);
     }
     
