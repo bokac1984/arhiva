@@ -345,9 +345,9 @@ class AgreementsController extends AppController {
             
             debug($toSave);
             
-//            if (!$this->Agreement->save($toSave)) {
-//                echo "NOT SAVED";
-//            }
+            if (!$this->Agreement->save($toSave)) {
+                echo "NOT SAVED";
+            }
         }
         echo 'DONE!';
     }
