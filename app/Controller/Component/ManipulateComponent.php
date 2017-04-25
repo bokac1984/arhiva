@@ -37,10 +37,22 @@ class ManipulateComponent extends Component {
         $path2 = WWW_ROOT . DS . 'DVD2' . DS;
         $this->tempFileLocation = $path2;
     }
+    
+    /**
+     * Ova metoda ne valja, treba dodati da ne gleda samo ime
+     * jer onda pravi dva ista hasha, moram ubaciti i vrijeme i jos neki random string
+     * 
+     * @param type $originalName
+     * @return type
+     */
     public function changeNameOfFile($originalName = '') {
         $temporalName = '';
         if ($originalName !== '') {
-            $temporalNameHashed = hash('sha512', $originalName);
+            /**
+             * ubaci neki radnom na osnovu vremena
+             */
+            $now = mktime();
+            $temporalNameHashed = hash('sha512', $originalName . $now);
             $temporalName = substr($temporalNameHashed, 0, 10);
         }
         
