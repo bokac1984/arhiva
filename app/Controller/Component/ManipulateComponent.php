@@ -41,12 +41,12 @@ class ManipulateComponent extends Component {
     }
     
     public function startup(\Controller $controller) {
-//        $this->folderLocation = WWW_ROOT . 'uploads' . DS . 'javne_nabavke_new' . DS;
-//        $path1 = WWW_ROOT . DS . 'DVD1' . DS;
-//        $path2 = WWW_ROOT . DS . 'DVD2' . DS;
+        $this->folderLocation = WWW_ROOT . 'uploaded_files' . DS . 'javne_nabavke_new' . DS;
+        $path1 = WWW_ROOT . DS . 'DVD1' . DS;
+        $path2 = WWW_ROOT . DS . 'DVD2' . DS;
         
         debug($this->settings);
-        $this->tempFileLocation = $this->settings['dvd1'];        
+        $this->tempFileLocation = $path1;        
         parent::startup($controller);
     }
     
@@ -90,7 +90,7 @@ class ManipulateComponent extends Component {
     }
     
     public function copyFile($folder = '', $path = '', $oldFileName = '') {
-        $file = new File($this->settings['tempFileLocation'] . $path);
+        $file = new File($this->tempFileLocation . $path);
         $fileName = $this->prepareFilename($oldFileName);
         // Executing this inside a CakePHP class:
         $this->log("Naziv fajla = $path -> $fileName", 'debug');
@@ -112,7 +112,7 @@ class ManipulateComponent extends Component {
      */
     public function processIt($path = '', $contractor = '', $contractName = '') {
         $digitalName = $this->createDigitalName($contractor);
-        $folderName = $this->settings['folderLocation'] . $digitalName;
+        $folderName = $this->folderLocation . $digitalName;
         
         $digitalFolder = new Folder($folderName, true, 755);
         
