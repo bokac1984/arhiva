@@ -305,6 +305,7 @@ class AgreementsController extends AppController {
             'limit' => '1',
             'fields' => array(
                 'Agreement.path',
+                'Agreement.name',
                 'Agreement.file_location'
             ),
             'contain' => array(
