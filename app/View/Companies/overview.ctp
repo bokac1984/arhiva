@@ -1,5 +1,5 @@
 <?php
-debug($company);
+//debug($company);
 ?>
 <div class="row hidden">
     <div class="col-md-12">
