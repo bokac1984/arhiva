@@ -295,6 +295,57 @@ class AgreementsController extends AppController {
         echo 'DONE!';
     }
     
+    public function redoFiles() {
+        $this->autoRender = false;
+        $data = $this->Agreement->find('all', array(
+            'conditions' => array(
+                'Agreement.created_new_name' => null
+            ),
+            'limit' => '1',
+            'fields' => array(
+                'Agreement.path',
+                'Agreement.file_location'
+            ),
+            'contain' => array(
+                'Purchase' => array(
+                    'fields' => array(
+                        'Purchase.name'
+                    )
+                )
+            )
+        ));
+        echo (count($data));
+        
+        if (count($data) === 0) {
+            return;
+        }
+        
+        foreach ($data as $k => $v) {
+            $fileLocation = $this->Manipulate->processIt($v['Agreement']['path'], 
+                $v['Purchase']['name'],
+                $v['Agreement']['name']);  
+            
+            if ($fileLocation === '' || empty($fileLocation)) {
+                break;
+            }
+            
+            $toSave = array(
+                'Agreement' => array(
+                    'id' => $v['Agreement']['id'],
+                    'new_filename' => basename($fileLocation),
+                    'file_location' => $fileLocation,
+                    'old_file_location' => $v['Agreement']['file_location'],
+                    'created_new_name' => '1'
+                )
+            );
+            
+            if (!$this->Agreement->save($toSave)) {
+                echo "NOT SAVED";
+            }
+        }
+        echo 'DONE!';
+    }
+    
     /**
      * Prvobitna metoda ya kopiranje fajlova
      * 
