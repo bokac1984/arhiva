@@ -47,6 +47,8 @@ class ManipulateComponent extends Component {
         
         $this->tempFileLocation = $path1; 
         debug($this->tempFileLocation);
+        debug(APP);
+        debug(APP_DIR);
         parent::startup($controller);
     }
     
