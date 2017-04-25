@@ -38,12 +38,16 @@ class ManipulateComponent extends Component {
     public function initialize(Controller $controller) {
         parent::initialize($controller);
         $this->controller = $controller;
+    }
+    
+    public function startup(\Controller $controller) {
 //        $this->folderLocation = WWW_ROOT . 'uploads' . DS . 'javne_nabavke_new' . DS;
 //        $path1 = WWW_ROOT . DS . 'DVD1' . DS;
 //        $path2 = WWW_ROOT . DS . 'DVD2' . DS;
         
         debug($this->settings);
-        $this->tempFileLocation = $this->settings['dvd1'];
+        $this->tempFileLocation = $this->settings['dvd1'];        
+        parent::startup($controller);
     }
     
     /**
