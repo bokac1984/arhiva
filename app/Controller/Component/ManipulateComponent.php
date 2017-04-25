@@ -29,12 +29,6 @@ class ManipulateComponent extends Component {
     public $price;
     public $fileLocation;
     
-    public $settings = array (
-        'folderLocation' => WWW_ROOT . 'uploaded_files' . DS . 'javne_nabavke_new' . DS,
-        'dvd1' => WWW_ROOT . DS . 'DVD1' . DS,
-        'dvd2' => WWW_ROOT . DS . 'DVD2' . DS,
-    );
-    
     public function initialize(Controller $controller) {
         parent::initialize($controller);
         $this->controller = $controller;
