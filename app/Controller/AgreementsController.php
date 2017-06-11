@@ -19,18 +19,14 @@ class AgreementsController extends AppController {
      * @var array
      */
     public $components = array('Paginator', 'Flash', 'Session', 'Manipulate');
-    
+
     public function beforeFilter() {
         parent::beforeFilter();
         // Allow users to register and logout.
         $this->Auth->allow(
-            'pregled',
-            'sendFile',
-            'pravilnici',
-            'agreement',
-            'kompanije'
+                'pregled', 'sendFile', 'pravilnici', 'agreement', 'kompanije'
         );
-    }    
+    }
 
     /**
      * index method
@@ -41,20 +37,18 @@ class AgreementsController extends AppController {
         $this->Agreement->recursive = 0;
         $this->set('agreements', $this->Paginator->paginate());
     }
-    
-    public function kompanije()
-    {
-        
+
+    public function kompanije() {
+
         $agreements = $this->Agreement->vratiPodatkeZaPregled('A', 'supplier_id');
-        
+
         $firstChar = $this->Agreement->allFirstLettersAndNumbers('supplier_id');
         unset($firstChar[0]);
-        
-        $this->set(compact('agreements', 'firstChar')); 
+
+        $this->set(compact('agreements', 'firstChar'));
     }
 
-
-        public function overview() {
+    public function overview() {
         $this->Agreement->recursive = 0;
 
         $containOptions = array(
@@ -96,23 +90,23 @@ class AgreementsController extends AppController {
             ),
             'fields' => $fields
         );
-       
-        $this->set('agreements', $this->Paginator->paginate());  
+
+        $this->set('agreements', $this->Paginator->paginate());
     }
-    
+
     /**
      * ovo bi trebala biti metoda za javni pregled sumirano po naruciocima
      */
-    public function pregled() {    
-        
+    public function pregled() {
+
         $agreements = $this->Agreement->vratiPodatkeZaPregled('A');
-        
+
         $firstChar = $this->Agreement->allFirstLettersAndNumbers();
         unset($firstChar[0]);
-        
-        $this->set(compact('agreements', 'firstChar'));  
+
+        $this->set(compact('agreements', 'firstChar'));
     }
-    
+
     public function pravilnici() {
         $this->Agreement->recursive = 0;
 
@@ -156,8 +150,8 @@ class AgreementsController extends AppController {
             ),
             'fields' => $fields
         );
-       
-        $this->set('agreements', $this->Paginator->paginate());         
+
+        $this->set('agreements', $this->Paginator->paginate());
     }
 
     /**
@@ -220,7 +214,68 @@ class AgreementsController extends AppController {
         $agreementTypes = $this->Agreement->AgreementType->find('list');
         $this->set(compact('agreementTypes'));
     }
-    
+
+    public function search() {
+        if ($this->request->is('get')) {
+            $keyword = $this->request->query['what'];
+
+
+        $containOptions = array(
+            'AgreementType' => array(
+                'fields' => array(
+                    'id',
+                    'name'
+                )
+            ),
+            'Purchase' => array(
+                'fields' => array(
+                    'id', 'name'
+                )
+            ),
+            'Supplier' => array(
+                'fields' => array(
+                    'id', 'name'
+                )
+            ),
+        );
+
+        $fields = array(
+            'Agreement.id',
+            'Agreement.name',
+            'Agreement.price',
+            'Agreement.contract_date',
+            'Agreement.new_file_name',
+        );
+
+        $this->Paginator->settings = array(
+            'limit' => 25,
+            'contain' => $containOptions,
+            'order' => array(
+                //'Agreement.contract_date' => 'DESC',
+                'Purchase.name'
+            ),
+            'conditions' => array(
+                'Agreement.display' => '1',
+                'OR' => array(
+                    'Agreement.name LIKE' => "%$keyword%",
+                    'Purchase.name LIKE' => "%$keyword%",
+                    'Supplier.name LIKE' => "%$keyword%",
+                )
+            ),
+            'fields' => $fields
+        );
+//            $agreements = $this->Paginator->paginate(
+//                'Agreement', 
+//                array(
+//                    'Agreement.name LIKE' => "%$keyword%"
+//                ),
+//                array('contain' => 'Purchase')
+//            );
+$this->set('agreements', $this->Paginator->paginate());
+            //$this->set(compact('agreements'));
+        }
+    }
+
     public function agreement() {
         $this->viewClass = 'Json';
         $letter = $this->request->data['letter'];
@@ -250,7 +305,7 @@ class AgreementsController extends AppController {
         }
         return $this->redirect(array('action' => 'index'));
     }
-    
+
     /**
      * Metoda za skidanje fajlova
      * 
@@ -260,16 +315,15 @@ class AgreementsController extends AppController {
      */
     public function sendFile($filename = '') {
         $file = $this->Agreement->getFile($filename);
-        
+
         if ($file === '') {
             throw new NotFoundException(__('Ne postoji fajl!'));
         }
-        
+
         $this->response->type(array('pdf' => 'application/pdf'));
         $this->response->type('pdf');
         $this->response->file(
-            $file,
-            array('download' => true, 'name' => $filename)
+                $file, array('download' => true, 'name' => $filename)
         );
 
         // Return response object to prevent controller from trying to render
@@ -286,16 +340,16 @@ class AgreementsController extends AppController {
         $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
         $path2 = WWW_ROOT . DS . 'DVD2' . DS . 'data2.xml';
         $localPath = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\data1ispravljeno.xml';
-        
+
         $xml = Xml::build($path2);
-        
+
         $data = Xml::toArray($xml);
-        
+
         //debug($data);
         $this->Agreement->saveToDatabase($data['nabavke']['nabavka']);
         echo 'DONE!';
     }
-    
+
     public function redoFiles() {
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
@@ -318,20 +372,18 @@ class AgreementsController extends AppController {
             )
         ));
         echo (count($data));
-        
+
         if (count($data) === 0) {
             return;
         }
-        
+
         foreach ($data as $k => $v) {
-            $fileLocation = $this->Manipulate->processIt($v['Agreement']['path'], 
-                $v['Purchase']['name'],
-                $v['Agreement']['name']);  
-            
+            $fileLocation = $this->Manipulate->processIt($v['Agreement']['path'], $v['Purchase']['name'], $v['Agreement']['name']);
+
             if ($fileLocation === '' || empty($fileLocation)) {
                 break;
             }
-            
+
             $toSave = array(
                 'Agreement' => array(
                     'id' => $v['Agreement']['id'],
@@ -341,14 +393,14 @@ class AgreementsController extends AppController {
                     'created_new_name' => '1'
                 )
             );
-            
+
             if (!$this->Agreement->save($toSave)) {
                 echo "NOT SAVED";
             }
         }
         echo 'DONE!';
     }
-    
+
     /**
      * Prvobitna metoda ya kopiranje fajlova
      * 
@@ -372,20 +424,18 @@ class AgreementsController extends AppController {
             )
         ));
         echo (count($data));
-        
+
         if (count($data) === 0) {
             return;
         }
-        
+
         foreach ($data as $k => $v) {
-            $fileLocation = $this->Manipulate->processIt($v['Agreement']['path'], 
-                $v['Purchase']['name'],
-                $v['Agreement']['name']);  
-            
+            $fileLocation = $this->Manipulate->processIt($v['Agreement']['path'], $v['Purchase']['name'], $v['Agreement']['name']);
+
             if ($fileLocation === '' || empty($fileLocation)) {
                 break;
             }
-            
+
             $toSave = array(
                 'Agreement' => array(
                     'id' => $v['Agreement']['id'],
@@ -395,14 +445,14 @@ class AgreementsController extends AppController {
                     'display' => '1'
                 )
             );
-            
+
             if (!$this->Agreement->save($toSave)) {
                 echo "NOT SAVED";
             }
         }
         echo 'DONE!';
     }
-    
+
     /**
      * Kreiranje foldera i kopiranje fajlova iy pomocnih diskova (DVD1, DVD2)
      * 
@@ -424,23 +474,21 @@ class AgreementsController extends AppController {
                 )
             )
         ));
-        echo (count($data)) ."<br/>";
-        
+        echo (count($data)) . "<br/>";
+
         if (count($data) === 0) {
             echo 'vracam se<br/>';
             return;
         }
-        
+
         foreach ($data as $k => $v) {
             $fileLocation = $this->Manipulate->processIt(
-                $v['Agreement']['path'], 
-                $v['Purchase']['name'],
-                $v['Agreement']['name']);  
-            
+                    $v['Agreement']['path'], $v['Purchase']['name'], $v['Agreement']['name']);
+
             if ($fileLocation === '' || empty($fileLocation)) {
                 break;
             }
-            
+
             $toSave = array(
                 'Agreement' => array(
                     'id' => $v['Agreement']['id'],
@@ -450,14 +498,14 @@ class AgreementsController extends AppController {
                     'display' => '1'
                 )
             );
-            
+
             if (!$this->Agreement->save($toSave)) {
                 echo "NOT SAVED";
             }
         }
         echo 'DONE!';
-    }   
-    
+    }
+
     /**
      * Metoda koja se koristila da se cijena preuredi
      * 
@@ -476,8 +524,8 @@ class AgreementsController extends AppController {
                 'Agreement.original_price'
             )
         ));
-        echo (count($data)) ."<br/>";
-        
+        echo (count($data)) . "<br/>";
+
         if (count($data) === 0) {
             echo 'vracam se<br/>';
             return;
@@ -493,24 +541,22 @@ class AgreementsController extends AppController {
              * 
              */
             if (
-                    strpos($zadnjeCifre, ',') === 0
-                    || 
+                    strpos($zadnjeCifre, ',') === 0 ||
                     strpos($zadnjeCifre, '.') === 0
-                ) {
-                echo strpos($zadnjeCifre, ',')."<br>";
-                
+            ) {
+                echo strpos($zadnjeCifre, ',') . "<br>";
+
                 // ako zadnje 2 cifer budu 00
                 // cemo da radimo drugacije
-                if ($zadnjeCifre === ',00'
-                        || $zadnjeCifre === '.00'
-                        ) {
+                if ($zadnjeCifre === ',00' || $zadnjeCifre === '.00'
+                ) {
                     $cijeliDio = substr($v['Agreement']['original_price'], 0, -3);
                 } else {
                     $cijeliDio = str_replace($zadnjeCifre, '', $v['Agreement']['original_price']);
                 }
-                
-                
-                $cijeliDioBezZnakova = str_replace(array(',','.', ' '), '', $cijeliDio);
+
+
+                $cijeliDioBezZnakova = str_replace(array(',', '.', ' '), '', $cijeliDio);
                 $zadnjeCifreBezZnakova = str_replace(array(',', '.', ' '), '', $zadnjeCifre);
                 //debug($v);
 //                echo $v['Agreement']['price'] ."=".
@@ -521,13 +567,13 @@ class AgreementsController extends AppController {
 //                        . " ********** ";                
 //                echo $zadnjeCifre."<br />";
                 $i++;
-                
+
                 $krajnjiBroj = $cijeliDioBezZnakova . "." . $zadnjeCifreBezZnakova;
-                
-                
+
+
                 $flotBroj = number_format($krajnjiBroj, 2, '.', '');
                 //echo "*****$krajnjiBroj = $flotBroj****";
-                
+
                 $dataToSave = array(
                     'Agreement' => array(
                         'id' => $v['Agreement']['id'],
@@ -535,12 +581,11 @@ class AgreementsController extends AppController {
                         'old_path' => $v['Agreement']['price']
                     )
                 );
-                
+
                 if (!$this->Agreement->save($dataToSave)) {
                     echo "not saved {$v['id']}";
                 }
                 //
-
             } else {
                 $dataToSave = array(
                     'Agreement' => array(
@@ -548,13 +593,13 @@ class AgreementsController extends AppController {
                         'old_path' => $v['Agreement']['price']
                     )
                 );
-                
+
                 if (!$this->Agreement->save($dataToSave)) {
                     echo "not saved {$v['id']}";
                 }
             }
-                
         }
         echo "Ukupno je bilo $i";
-    }   
+    }
+
 }

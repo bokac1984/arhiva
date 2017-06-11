@@ -193,10 +193,8 @@
         <script src="/plugins/jquery.transit/jquery.transit.js"></script>
         <script src="/plugins/hover-dropdown/twitter-bootstrap-hover-dropdown.min.js"></script>
         <script src="/plugins/jquery.appear/jquery.appear.js"></script>
-        <script src="/plugins/blockUI/jquery.blockUI.js"></script>
         <script src="/plugins/jquery-cookie/jquery.cookie.js"></script>
         <script src="/js/main.js"></script>
-        <?php echo $this->fetch('scriptBottom'); ?>
         <!-- end: MAIN JAVASCRIPTS -->
         <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
         <script src="/plugins/revolution_slider/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
@@ -205,6 +203,7 @@
         <script src="/plugins/stellar.js/jquery.stellar.min.js"></script>
         <script src="/plugins/colorbox/jquery.colorbox-min.js"></script>
         <script src="/js/index.js"></script>
+        <?php echo $this->fetch('scriptBottom'); ?>
         <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
         <script>
             jQuery(document).ready(function () {
