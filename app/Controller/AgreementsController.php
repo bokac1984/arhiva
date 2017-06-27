@@ -245,6 +245,7 @@ class AgreementsController extends AppController {
             'Agreement.price',
             'Agreement.contract_date',
             'Agreement.new_file_name',
+            'Agreement.path',
         );
 
         $this->Paginator->settings = array(

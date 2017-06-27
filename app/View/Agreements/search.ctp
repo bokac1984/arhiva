@@ -23,6 +23,7 @@ echo $this->Html->css('search', array('block' => 'css'));
                         <th><?php echo $this->Paginator->sort('supplier_id', 'Dobavljac'); ?></th>
                         <th><?php echo $this->Paginator->sort('agreement_type', 'Tip'); ?></th>
                         <th><?php echo $this->Paginator->sort('new_file_name', 'Fajl'); ?></th>
+                        <th><?php echo $this->Paginator->sort('path', 'Path'); ?></th>
                         <th class="actions"><?php echo __('Actions'); ?></th>
                     </tr>
                 </thead>
@@ -50,7 +51,8 @@ echo $this->Html->css('search', array('block' => 'css'));
                             <td>
                                 <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', $agreement['AgreementType']['id'])); ?>
                             </td> 
-                            <td><?php echo h($agreement['Agreement']['new_file_name']); ?>&nbsp;</td>                            
+                            <td><?php echo h($agreement['Agreement']['new_file_name']); ?>&nbsp;</td>  
+                            <td><?php echo h($agreement['Agreement']['path']); ?>&nbsp;</td>  
                             <td class="actions">
                                 <?php
                                 echo $this->Link->cLink(__(''), array('action' => 'view', $agreement['Agreement']['id']), 'fa fa-eye', array(
