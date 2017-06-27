@@ -1,4 +1,5 @@
 <?php
+echo $this->Html->css('search', array('block' => 'css'));
 //echo $this->Html->css('/js/libs/editable/css/bootstrap-editable', array('block' => 'css'));
 //echo $this->Html->script('/js/libs/editable/js/bootstrap-editable.min', array('block'=>'scriptBottom'));
 //
@@ -12,7 +13,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="agreements index">
-            <table class="table table-responsive table-hover"cellpadding="0" cellspacing="0">
+            <table class="table table-responsive table-hover search-table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
                         <th><?php echo $this->Paginator->sort('name', 'Naziv'); ?></th>
