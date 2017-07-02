@@ -78,6 +78,8 @@ class AppModel extends Model {
         $this->create();
         if ($this->save($dataToSave)) {
             return $this->getLastInsertID();
+        } else {
+            echo 'pao save iz nekog razloga';
         }
 
         return 0;
