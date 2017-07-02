@@ -163,6 +163,7 @@ class Agreement extends AppModel {
             if ($purchase !== 0) {
                 $ugovor['Agreement']['purchase_id'] = $purchase;
             } else {
+                echo 'ne radi dobalvjac';
                 debug($v['path']);
                 break;
             }
@@ -171,6 +172,7 @@ class Agreement extends AppModel {
             if ($supplier !== 0) {
                 $ugovor['Agreement']['supplier_id'] = $supplier;
             } else {
+                echo 'ne radi supplioer';
                 debug($v['path']);
                 break;
             }
@@ -200,6 +202,7 @@ class Agreement extends AppModel {
             if (!$this->save($ugovor)) {
                 echo 'nije sacuvalo!';
                 debug($v['path']);
+                debug($this->validationErrors);
                 break;
             }
         }
