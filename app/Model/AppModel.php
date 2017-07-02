@@ -58,7 +58,8 @@ class AppModel extends Model {
             'conditions' => array(
                 'OR' => array(
                     "UPPER({$this->alias}.name)" => mb_strtoupper($name, 'UTF-8'),
-                    "{$this->alias}.name" => $name,       
+                    "{$this->alias}.name" => $name, 
+                    "LCASE({$this->alias}.name)" => mb_strtolower($name, 'UTF-8'),
                 ), 
             ),
             'fields' => array(
