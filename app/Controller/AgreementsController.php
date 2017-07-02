@@ -377,7 +377,6 @@ class AgreementsController extends AppController {
         $this->Agreement->findDifferences($data['nabavke']['nabavka'], $dvd);
         
         debug(count($this->Agreement->differences));                   
-//        debug($this->Agreement->differences); 
         
         if (!$this->Agreement->saveDifferences()) {
             echo 'NOT DONE!';
@@ -499,12 +498,13 @@ class AgreementsController extends AppController {
      * 
      * @return type
      */
-    public function copybackup() {
+    public function create_files($dvd = '') {
         $this->autoRender = false;
         $data = $this->Agreement->find('all', array(
             'conditions' => array(
                 'Agreement.file_location' => null,
-                'Agreement.new_file_name' => null
+                'Agreement.new_file_name' => null,
+                'Agreement.dvd' => $dvd
             ),
             'limit' => '1000',
             'contain' => array(
@@ -524,7 +524,7 @@ class AgreementsController extends AppController {
 
         foreach ($data as $k => $v) {
             $fileLocation = $this->Manipulate->processIt(
-                    $v['Agreement']['path'], $v['Purchase']['name'], $v['Agreement']['name']);
+                    $v['Agreement']['path'], $v['Purchase']['name'], $v['Agreement']['name'], $dvd);
 
             if ($fileLocation === '' || empty($fileLocation)) {
                 break;
