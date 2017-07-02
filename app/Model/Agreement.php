@@ -198,6 +198,7 @@ class Agreement extends AppModel {
 
             $this->create();
             if (!$this->save($ugovor)) {
+                echo 'nije sacuvalo!';
                 debug($v['path']);
                 break;
             }
