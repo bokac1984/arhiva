@@ -98,7 +98,7 @@ class ManipulateComponent extends Component {
      * ako postoji onda da se u taj folder kopira fajl sa imenom koje 
      * ce biti random po algiritmu odozgo kreiranom
      */
-    public function processIt($path = '', $contractor = '', $contractName = '') {
+    public function processIt($path = '', $contractor = '', $contractName = '', $dvd = '1') {
         $digitalName = $this->createDigitalName($contractor);
         $folderName = $this->folderLocation . $digitalName;
 
