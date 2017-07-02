@@ -183,12 +183,12 @@ class Agreement extends AppModel {
             $ugovor['Agreement']['dvd'] = $dvd;
 
             $typeId = $this->AgreementType->checkAndSave(trim($v['vrsta']));
-            debug($typeId);
+            
             if ($typeId !== 0) {
                 $ugovor['Agreement']['agreement_type_id'] = $typeId;
             } else {
                 debug($v['path']);
-                break;
+                continue;
             }
 
             if ($this->checkAndSaveAgrement($ugovor) === 1) {
