@@ -76,6 +76,7 @@ class AppModel extends Model {
         );
 
         $this->create();
+        debug($dataToSave);
         if ($this->save($dataToSave)) {
             return $this->getLastInsertID();
         } else {
