@@ -23,7 +23,7 @@ var inst = function () {
         $('.mergeConfirmed').click(function(){
             //console.log(arr);
            jQuery.ajax({
-                url: '/companies/merge',
+                url: '/companies/automerge',
                 method: 'POST',
                 data: { ids: arr},
                 type: 'json'

@@ -10,6 +10,7 @@ echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal', array('blo
 echo $this->Html->css('/plugins/iCheck/skins/square/blue', array('block' => 'css'));
 echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
 ?>
+<?php echo $this->element('company_search'); ?>
 <div class="row">
     <div class="col-md-12">
 
@@ -67,7 +68,21 @@ echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
         <h4>Spajanje</h4>
     </div>
     <div class="modal-body" style="margin-bottom:0">
-        <h5>Da li ste sigurni da želite spojiti odabrane kompanije?</h5>
+        <div class="row question">
+            <div class="col-md-12">
+                <h5>Da li ste sigurni da želite spojiti odabrane kompanije?</h5>
+            </div>
+        </div>
+        <div class="row waiting hidden">
+            <div class="col-md-12">
+                <h5>Cekanje</h5>
+            </div>
+        </div>
+        <div class="row merge-results hidden">
+            <div class="col-md-12">
+                
+            </div>
+        </div>        
     </div>    
     <div class="modal-footer" style="margin-top:0">       
         <button id="btn-dialog-dismiss" class="btn btn-primary mergeConfirmed">

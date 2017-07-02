@@ -81,9 +81,14 @@ $url = $this->request->here;
             </li> 
             <li>
                 <a href="/companies">
-                    Upravljanje kompanijama/preduzecima
+                    Upravljanje kompanijama
                 </a>
-            </li>             
+            </li> 
+            <li>
+                <a href="/companies/merger">
+                    Spajanje kompanija
+                </a>
+            </li> 
         </ul>
     </li> 
     <li class="<?php echo (preg_match("/(\/settings)/", $url))? 'active' : ''?>">

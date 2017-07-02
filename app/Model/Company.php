@@ -25,7 +25,7 @@ class Company extends AppModel {
             'unique' => array(
                 'rule' => 'isUnique',
                 'required' => 'create',
-                'message' => 'Your custom message here',
+                'message' => 'Naziv kompanije mora biti jedinstven',
             //'allowEmpty' => false,
             //'required' => false,
             //'last' => false, // Stop validation after this rule
@@ -156,7 +156,7 @@ class Company extends AppModel {
                     'old_purchaser_id' => $id
                 ), 
                 array(
-                        'PurchaseAgreement.purchase_id' => $id
+                    'PurchaseAgreement.purchase_id' => $id
                 )
             );
             
@@ -166,23 +166,25 @@ class Company extends AppModel {
                     'old_supplier_id' => $id
                 ), 
                 array(
-                        'SupplierAgreement.supplier_id' => $id
+                    'SupplierAgreement.supplier_id' => $id
                 )
             );
             
             if ($purchase && $supplier) {
-                $saved = $this->save(array(
+                return $this->save(array(
                     'Company' => array(
                         'merged' => 1,
                         'id' => $id
                     )
                 ));
                 
-                if (!$saved) {
-                    echo 'nije sacuvao';
-                }
+                
+            } else {
+                echo 'ne radi';
             }
         }
+        
+        return false;
     }
 
 }

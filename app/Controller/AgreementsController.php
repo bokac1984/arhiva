@@ -220,60 +220,53 @@ class AgreementsController extends AppController {
             $keyword = $this->request->query['what'];
 
 
-        $containOptions = array(
-            'AgreementType' => array(
-                'fields' => array(
-                    'id',
-                    'name'
-                )
-            ),
-            'Purchase' => array(
-                'fields' => array(
-                    'id', 'name'
-                )
-            ),
-            'Supplier' => array(
-                'fields' => array(
-                    'id', 'name'
-                )
-            ),
-        );
+            $containOptions = array(
+                'AgreementType' => array(
+                    'fields' => array(
+                        'id',
+                        'name'
+                    )
+                ),
+                'Purchase' => array(
+                    'fields' => array(
+                        'id', 'name'
+                    )
+                ),
+                'Supplier' => array(
+                    'fields' => array(
+                        'id', 'name'
+                    )
+                ),
+            );
 
-        $fields = array(
-            'Agreement.id',
-            'Agreement.name',
-            'Agreement.price',
-            'Agreement.contract_date',
-            'Agreement.new_file_name',
-            'Agreement.path',
-        );
+            $fields = array(
+                'Agreement.id',
+                'Agreement.name',
+                'Agreement.price',
+                'Agreement.contract_date',
+                'Agreement.new_file_name',
+                'Agreement.path',
+            );
 
-        $this->Paginator->settings = array(
-            'limit' => 25,
-            'contain' => $containOptions,
-            'order' => array(
-                //'Agreement.contract_date' => 'DESC',
-                'Purchase.name'
-            ),
-            'conditions' => array(
-                'Agreement.display' => '1',
-                'OR' => array(
-                    'Agreement.name LIKE' => "%$keyword%",
-                    'Purchase.name LIKE' => "%$keyword%",
-                    'Supplier.name LIKE' => "%$keyword%",
-                )
-            ),
-            'fields' => $fields
-        );
-//            $agreements = $this->Paginator->paginate(
-//                'Agreement', 
-//                array(
-//                    'Agreement.name LIKE' => "%$keyword%"
-//                ),
-//                array('contain' => 'Purchase')
-//            );
-$this->set('agreements', $this->Paginator->paginate());
-            //$this->set(compact('agreements'));
+            $this->Paginator->settings = array(
+                'limit' => 25,
+                'contain' => $containOptions,
+                'order' => array(
+                    //'Agreement.contract_date' => 'DESC',
+                    'Purchase.name'
+                ),
+                'conditions' => array(
+                    'Agreement.display' => '1',
+                    'OR' => array(
+                        'Agreement.name LIKE' => "%$keyword%",
+                        'Purchase.name LIKE' => "%$keyword%",
+                        'Supplier.name LIKE' => "%$keyword%",
+                    )
+                ),
+                'fields' => $fields
+            );
+
+            $this->set('agreements', $this->Paginator->paginate());
         }
     }
 
@@ -335,20 +328,60 @@ $this->set('agreements', $this->Paginator->paginate());
     /**
      * Ucitavanje podataka u bazu iz XML fajlova
      */
-    public function obradi() {
+    public function obradi($dvd = null) {
         $this->autoRender = false;
+        
+        if ($dvd == null || $dvd > 2 || $dvd < 1) {
+            throw new NotFoundException(__('Ili 1 ili 2'));
+        }
+        
         // local file
         $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
         $path2 = WWW_ROOT . DS . 'DVD2' . DS . 'data2.xml';
-        $localPath = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\data1ispravljeno.xml';
-
-        $xml = Xml::build($path2);
+        $localPath1 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd1_ispravljeno.xml';
+        $localPath2 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd2_ispravljeno.xml';
+        
+        $xml = Xml::build(${'localPath'.$dvd});
 
         $data = Xml::toArray($xml);
 
         //debug($data);
-        $this->Agreement->saveToDatabase($data['nabavke']['nabavka']);
+        $this->Agreement->saveToDatabase($data['nabavke']['nabavka'], $dvd);
         echo 'DONE!';
+    }
+    
+    /**
+     * Ova metoda ce da pokusa da obradi dodatne
+     * fajlove u kojima su podaci koji treba da se dopune
+     * 
+     * @param type $dvd
+     * @throws NotFoundException
+     */
+    public function dopuni($dvd = null) {
+        $this->autoRender = false;
+        
+        if ($dvd == null || $dvd > 2 || $dvd < 1) {
+            throw new NotFoundException(__('Ili 1 ili 2'));
+        }
+        
+        // local file
+        $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
+        $path2 = WWW_ROOT . DS . 'DVD2' . DS . 'data2.xml';
+        $localPath1 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd1_aca.xml';
+        $localPath2 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd2_aca.xml';
+        
+        $xml = Xml::build(${'localPath'.$dvd});
+
+        $data = Xml::toArray($xml);
+        //$this->Agreement->editData($data['ispravke']['ispravka'], $dvd);
+        $this->Agreement->editData($data['nabavke']['nabavka'], $dvd);
+        echo 'DONE!';
+    }
+    
+    
+    public function testing() {
+        $this->autoRender = false;
+        echo $this->Manipulate->random_text();
     }
 
     public function redoFiles() {
@@ -510,6 +543,8 @@ $this->set('agreements', $this->Paginator->paginate());
     /**
      * Metoda koja se koristila da se cijena preuredi
      * 
+     * I ovo se od danas ne koristi jer imam sve podatke spremne
+     * 
      * @return type
      */
     public function cena() {
@@ -560,20 +595,11 @@ $this->set('agreements', $this->Paginator->paginate());
                 $cijeliDioBezZnakova = str_replace(array(',', '.', ' '), '', $cijeliDio);
                 $zadnjeCifreBezZnakova = str_replace(array(',', '.', ' '), '', $zadnjeCifre);
                 //debug($v);
-//                echo $v['Agreement']['price'] ."=".
-//                        $v['Agreement']['original_price'] 
-//                        ." = $cijeliDio"
-//                            . " = $cijeliDioBezZnakova"
-//                                . " = $zadnjeCifreBezZnakova"
-//                        . " ********** ";                
-//                echo $zadnjeCifre."<br />";
                 $i++;
 
                 $krajnjiBroj = $cijeliDioBezZnakova . "." . $zadnjeCifreBezZnakova;
 
-
                 $flotBroj = number_format($krajnjiBroj, 2, '.', '');
-                //echo "*****$krajnjiBroj = $flotBroj****";
 
                 $dataToSave = array(
                     'Agreement' => array(

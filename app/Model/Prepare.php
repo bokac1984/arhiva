@@ -9,7 +9,7 @@ App::uses('Folder', 'Utility');
  */
 class Prepare extends AppModel {
     
-    private $goLeftRightMoves = 30;
+    private $goLeftRightMoves = 50;
     public $percent = 95;
     public $companies = array();
     public $sorted = array();
@@ -70,7 +70,8 @@ class Prepare extends AppModel {
     }  
     
     public function compareSimilarity() {
-        $numCompanies = count($this->companies);
+        $inserted = array();
+        echo $numCompanies = count($this->companies);
         foreach ($this->companies as $id => $name) {
             //debug($id);
             $kljuc = key($name);
@@ -80,11 +81,23 @@ class Prepare extends AppModel {
                 if ($noviKljuc < $numCompanies) {
                     //debug($noviKljuc);
                     $kljucKompanije = key($this->companies[$noviKljuc]);
+                    // nadji slicnost tekstova i stavi u procenat
                     similar_text($name[$kljuc], $this->companies[$i+$id][$kljucKompanije], $percent);
-                    $this->sorted[$kljuc][] = array(
-                       'id' => $kljucKompanije,
-                       'percent' => $percent
-                    );
+                    /**
+                     * ako je procenat veci ili jednak
+                     * i ako vec nije insertovan ovaj kljuc negdje
+                     * tek onda ga dodaj u niz slicnih
+                     * 
+                     * Ovo je sve da bi se sprijecilo generisanje kraceg niza
+                     * sa svim podacim u duzem nizu
+                     */
+                    if ($percent >= $this->percent && !in_array($kljucKompanije, $inserted)) {
+                        $inserted[] = $kljucKompanije;
+                        $this->sorted[$kljuc][] = array(
+                           'id' => $kljucKompanije,
+                           'percent' => $percent
+                        );
+                    }
                 }
 
             }

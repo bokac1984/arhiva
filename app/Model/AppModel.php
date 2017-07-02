@@ -54,17 +54,19 @@ class AppModel extends Model {
     }
 
     public function checkAndSave($name = '') {
-        $exist = $this->find('first', array(
+        $exist = $this->find('all', array(
             'conditions' => array(
-                "{$this->alias}.name" => $name
+                "UPPER({$this->alias}.name)" => mb_strtoupper($name, 'UTF-8')
             ),
             'fields' => array(
                 "{$this->alias}.id"
             )
         ));
 
-        if (count($exist) > 0) {
-            return $exist[$this->alias]['id'];
+        if (count($exist) === 1) {
+            return $exist[0][$this->alias]['id'];
+        } else if (count($exist) > 1) {
+            return 0;
         }
 
         $dataToSave = array(

@@ -37,7 +37,7 @@ class CompaniesController extends AppController {
     public function index() {
         $this->Company->recursive = 0;
         $this->Paginator->settings = array(
-            'limit' => 25,
+            'limit' => 100,
             'order' => array(
                 'Company.name' => 'ASC'
             ),
@@ -134,25 +134,72 @@ class CompaniesController extends AppController {
     public function merge() {
         $this->autoRender = false;
         //$this->viewClass = 'Json';
-//        debug($this->request->data['ids']);exit();
+        debug($this->request->data['ids']);
         $ids = isset($this->request->data['ids']) && !empty($this->request->data['ids'])
                 ? $this->request->data['ids']
                 : array();
-//        $main = isset($this->request->data['main']) && !empty($this->request->data['main'])
-//                ? $this->request->data['main']
-//                : 0;
+        $main = isset($this->request->data['main']) && !empty($this->request->data['main'])
+                ? $this->request->data['main']
+                : 0;
+        
+//        $ids  = $this->Company->prepareIds($ids);
+//        debug($ids);
+        
+        $answer = array();
+//        foreach ($ids as $kompanije) {
+//            $main = $kompanije[0];
+//            $idss = array();
+//            for ($j = 1; $j < count($kompanije); $j++) {
+//                $idss[] = $kompanije[$j];
+//            }
+//            debug($ids);
+//            if (!$this->Company->mergeCompanies($main, $idss)) {
+//                $answer[$main] = 'Not merged!';
+//            }
+//        }
+        
+        // novi pokusaj merdovanja, ovo nesto nije dobro radilo
+        if(($key = array_search($main, $ids)) !== false) {
+            unset($ids[$key]);
+        }
+        if (!$this->Company->mergeCompanies($main, $ids)) {
+            $answer[$main] = 'Not merged!';
+        }
+        debug($answer);
+    }
+    
+    public function automerge() {
+        $this->autoRender = false;
+        //$this->viewClass = 'Json';
+       
+        $ids = isset($this->request->data['ids']) && !empty($this->request->data['ids'])
+                ? $this->request->data['ids']
+                : array();
         
         $ids  = $this->Company->prepareIds($ids);
         //debug($ids);
+        
+        $answer = array();
         foreach ($ids as $kompanije) {
             $main = $kompanije[0];
             $idss = array();
             for ($j = 1; $j < count($kompanije); $j++) {
                 $idss[] = $kompanije[$j];
             }
-
-            $this->Company->mergeCompanies($main, $idss);
+            
+            if (!$this->Company->mergeCompanies($main, $idss)) {
+                $answer[$main] = 'Not merged!';
+            }
         }
+        
+        // novi pokusaj merdovanja, ovo nesto nije dobro radilo
+//        if(($key = array_search($main, $ids)) !== false) {
+//            unset($ids[$key]);
+//        }
+//        if (!$this->Company->mergeCompanies($main, $ids)) {
+//            $answer[$main] = 'Not merged!';
+//        }
+        debug($answer);
     }
     
     public function merger() {        
@@ -175,7 +222,7 @@ class CompaniesController extends AppController {
                 ))); 
                 
                 $newNames = $this->Prepare->prepareCompanyNames($names);
-                //debug($newNames);
+                //debug($newNames);exit();
                 $this->Prepare->prepareCompanies($names);
 
                 $toBeMerged = $this->Prepare->exportedData;
@@ -250,6 +297,31 @@ class CompaniesController extends AppController {
             $this->Flash->error(__('The company could not be deleted. Please, try again.'));
         }
         return $this->redirect(array('action' => 'index'));
+    }
+    
+    public function search() {
+        if ($this->request->is('get')) {
+            $keyword = $this->request->query['what'];
+
+            $fields = array(
+                'Company.id',
+                'Company.name'
+            );
+
+            $this->Paginator->settings = array(
+                'limit' => 25,
+                'order' => array(
+                    'Company.name' => 'ASC',
+                ),
+                'conditions' => array(
+                    'Company.merged' => '0',
+                    'Company.name LIKE' => "%$keyword%"
+                ),
+                'fields' => $fields
+            );
+
+            $this->set('companies', $this->Paginator->paginate());
+        }        
     }
 
 }

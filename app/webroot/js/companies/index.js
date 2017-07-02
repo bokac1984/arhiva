@@ -23,15 +23,16 @@ var inst = function () {
         });        
         
         $('.mergeConfirmed').click(function(){
-            
+           var thisButton = this;
            jQuery.ajax({
-                url: '/companies/merge',
+                url: '/companies/automerge',
                 method: 'POST',
                 data: { ids: arr, main: mainId},
-                type: 'json'
+                type: 'html'
             }).done(function (response) {
                 //location.reload();
-                $modal.modal('hide');
+                //$modal.modal('hide');
+                thisButton.hide();
                 arr = [];
                 mainId = 0;
             }).fail(function () {

@@ -17,6 +17,12 @@ class Agreement extends AppModel {
      * @var string
      */
     public $displayField = 'name';
+    
+    /**
+     *
+     * @var array Razlika u nizovima podataka iz baze i onih iz ispravljenog Excela/XML 
+     */
+    private $differences = array();
 
 
     // The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -50,39 +56,132 @@ class Agreement extends AppModel {
         )
     );
 
+    public function checkAndSaveAgrement($data = array()) {
+        $result = $this->find('all', array(
+            'conditions' => array(
+                'Agreement.name' => $data['Agreement']['name'],
+                'Agreement.price' => $data['Agreement']['price'],
+                'Agreement.path' => $data['Agreement']['path'],
+                'Agreement.original_price' => $data['Agreement']['original_price'],
+                'Agreement.contract_date' => $data['Agreement']['contract_date'],
+                'Agreement.agreement_type_id' => $data['Agreement']['agreement_type_id'],
+                'Agreement.dvd' => $data['Agreement']['dvd'],
+                'Agreement.purchase_id' => $data['Agreement']['purchase_id'],
+                'Agreement.supplier_id' => $data['Agreement']['supplier_id'],
+            ),
+            'fields' => array(
+                'Agreement.id'
+            )
+        ));
+
+
+        if (count($result) > 0) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Pogledaj da li ima razlike u podacima
+     * izmedju podataka koji su TI ispravili i originala dostavljenih od Sectora
+     * 
+     * @param array $data
+     */
+    public function editData($data = array(), $dvd = '') {
+        $i = 0;
+        foreach ($data as $ugovor) {
+            $options = array(
+                'conditions' => array(
+                    'Agreement.name' => $ugovor['predmet'],
+                    //'Agreement.contract_date' => $ugovor['datum'],
+                    'Agreement.path' => $ugovor['path'],
+                    //'Agreement.price' => $ugovor['price'],
+                    'Agreement.dvd' => $dvd,
+                    'Narucilac.name' => $ugovor['narucilac'],
+                    'Dobavljac.name' => $ugovor['dobavljac'],
+                ),
+                'joins' => array(
+                    array('alias' => 'VrstaPostupka',
+                        'table' => 'agreement_types',
+                        'type' => 'LEFT',
+                        'conditions' => array(
+                            '`VrstaPostupka`.`id` = `Agreement`.`agreement_type_id`'
+                        )
+                    ),
+                    array('alias' => 'Narucilac',
+                        'table' => 'companies',
+                        'type' => 'LEFT',
+                        'conditions' => array(
+                            '`Narucilac`.`id` = `Agreement`.`purchase_id`'
+                        )
+                    ),
+                    array('alias' => 'Dobavljac',
+                        'table' => 'companies',
+                        'type' => 'LEFT',
+                        'conditions' => array(
+                            '`Dobavljac`.`id` = `Agreement`.`supplier_id`'
+                        )
+                    ),
+                ),
+                'fields' => array(
+                    'Agreement.id', 'Agreement.name', 'Agreement.contract_date', 'Agreement.price', 'Agreement.path',
+                    'Narucilac.id', 'Narucilac.name',
+                    'Dobavljac.id', 'Dobavljac.name',
+                    'VrstaPostupka.id', 'VrstaPostupka.name'
+                )
+            );
+            //debug($options['conditions']);
+            $dbUgovor = $this->find('first', $options);
+//            debug($this->getLastQuery());
+//            debug($dbUgovor);
+//            debug($ugovor);
+            
+            
+            /**
+             * Ako nije prazan onda pogledaj razlike u odnosu na XML podatke
+             */
+            if (!empty($dbUgovor)) {
+                $this->checkDifference($dbUgovor, $ugovor);
+            }
+        }
+        debug(count($this->differences));                   
+        debug($this->differences); 
+        exit(); 
+    }
+
     /**
      * Metoda kojom se snimaju podaci, ovo se koristi samo jednom.
+     * A sada moze i vise puta jer ne moze da snimi ako naidje na duplu akciju
      * @param type $data
      */
-    public function saveToDatabase($data = array()) {
+    public function saveToDatabase($data = array(), $dvd = 1) {
         foreach ($data as $k => $v) {
             $ugovor = array();
             //debug($v);exit();
             $purchase = $this->Purchase->checkAndSave(trim($v['narucilac']));
-            if ($purchase !== 0)
-            {
+            if ($purchase !== 0) {
                 $ugovor['Agreement']['purchase_id'] = $purchase;
             } else {
                 debug($v['path']);
                 break;
             }
-            
+
             $supplier = $this->Supplier->checkAndSave(trim($v['dobavljac']));
-            if ($supplier !== 0)
-            {
+            if ($supplier !== 0) {
                 $ugovor['Agreement']['supplier_id'] = $supplier;
             } else {
                 debug($v['path']);
                 break;
             }
-            
+
             $ugovor['Agreement']['name'] = isset($v['predmet']) ? $v['predmet'] : '';
             $ugovor['Agreement']['price'] = isset($v['price']) ? $v['price'] : '';
             $ugovor['Agreement']['original_price'] = isset($v['price']) ? $v['price'] : '';
             $ugovor['Agreement']['contract_date'] = isset($v['datum']) ? $v['datum'] : '';
             $ugovor['Agreement']['path'] = $v['path'];
-            $ugovor['Agreement']['dvd'] = '2';
-            
+            $ugovor['Agreement']['dvd'] = $dvd;
+
             $typeId = $this->AgreementType->checkAndSave(trim($v['vrsta']));
             //debug($typeId);
             if ($typeId !== 0) {
@@ -91,6 +190,12 @@ class Agreement extends AppModel {
                 debug($v['path']);
                 break;
             }
+
+            if ($this->checkAndSaveAgrement($ugovor) === 1) {
+                echo "{$ugovor['Agreement']['path']} <br>";
+                continue;
+            }
+
             $this->create();
             if (!$this->save($ugovor)) {
                 debug($v['path']);
@@ -98,7 +203,7 @@ class Agreement extends AppModel {
             }
         }
     }
-    
+
     public function dajJedanUgovor($koji = array()) {
         $data = $this->find('first', array(
             'conditions' => array(
@@ -110,20 +215,20 @@ class Agreement extends AppModel {
         if (count($data) > 0) {
             return $data;
         }
-        
+
         return array();
     }
-    
+
     public function fixMoneyProblem($data = array()) {
         $i = 0;
         foreach ($data as $k => $v) {
             $ugovor = $this->dajJedanUgovor($v);
-            
+
             if (empty($ugovor)) {
                 echo 'breakam ovo';
                 break;
             }
-            
+
             $cijena = $v['price'];
             if ($ugovor['Agreement']['price'] !== $cijena) {
                 $i++;
@@ -131,7 +236,7 @@ class Agreement extends AppModel {
         }
         return $i;
     }
-    
+
     /**
      * Pokusaj da se vrate podaci iz kesa za ovo da vidimo koliko ce brzo 
      * da ide
@@ -139,62 +244,61 @@ class Agreement extends AppModel {
      * @return type
      */
     public function vratiPodatkeZaPregled($letter = '', $type = 'purchase_id') {
-        $options['joins'] =  array(
-                 array('table' => 'companies',
-                    'alias' => 'Company',
-                    'type' => 'INNER',
-                    'conditions' => array(
-                        "Agreement.$type = Company.id",
-                    )
+        $options['joins'] = array(
+            array('table' => 'companies',
+                'alias' => 'Company',
+                'type' => 'INNER',
+                'conditions' => array(
+                    "Agreement.$type = Company.id",
                 )
-            );
+            )
+        );
         $options['fields'] = array(
             'DISTINCT Company.id', 'Company.name'
         );
         $options['order'] = array(
             'Company.name' => 'ASC'
         );
-        
+
         if ($letter !== '') {
             if ($letter === '#') {
                 $options['conditions'] = array(
                     'AND' => array(
                         'Agreement.display' => '1',
                         'LEFT(Company.name, 1)' => array(
-                            '1','2','3','4','5',
-                            '6','7','8','9', '0'
+                            '1', '2', '3', '4', '5',
+                            '6', '7', '8', '9', '0'
                         )
                     )
                 );
             } else {
-               $options['conditions'] = array(
+                $options['conditions'] = array(
                     'AND' => array(
                         'Agreement.display' => '1',
                         'LEFT(Company.name, 1)' => "$letter"
                     )
-                );             
+                );
             }
-
         } else {
             $options['conditions'] = array(
                 'Agreement.display' => '1'
-            ); 
+            );
         }
 
         $options['order'] = array(
             'Company.name'
         );
-        
+
         Cache::clear();
         //$result = Cache::read('pregled_podaci', 'default');
         //if (!$result) {
-            Debugger::log($options);
-            $result = $this->find('all', $options);
-            //Cache::write('pregled_podaci', $result, 'default');
+        Debugger::log($options);
+        $result = $this->find('all', $options);
+        //Cache::write('pregled_podaci', $result, 'default');
         //}
-        return $result;          
+        return $result;
     }
-    
+
     /**
      * 
      * @param string $type Tip ugovora, da li je supplier_id
@@ -202,15 +306,15 @@ class Agreement extends AppModel {
      * @return type
      */
     public function allFirstLettersAndNumbers($type = 'purchase_id') {
-        $options['joins'] =  array(
-                 array('table' => 'companies',
-                    'alias' => 'Company',
-                    'type' => 'INNER',
-                    'conditions' => array(
-                        "Agreement.$type = Company.id"
-                    )
+        $options['joins'] = array(
+            array('table' => 'companies',
+                'alias' => 'Company',
+                'type' => 'INNER',
+                'conditions' => array(
+                    "Agreement.$type = Company.id"
                 )
-            );
+            )
+        );
         $options['fields'] = array(
             'DISTINCT LEFT(Company.name, 1) as firstLetter'
         );
@@ -219,11 +323,43 @@ class Agreement extends AppModel {
         );
         $options['conditions'] = array(
             'Agreement.display' => '1',
-            'NOT' => array( // There's your problem! :)
+            'NOT' => array(// There's your problem! :)
                 'LEFT(Company.name, 1)' => array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
             )
         );
-        
+
         return $this->find('all', $options);
     }
+    
+    /**
+     * 
+     * Pogledaj ima li razlike izmedju dve vriejdnosti
+     * i ako ima postavi te razlike u privatni niz ove klase
+     * 
+     * NAPOMENA: Morao sam koristiti mb_strtoupper jer strtoupper nije
+     * radio dobro iz razloga sto su stringovi bili razlicitih enkodinga
+     * 
+     * @param string $original
+     * @param string $edited
+     */
+    private function checkDifference($original, $edited) {
+        if (mb_strtoupper($original['VrstaPostupka']['name']) !== mb_strtoupper($edited['vrsta'])) {
+            $this->differences[$original['Agreement']['id']]['postupak'] = array(
+                'new' => $edited['vrsta'],
+                'old' => $original['VrstaPostupka']['name'],
+                'path' => $edited['path']
+            );           
+        }
+        
+        if (mb_strtoupper($original['Narucilac']['name']) !== mb_strtoupper($edited['narucilac'])) {
+            $this->differences[$original['Agreement']['id']]['narucilac'] = $edited['narucilac']."=".$original['Narucilac']['name'];
+        }
+        
+        if (mb_strtoupper($original['Dobavljac']['name']) !== mb_strtoupper($edited['dobavljac'])) {
+            var_dump($original['Dobavljac']['name'] == $edited['dobavljac']);
+            //var_dump($original['Dobavljac']['name']);
+            $this->differences[$original['Agreement']['id']]['dobavljac'] = $edited['dobavljac']."=".$original['Dobavljac']['name'];
+        }
+    }
+
 }
