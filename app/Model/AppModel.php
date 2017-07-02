@@ -62,7 +62,7 @@ class AppModel extends Model {
                 "{$this->alias}.id"
             )
         ));
-debug(count($exist));
+        
         if (count($exist) === 1) {
             return $exist[0][$this->alias]['id'];
         } else if (count($exist) > 1) {
