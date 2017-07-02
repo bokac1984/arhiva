@@ -22,7 +22,7 @@ class Agreement extends AppModel {
      *
      * @var array Razlika u nizovima podataka iz baze i onih iz ispravljenog Excela/XML 
      */
-    private $differences = array();
+    public $differences = array();
 
 
     // The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -56,6 +56,13 @@ class Agreement extends AppModel {
         )
     );
 
+    /**
+     * Overridovana metoda iz AppModela da bi zadovoljia potrebe
+     * ove klase za check and save
+     * 
+     * @param type $data
+     * @return int
+     */
     public function checkAndSaveAgrement($data = array()) {
         $result = $this->find('all', array(
             'conditions' => array(
@@ -81,6 +88,31 @@ class Agreement extends AppModel {
 
         return 0;
     }
+    
+    /**
+     * nakon sto nadjemo razlike pokusaj da ih ispravish
+     * 
+     * @return boolean
+     */
+    public function saveDifferences() {
+        if (empty($this->differences)) {
+            return false;
+        }
+        foreach ($this->differences as $agreement_id => $type) {
+            $typeId = $this->AgreementType->checkAndSave($type['agreement_type_id']['new']);
+            $dataToSave = array(
+                'id' => $agreement_id,
+                'agreement_type_id' => $typeId
+            );
+                    
+            if (!$this->save($dataToSave)) {
+                debug($dataToSave);
+                return false;
+            }      
+        }
+        
+        return true;
+    }
 
     /**
      * Pogledaj da li ima razlike u podacima
@@ -94,9 +126,9 @@ class Agreement extends AppModel {
             $options = array(
                 'conditions' => array(
                     'Agreement.name' => $ugovor['predmet'],
-                    //'Agreement.contract_date' => $ugovor['datum'],
+                    'Agreement.contract_date' => $ugovor['datum'],
                     'Agreement.path' => $ugovor['path'],
-                    //'Agreement.price' => $ugovor['price'],
+                    'Agreement.price' => $ugovor['price'],
                     'Agreement.dvd' => $dvd,
                     'Narucilac.name' => $ugovor['narucilac'],
                     'Dobavljac.name' => $ugovor['dobavljac'],
@@ -131,13 +163,8 @@ class Agreement extends AppModel {
                     'VrstaPostupka.id', 'VrstaPostupka.name'
                 )
             );
-            //debug($options['conditions']);
+
             $dbUgovor = $this->find('first', $options);
-//            debug($this->getLastQuery());
-//            debug($dbUgovor);
-//            debug($ugovor);
-            
-            
             /**
              * Ako nije prazan onda pogledaj razlike u odnosu na XML podatke
              */
@@ -145,9 +172,6 @@ class Agreement extends AppModel {
                 $this->checkDifference($dbUgovor, $ugovor);
             }
         }
-        debug(count($this->differences));                   
-        debug($this->differences); 
-        exit(); 
     }
 
     /**
@@ -348,21 +372,22 @@ class Agreement extends AppModel {
      */
     private function checkDifference($original, $edited) {
         if (mb_strtoupper($original['VrstaPostupka']['name']) !== mb_strtoupper($edited['vrsta'])) {
-            $this->differences[$original['Agreement']['id']]['postupak'] = array(
+            $this->differences[$original['Agreement']['id']]['agreement_type_id'] = array(
                 'new' => $edited['vrsta'],
-                'old' => $original['VrstaPostupka']['name'],
+                'old' => array(
+                    'id' => $original['VrstaPostupka']['id'],
+                    'name' => $original['VrstaPostupka']['name']
+                ),
                 'path' => $edited['path']
             );           
         }
         
         if (mb_strtoupper($original['Narucilac']['name']) !== mb_strtoupper($edited['narucilac'])) {
-            $this->differences[$original['Agreement']['id']]['narucilac'] = $edited['narucilac']."=".$original['Narucilac']['name'];
+            $this->differences[$original['Agreement']['id']]['narucilac'] = $edited['narucilac'];
         }
         
         if (mb_strtoupper($original['Dobavljac']['name']) !== mb_strtoupper($edited['dobavljac'])) {
-            var_dump($original['Dobavljac']['name'] == $edited['dobavljac']);
-            //var_dump($original['Dobavljac']['name']);
-            $this->differences[$original['Agreement']['id']]['dobavljac'] = $edited['dobavljac']."=".$original['Dobavljac']['name'];
+            $this->differences[$original['Agreement']['id']]['dobavljac'] = $edited['dobavljac'];
         }
     }
 

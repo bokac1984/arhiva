@@ -375,6 +375,13 @@ class AgreementsController extends AppController {
         $data = Xml::toArray($xml);
         //$this->Agreement->editData($data['ispravke']['ispravka'], $dvd);
         $this->Agreement->editData($data['nabavke']['nabavka'], $dvd);
+        
+        debug(count($this->Agreement->differences));                   
+//        debug($this->Agreement->differences); 
+        
+        if (!$this->Agreement->saveDifferences()) {
+            echo 'NOT DONE!';
+        }
         echo 'DONE!';
     }
     
