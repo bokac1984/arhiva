@@ -56,7 +56,10 @@ class AppModel extends Model {
     public function checkAndSave($name = '') {
         $exist = $this->find('all', array(
             'conditions' => array(
-                "UPPER({$this->alias}.name)" => mb_strtoupper($name, 'UTF-8')
+                'OR' => array(
+                    "UPPER({$this->alias}.name)" => mb_strtoupper($name, 'UTF-8'),
+                    "{$this->alias}.name" => $name,       
+                ), 
             ),
             'fields' => array(
                 "{$this->alias}.id"
