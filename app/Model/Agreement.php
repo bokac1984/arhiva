@@ -120,8 +120,7 @@ class Agreement extends AppModel {
      * 
      * @param array $data
      */
-    public function editData($data = array(), $dvd = '') {
-        $i = 0;
+    public function findDifferences($data = array(), $dvd = '') {
         foreach ($data as $ugovor) {
             $options = array(
                 'conditions' => array(

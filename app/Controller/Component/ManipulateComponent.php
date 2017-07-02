@@ -32,11 +32,11 @@ class ManipulateComponent extends Component {
     }
 
     public function startup(\Controller $controller) {
-        $this->folderLocation = APP . 'uploaded_files' . DS . 'javne_nabavke_new' . DS;
+        $this->folderLocation = APP . 'uploaded_files' . DS . 'jn_data' . DS;
         $path1 = APP . 'uploaded_files' . DS . 'DVD1' . DS;
         $path2 = APP . 'uploaded_files' . DS . 'DVD2' . DS;
 
-        $this->tempFileLocation = $path2;
+        $this->tempFileLocation = $path1;
         parent::startup($controller);
     }
 
