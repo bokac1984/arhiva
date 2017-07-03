@@ -1,6 +1,6 @@
 var editFun = function () {
     var edit = function () {
-        $('#datetimepicker').datetimepicker();
+        //$('#datetimepicker').datetimepicker();
     };
     
     return {
