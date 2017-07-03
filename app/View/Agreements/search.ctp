@@ -1,13 +1,5 @@
 <?php
 echo $this->Html->css('search', array('block' => 'css'));
-//echo $this->Html->css('/js/libs/editable/css/bootstrap-editable', array('block' => 'css'));
-//echo $this->Html->script('/js/libs/editable/js/bootstrap-editable.min', array('block'=>'scriptBottom'));
-//
-//echo $this->Html->scriptBlock("$.fn.editable.defaults.mode = 'popup';", array('block'=>'scriptBottom'));
-//echo $this->Html->script('/js/agreements/search', array('block' => 'scriptBottom'));
-////echo $this->Html->scriptBlock("$.fn.editable.defaults.mode = 'popup';", array('block'=>'scriptBottom'));
-//echo $this->Html->scriptBlock("searchFun.init(1);", array('block' => 'scriptBottom'));
-//debug($agreements);
 ?>
 <?php echo $this->element('search'); ?>
 <div class="row">
@@ -18,7 +10,7 @@ echo $this->Html->css('search', array('block' => 'css'));
                     <tr>
                         <th><?php echo $this->Paginator->sort('name', 'Naziv'); ?></th>
                         <th><?php echo $this->Paginator->sort('price', 'Cijena'); ?></th>
-                        <th><?php echo $this->Paginator->sort('contract_date', 'Datum'); ?></th>
+                        <th><?php echo $this->Paginator->sort('contract_date', 'Datum (dd.mm.gggg)'); ?></th>
                         <th><?php echo $this->Paginator->sort('purchase_id', 'Narucilac'); ?></th>
                         <th><?php echo $this->Paginator->sort('supplier_id', 'Dobavljac'); ?></th>
                         <th><?php echo $this->Paginator->sort('agreement_type', 'Tip'); ?></th>
@@ -34,7 +26,7 @@ echo $this->Html->css('search', array('block' => 'css'));
                             <td><?php echo h($agreement['Agreement']['price']); ?>&nbsp;</td>
                             <td>
                                 <?php
-                                echo $this->Html->link($this->Time->format($agreement['Agreement']['contract_date']), '#', array(
+                                echo $this->Html->link($this->Time->format($agreement['Agreement']['contract_date'], '%d.%m.%Y'), '#', array(
                                     'data-pk' => $agreement['Agreement']['id'],
                                     'data-url' => '/Agreements/editable',
                                     'data-type' => 'text',

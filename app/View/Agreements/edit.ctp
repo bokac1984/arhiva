@@ -1,3 +1,7 @@
+<?php
+echo $this->Html->script('/js/agreements/edit', array('block' => 'scriptBottom'));
+echo $this->Html->scriptBlock("editFun.init();", array('block' => 'scriptBottom'));
+?>
 <div class="row form">
     <?php
     echo $this->Form->create('Agreement');
@@ -21,11 +25,14 @@
             echo $this->Form->input('id');
             echo $this->Form->input('name');
             echo $this->Form->input('price');
-            echo $this->Form->input('path');
-            echo $this->Form->input('contract_date', array(
-                'type' => 'text'
+            echo $this->Form->input('path', array(
+                'readonly' => true
             ));
-            echo $this->Form->input('new_file_name');
+            echo $this->Form->input('contract_date', array(
+                'id' => 'datepicker',
+                'type' => 'text',
+                'label' => 'Datum (gggg-mm-dd)'
+            ));
             ?>
         </fieldset>
         <div class="form-group">
@@ -39,13 +46,10 @@
     </div>
     <div class="col-md-6">
         <?php
-        echo $this->Form->input('file_location');
         echo $this->Form->input('agreement_type_id');
-        echo $this->Form->input('purchase_id');
-        echo $this->Form->input('supplier_id');
-        echo $this->Form->input('dvd');
-        echo $this->Form->input('old_purchaser_id');
-        echo $this->Form->input('old_supplier_id');
+        echo $this->Form->input('dvd', array(
+                'readonly' => true
+            ));
         ?>                
     </div>
     <?php echo $this->Form->end(); ?>

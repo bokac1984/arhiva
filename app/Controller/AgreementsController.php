@@ -384,6 +384,37 @@ class AgreementsController extends AppController {
         echo 'DONE!';
     }
     
+    /**
+     * lokalna metoda koja se koristi samo za poredjenje xmlova
+     */
+    public function compare() {
+        $this->autoRender = false;
+        $localPath1 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd1_ispravljeno.xml';
+        $localPath2 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd1_pravilan.xml';
+        
+        $xml1 = Xml::build($localPath1);
+        $xml2 = Xml::build($localPath2);
+
+        $data1 = Xml::toArray($xml1);
+        $data2 = Xml::toArray($xml2);
+        
+        $names = array(
+            "narucilac", "dobavljac","predmet","price","datum","vrsta","path"
+        );
+        $brojUkupan = count($data2['nabavke']['nabavka']);
+        $brojPodredova = count($data1['nabavke']['nabavka'][0]);
+        //debug($data1);
+        for ($i = 0; $i < $brojUkupan; $i++) {
+            for ($j = 0; $j < $brojPodredova; $j++ ) {
+                if ($data1['nabavke']['nabavka'][$i][$names[$j]] !== $data2['nabavke']['nabavka'][$i][$names[$j]]) {
+                    print "{$names[$j]} = {$data1['nabavke']['nabavka'][$i][$names[$j]]} !== {$data2['nabavke']['nabavka'][$i][$names[$j]]} => {$data1['nabavke']['nabavka'][$i]['path']}<br>";
+                }
+            }
+
+        }
+        echo 'DONE!';
+    }
+    
     
     public function testing() {
         $this->autoRender = false;

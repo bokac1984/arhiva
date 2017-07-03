@@ -28,6 +28,7 @@ class Prepare extends AppModel {
             $drugaIter = str_replace(array('doo'), ' doo ', $prvaIter);
             $trecaIter = str_replace(array('  '), ' ', $drugaIter);
             $cetvrtiIter = preg_replace('!\s+!', ' ', $trecaIter);
+            $cetvrtiIter = preg_replace('/d.*o.*o.*/gi', ' ', $cetvrtiIter);
             
             $this->companies[$k][$v['Company']['id']] = trim($cetvrtiIter);
             
