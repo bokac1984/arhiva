@@ -17,15 +17,18 @@ echo $this->Html->css('search', array('block' => 'css'));
                 <thead>
                     <tr>
                         <th><?php echo $this->Paginator->sort('name', 'Naziv'); ?></th>
-                        <th><?php echo $this->Paginator->sort('id', '#'); ?></th>
-                        <th class="actions"><?php echo __('Actions'); ?></th>
+                        <th><?php echo $this->Paginator->sort('id', 'ID'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($companies as $agreement): ?>
+                    <?php foreach ($companies as $company): ?>
                         <tr>
-                            <td><?php echo h($agreement['Company']['name']); ?>&nbsp;</td>
-                            <td><?php echo h($agreement['Company']['id']); ?>&nbsp;</td>                                   
+                            
+                            <td><?php echo h($company['Company']['name']); ?>&nbsp;</td>
+                            <td>
+                                <?php echo $this->Html->link(__($company['Company']['id']), array('action' => 'view', $company['Company']['id'])); ?>
+                                &nbsp;
+                            </td>                                   
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
