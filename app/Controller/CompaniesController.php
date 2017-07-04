@@ -324,4 +324,13 @@ class CompaniesController extends AppController {
         }        
     }
 
+    public function test() {
+        $this->autoRender = false;
+        // top of file
+$starTime = microtime(true);
+        $this->Company->saveCleanNames();
+        // bottom of file
+echo '<!-- Exec time: ', microtime(true) - $startTime, ' -->';
+        echo "DONE!";
+    }
 }

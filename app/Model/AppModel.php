@@ -52,21 +52,65 @@ class AppModel extends Model {
         $lastLog = end($logs['log']);
         return $lastLog['query'];
     }
+    
+    /**
+     * Ova metoda bi trebalo da ocisti naziv kompanije
+     * od stvari kao doo, d.o.o., ad, a.d., d.d., dd itd.
+     * 
+     * @param string $name Naziv kompanije
+     * @param string $upper Da li da koristim funk strtoupper ili strtolower
+     * @return string Vrijedonst ociscenog naziva kompanije
+     */
+    public function cleanName($name = '', $upper = true) {
+        if ($upper) {
+            $name = mb_strtoupper($name, 'UTF-8');
+        } else {
+            $name = mb_strtolower($name, 'UTF-8');
+        }
+ 
+        $patterns = array(
+            '/(\s*?d\.*?o\.*?o\.*?\s*?)/i',
+            '/(\s*?a\.*?d\.*?\s*?)/i',
+            '/(\s*?d\.*?d\.*?\s*?)/i',
+            '/(\s*?s\.*?z\.*?r\.*?\s*?)/i'
+        );
+        
+        $removedDoo =preg_replace($patterns, ' ', $name);
+        
+        $prvaIter = str_replace(array(',', '.', '\n', '&', '-'), ' ', $removedDoo);
+//        $drugaIter = str_replace(array('doo'), ' doo ', $prvaIter);
+//        $trecaIter = str_replace(array('  '), ' ', $drugaIter);
+        $cetvrtiIter = preg_replace('!\s+!', ' ', $prvaIter);
 
+        return trim($cetvrtiIter);
+    }
+
+    /**
+     * Provjera da li postoji naziv i ako postoji onda sacuvaj taj id u agreement
+     * inace sacuvaj novi i vrati ID
+     * 
+     * @param string $name
+     * @return int Valid save or not OR ID of saved table
+     */
     public function checkAndSave($name = '') {
+        $cleaned_upper = $this->cleanName($name);
+        $cleaned_lower = $this->cleanName($name, false);
+        
         $exist = $this->find('all', array(
             'conditions' => array(
                 'OR' => array(
                     "UPPER({$this->alias}.name)" => mb_strtoupper($name, 'UTF-8'),
                     "{$this->alias}.name" => $name, 
                     "LCASE({$this->alias}.name)" => mb_strtolower($name, 'UTF-8'),
+                    "{$this->alias}.cleaned_name" => $cleaned_upper,
+                    "{$this->alias}.cleaned_name_lower" => $cleaned_lower,       
                 ), 
             ),
             'fields' => array(
                 "{$this->alias}.id"
             )
         ));
-        
+                
         if (count($exist) === 1) {
             return $exist[0][$this->alias]['id'];
         } else if (count($exist) > 1) {
@@ -75,7 +119,9 @@ class AppModel extends Model {
 
         $dataToSave = array(
             "{$this->alias}" => array(
-                'name' => $name
+                'name' => $name,
+                'cleaned_name' => $cleaned_upper,
+                'cleaned_name_lower' => $cleaned_lower
             )
         );
 

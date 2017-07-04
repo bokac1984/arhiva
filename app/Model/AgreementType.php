@@ -42,6 +42,12 @@ class AgreementType extends AppModel {
         )
     );
 
+    /**
+     * Save if not saved earlier
+     * 
+     * @param string $name
+     * @return int ID of existing or newly saved
+     */
     public function checkAndSave($name = '') {
         $exist = $this->find('all', array(
             'conditions' => array(

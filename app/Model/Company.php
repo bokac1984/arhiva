@@ -186,5 +186,29 @@ class Company extends AppModel {
         
         return false;
     }
+    
+    public function saveCleanNames() {
+        $all = $this->find('all', array(
+            'fields' => array(
+                'id', 'name'
+            ),
+            'order' => array(
+                'name' => "ASC"
+            )
+        ));
+        
+        foreach ($all as $k => $c) {
+            $data = array(
+                'id' => $c['Company']['id'],
+                'name' => $c['Company']['name'],
+                'cleaned_name' => $this->cleanName($c['Company']['name']),
+                'cleaned_name_lower' => $this->cleanName($c['Company']['name'], false)
+            );
+            
+            if (!$this->save($data)) {  
+                echo $c['Company']['name'] . "<br>";
+            }
+        }
+    }
 
 }

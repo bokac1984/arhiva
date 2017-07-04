@@ -186,6 +186,7 @@ class Agreement extends AppModel {
             if ($purchase !== 0) {
                 $ugovor['Agreement']['purchase_id'] = $purchase;
             } else {
+                debug($purchase);
                 echo 'ne radi dobalvjac';
                 debug($v['path']);
                 break;
