@@ -138,18 +138,33 @@ class Company extends AppModel {
         return $temp;
     }
     
+    public function checkIfMergedAlready($companies = array()) {
+        $merged = $this->find('all');
+    }
+    
+    /**
+     * 
+     * @param type $main
+     * @param type $toBeMerged
+     * @return boolean
+     */
     public function mergeCompanies($main = 0, $toBeMerged = array()) {
+        $dataToSave = array();
+        
+        $ds = $this->getDataSource();
+        
+        // pocni transakciju
+        $ds->begin();
+        
         $newIds = array();
         /*
          * sklonimo onaj ID koji necemo da mijenjamo iz niza za mijenjanje
          */
-        foreach ($toBeMerged as $id) {
-            if ($id !== $main) {
-                $newIds[] = $id;
-            }
+        if(($key = array_search($main, $toBeMerged)) !== false) {
+            unset($toBeMerged[$key]);
         }
-
-        foreach ($newIds as $id) {
+        
+        foreach ($toBeMerged as $id) {
             $purchase = $this->PurchaseAgreement->updateAll(
                 array(
                     'purchase_id' => $main,
@@ -171,18 +186,22 @@ class Company extends AppModel {
             );
             
             if ($purchase && $supplier) {
-                return $this->save(array(
-                    'Company' => array(
-                        'merged' => 1,
-                        'id' => $id
-                    )
-                ));
-                
-                
-            } else {
-                echo 'ne radi';
+                $dataToSave[]['Company'] = array(
+                    'merged' => 1,
+                    'id' => $id
+                ); 
             }
         }
+        
+        if (!empty($dataToSave)) {
+            if ($this->saveAll($dataToSave)) {
+                $ds->commit();
+                return true;
+            }   
+        }
+        
+        // ako smo dosli dovdje onda uradi rollback
+        $ds->rollback();
         
         return false;
     }

@@ -373,7 +373,7 @@ class AgreementsController extends AppController {
         $xml = Xml::build(${'localPath'.$dvd});
 
         $data = Xml::toArray($xml);
-        //$this->Agreement->editData($data['ispravke']['ispravka'], $dvd);
+        
         $this->Agreement->findDifferences($data['nabavke']['nabavka'], $dvd);
         
         debug(count($this->Agreement->differences));                   

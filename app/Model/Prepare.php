@@ -22,16 +22,8 @@ class Prepare extends AppModel {
     
     public function prepareCompanies($names) {  
         //debug($names);
-        foreach($names as $k => $v) {
-            //debug($v);
-            $prvaIter = str_replace(array(',', '.', '\n', '&', '-'), '', strtoupper($v['Company']['name']));
-            $drugaIter = str_replace(array('doo'), ' doo ', $prvaIter);
-            $trecaIter = str_replace(array('  '), ' ', $drugaIter);
-            $cetvrtiIter = preg_replace('!\s+!', ' ', $trecaIter);
-            $cetvrtiIter = preg_replace('/d.*o.*o.*/gi', ' ', $cetvrtiIter);
-            
-            $this->companies[$k][$v['Company']['id']] = trim($cetvrtiIter);
-            
+        foreach($names as $k => $v) {         
+            $this->companies[$k][$v['Company']['id']] = $this->cleanName($v['Company']['name']);
         }
         
         //debug(count_chars('15 APRIL AD VIŠEGRAD', 3));
@@ -72,7 +64,7 @@ class Prepare extends AppModel {
     
     public function compareSimilarity() {
         $inserted = array();
-        echo $numCompanies = count($this->companies);
+        $numCompanies = count($this->companies);
         foreach ($this->companies as $id => $name) {
             //debug($id);
             $kljuc = key($name);

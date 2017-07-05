@@ -4,6 +4,7 @@ var inst = function () {
         var $modal = $('#merge-modal');
         var mainId;
         var arr = [];
+        var idArrayWitoutMain = [];
         
         $("#merge-btn").click(function (event) {
             
@@ -19,24 +20,36 @@ var inst = function () {
             $.each($(".chekboksovi .iradio_square-blue.checked"),function(){
                 mainId = ($(this).find('.main').val());
             });
+            
+            idArrayWitoutMain = arr;
+            var index = idArrayWitoutMain.indexOf(mainId);
+
+            if (index > -1) {
+               idArrayWitoutMain.splice(index, 1);
+            }
             $modal.modal();
         });        
         
         $('.mergeConfirmed').click(function(){
-           var thisButton = this;
+           var $thisButton = $(this);
            jQuery.ajax({
-                url: '/companies/automerge',
+                url: '/companies/merge',
                 method: 'POST',
                 data: { ids: arr, main: mainId},
                 type: 'html'
             }).done(function (response) {
                 //location.reload();
-                //$modal.modal('hide');
-                thisButton.hide();
+                $modal.modal('hide');
+                $thisButton.hide();
                 arr = [];
                 mainId = 0;
+                idArrayWitoutMain.forEach(function(element) {
+                    $('.chekboksovi').find('tr#'+element).fadeOut();
+                });
+                $('input[name="iCheck"]').iCheck('uncheck');
+                $('input[class="koji-id"]').iCheck('uncheck');
             }).fail(function () {
-                alert('fail');
+                alert('failed to save!');
             });
         });        
     };

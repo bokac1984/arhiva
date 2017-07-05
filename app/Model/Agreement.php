@@ -129,8 +129,8 @@ class Agreement extends AppModel {
                     'Agreement.path' => $ugovor['path'],
                     'Agreement.price' => $ugovor['price'],
                     'Agreement.dvd' => $dvd,
-                    'Narucilac.name' => $ugovor['narucilac'],
-                    'Dobavljac.name' => $ugovor['dobavljac'],
+                    'Narucilac.cleaned_name' => $this->cleanName($ugovor['narucilac']),
+                    'Dobavljac.cleaned_name' => $this->cleanName($ugovor['dobavljac']),
                 ),
                 'joins' => array(
                     array('alias' => 'VrstaPostupka',
@@ -380,14 +380,6 @@ class Agreement extends AppModel {
                 ),
                 'path' => $edited['path']
             );           
-        }
-        
-        if (mb_strtoupper($original['Narucilac']['name']) !== mb_strtoupper($edited['narucilac'])) {
-            $this->differences[$original['Agreement']['id']]['narucilac'] = $edited['narucilac'];
-        }
-        
-        if (mb_strtoupper($original['Dobavljac']['name']) !== mb_strtoupper($edited['dobavljac'])) {
-            $this->differences[$original['Agreement']['id']]['dobavljac'] = $edited['dobavljac'];
         }
     }
 

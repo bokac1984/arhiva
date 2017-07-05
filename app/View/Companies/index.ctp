@@ -41,20 +41,16 @@ echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
             </thead>
             <tbody class='chekboksovi'>
                 <?php foreach ($companies as $company): ?>
-                    <tr>
+                    <tr id="<?php echo h($company['Company']['id']); ?>">
                         <td class="center">
                             <input name="iCheck" class="koji-id" type="checkbox" value="<?php echo h($company['Company']['id']); ?>" /></td>
                         <td class="center">
                             <input name="iCheck[]" class="main" type="radio" value="<?php echo h($company['Company']['id']); ?>" /></td>
-                        <td><?php echo h($company['Company']['id']); ?>&nbsp;</td>
+                        <td class="company-id"><?php echo h($company['Company']['id']); ?>&nbsp;</td>
                         <td><?php echo h($company['Company']['name']); ?>&nbsp;</td>
                         <td><?php echo h($company['Company']['created']); ?>&nbsp;</td>
                         <td><?php echo h($company['Company']['modified']); ?>&nbsp;</td>
-                        <td class="actions">
-                            <?php echo $this->Html->link(__('View'), array('action' => 'view', $company['Company']['id'])); ?>
-                            <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $company['Company']['id'])); ?>
-                            <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $company['Company']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $company['Company']['id']))); ?>
-                        </td>
+                        <?php echo $this->element('actions', array('data'=> $company['Company'])); ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
