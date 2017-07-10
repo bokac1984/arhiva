@@ -229,5 +229,4 @@ class Company extends AppModel {
             }
         }
     }
-
 }

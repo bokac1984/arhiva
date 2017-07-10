@@ -1,22 +1,34 @@
-<div class="companies form">
-<?php echo $this->Form->create('Company'); ?>
-	<fieldset>
-		<legend><?php echo __('Edit Company'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('name');
-		echo $this->Form->input('type');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<div class="companies form row">
+    <div class="col-md-12">
+        <?php
+        echo $this->Form->create('Company');
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Company.id')), array('confirm' => __('Are you sure you want to delete # %s?', $this->Form->value('Company.id')))); ?></li>
-		<li><?php echo $this->Html->link(__('List Companies'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Agreements'), array('controller' => 'agreements', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Agreement'), array('controller' => 'agreements', 'action' => 'add')); ?> </li>
-	</ul>
+        $this->Form->inputDefaults(array(
+            'error' => array(
+                'attributes' => array(
+                    'wrap' => 'div',
+                    'class' => 'label label-warning'
+                )
+            ),
+            'div' => 'form-group',
+            'class' => 'form-control'
+            )
+        );
+        ?>
+        <fieldset>
+            <legend><?php echo __('Uređivanje kompanije'); ?></legend>
+            <?php
+            echo $this->Form->input('id');
+            echo $this->Form->input('name');
+            ?>
+        </fieldset>
+        <div class="form-group">
+            <div class="col-sm-6 col-sm-offset-6">
+                <button class="btn btn-blue btn-block" type="submit"> 
+                    Sačuvaj <i class="fa fa-arrow-circle-right"></i> 
+                </button>
+            </div>
+        </div>        
+        <?php echo $this->Form->end(); ?>
+    </div>
 </div>

@@ -6,11 +6,11 @@
  */
 ?>
 <td class="actions">
-<?php
-echo $this->Link->cLink(__(''), array('action' => 'view', $data['id']), 'fa fa-eye', array(
-    'title' => 'Pregledaj'
-));
-?>
+    <?php
+    echo $this->Link->cLink(__(''), array('action' => 'view', $data['id']), 'fa fa-eye', array(
+        'title' => 'Pregledaj'
+    ));
+    ?>
     <?php
     echo $this->Link->cLink(__(''), array('action' => 'edit', $data['id']), 'fa fa-edit', array(
         'title' => 'Uredi'

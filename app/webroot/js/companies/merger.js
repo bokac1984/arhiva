@@ -4,7 +4,7 @@ var inst = function () {
         var $modal = $('#merge-modal');
         var mainId;
         var arr = [],
-                glavniNiz = [];
+        glavniNiz = [];
         
         $("#merge-btn").click(function (event) {
             
@@ -18,6 +18,25 @@ var inst = function () {
                 return;
             } 
             $modal.modal();
+        });   
+        
+        var findChecked = function(){
+            $.each($(".chekboksovi .icheckbox_square-blue.checked"),function(){
+                arr.push($(this).find('.koji-id').val());
+            });
+
+            if (arr.length === 0) {
+                $('.error-delete').fadeIn().delay(2000).fadeOut();
+                return;
+            } 
+            $modal.modal();            
+        };
+        
+        $(".join-companies").click(function (event) {
+            
+            event.preventDefault();
+            $(this).parent().parent().find('input').iCheck('check');
+            findChecked();
         });        
         
         $('.mergeConfirmed').click(function(){
@@ -29,13 +48,17 @@ var inst = function () {
                 type: 'json'
             }).done(function (response) {
                 //location.reload();
-                $modal.modal('hide');
+                //$modal.modal('hide');
+                //var encoded = JSON.parse(response);
+                console.log(arr[0]);
+                $modal.find('.modal-body').append(response.message);
                 arr = [];
                 mainId = 0;
             }).fail(function () {
                 alert('fail');
             });
-        });        
+        });
+        
     };
     
     var pregled = function () {

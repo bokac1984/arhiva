@@ -18,6 +18,7 @@ echo $this->Html->css('search', array('block' => 'css'));
                     <tr>
                         <th><?php echo $this->Paginator->sort('name', 'Naziv'); ?></th>
                         <th><?php echo $this->Paginator->sort('id', 'ID'); ?></th>
+                        <th class="actions">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +29,8 @@ echo $this->Html->css('search', array('block' => 'css'));
                             <td>
                                 <?php echo $this->Html->link(__($company['Company']['id']), array('action' => 'view', $company['Company']['id'])); ?>
                                 &nbsp;
-                            </td>                                   
+                            </td>  
+                            <td><?php echo $this->element('actions', array('data' => $company['Company'])); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

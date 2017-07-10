@@ -143,15 +143,17 @@ class CompaniesController extends AppController {
     }
 
     public function automerge() {
-        $this->autoRender = false;
-        //$this->viewClass = 'Json';
+        $this->viewClass = 'Json';
 
         $ids = isset($this->request->data['ids']) && !empty($this->request->data['ids']) ? $this->request->data['ids'] : array();
 
         $ids = $this->Company->prepareIds($ids);
         //debug($ids);
 
-        $answer = array();
+        $answer = array(
+            'status' => true,
+            'message' => array()
+        );
         foreach ($ids as $kompanije) {
             $main = $kompanije[0];
             $idss = array();
@@ -159,11 +161,12 @@ class CompaniesController extends AppController {
                 $idss[] = $kompanije[$j];
             }
 
-            if (!$this->Company->mergeCompanies($main, $idss)) {
-                $answer[$main] = 'Not merged!';
-            }
+            //if (!$this->Company->mergeCompanies($main, $idss)) {
+                $answer['status'] = false;
+                $answer['message'][$main] = false;
+            //}
         }
-        debug($answer);
+        $this->set(compact('answer'));
     }
 
     public function merger() {
@@ -172,17 +175,21 @@ class CompaniesController extends AppController {
 
             $this->Prepare->percent = $percent;
             $names = ($this->Company->find('all', array(
-                        'fields' => array(
-                            'Company.name', 'Company.id'
-                        ),
-                        'order' => array(
-                            'Company.name' => 'ASC'
-                        ),
-                        'conditions' => array(
-                            'Company.merged' => '0'
-                        )
+                'fields' => array(
+                    'Company.name', 'Company.id'
+                ),
+                'order' => array(
+                    'Company.name' => 'ASC'
+                ),
+                'conditions' => array(
+                    'Company.merged' => '0',
+                    'Company.name LIKE' => '%beg%'
+                )
             )));
-
+            
+            //debug($names);
+            
+$starTime = microtime(true);
             $newNames = $this->Prepare->prepareCompanyNames($names);
             //debug($newNames);exit();
             $this->Prepare->prepareCompanies($names);
@@ -190,7 +197,7 @@ class CompaniesController extends AppController {
             $toBeMerged = $this->Prepare->exportedData;
             //debug($this->Prepare->makeStringy);exit();
             //debug($toBeMerged);
-
+echo '<!-- Exec time: ', microtime(true) - $startTime, ' -->';
             $newData = array();
             $i = 0;
             foreach ($toBeMerged as $k => $v) {

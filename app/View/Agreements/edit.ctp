@@ -2,6 +2,15 @@
 echo $this->Html->script('/js/agreements/edit', array('block' => 'scriptBottom'));
 echo $this->Html->scriptBlock("editFun.init();", array('block' => 'scriptBottom'));
 ?>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+    });
+</script>
 <div class="row form">
     <?php
     echo $this->Form->create('Agreement');
@@ -48,8 +57,8 @@ echo $this->Html->scriptBlock("editFun.init();", array('block' => 'scriptBottom'
         <?php
         echo $this->Form->input('agreement_type_id');
         echo $this->Form->input('dvd', array(
-                'readonly' => true
-            ));
+            'readonly' => true
+        ));
         ?>                
     </div>
     <?php echo $this->Form->end(); ?>

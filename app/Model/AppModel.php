@@ -71,15 +71,20 @@ class AppModel extends Model {
         $patterns = array(
             '/(\s*?d\.*?o\.*?o\.*?\s*?)/i',
             '/(\s*?a\.*?d\.*?\s*?)/i',
+            '/(\s*?a\.*?\s*?d\.*?\s*?)/i',
             '/(\s*?d\.*?d\.*?\s*?)/i',
-            '/(\s*?s\.*?z\.*?r\.*?\s*?)/i'
+            '/(\s*?s\.*?z\.*?r\.*?\s*?)/i',
+            '/(\s*?j\.*?z\.*?u\.*?\s*?)/i',
+            '/(\s*?j\.*?u\.*?\s*?)/i',
+            '/(\s*?r\.*?s\.*?\s*?)/i',
+            '/(\s*?j\.*?p\.*?\s*?)/i',
+            '/(\s*?j\.*?k\.*?p\.*?\s*?)/i',
+            '/(\s*?k\.*?j\.*?k\.*?p\.*?\s*?)/i',
         );
         
         $removedDoo =preg_replace($patterns, ' ', $name);
         
         $prvaIter = str_replace(array(',', '.', '\n', '&', '-'), ' ', $removedDoo);
-//        $drugaIter = str_replace(array('doo'), ' doo ', $prvaIter);
-//        $trecaIter = str_replace(array('  '), ' ', $drugaIter);
         $cetvrtiIter = preg_replace('!\s+!', ' ', $prvaIter);
 
         return trim($cetvrtiIter);

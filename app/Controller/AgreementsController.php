@@ -330,18 +330,18 @@ class AgreementsController extends AppController {
      */
     public function obradi($dvd = null) {
         $this->autoRender = false;
-        
+
         if ($dvd == null || $dvd > 2 || $dvd < 1) {
             throw new NotFoundException(__('Ili 1 ili 2'));
         }
-        
+
         // local file
         $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
         $path2 = WWW_ROOT . DS . 'DVD2' . DS . 'data2.xml';
         $localPath1 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd1_ispravljeno.xml';
         $localPath2 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd2_ispravljeno.xml';
-        
-        $xml = Xml::build(${'localPath'.$dvd});
+
+        $xml = Xml::build(${'localPath' . $dvd});
 
         $data = Xml::toArray($xml);
 
@@ -349,7 +349,7 @@ class AgreementsController extends AppController {
         $this->Agreement->saveToDatabase($data['nabavke']['nabavka'], $dvd);
         echo 'DONE!';
     }
-    
+
     /**
      * Ova metoda ce da pokusa da obradi dodatne
      * fajlove u kojima su podaci koji treba da se dopune
@@ -359,31 +359,31 @@ class AgreementsController extends AppController {
      */
     public function dopuni($dvd = null) {
         $this->autoRender = false;
-        
+
         if ($dvd == null || $dvd > 2 || $dvd < 1) {
             throw new NotFoundException(__('Ili 1 ili 2'));
         }
-        
+
         // local file
         $path1 = WWW_ROOT . DS . 'DVD1' . DS . 'data1ispravljeno.xml';
         $path2 = WWW_ROOT . DS . 'DVD2' . DS . 'data2.xml';
         $localPath1 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd1_aca.xml';
         $localPath2 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd2_aca.xml';
-        
-        $xml = Xml::build(${'localPath'.$dvd});
+
+        $xml = Xml::build(${'localPath' . $dvd});
 
         $data = Xml::toArray($xml);
-        
+
         $this->Agreement->findDifferences($data['nabavke']['nabavka'], $dvd);
-        
-        debug(count($this->Agreement->differences));                   
-        
+
+        debug(count($this->Agreement->differences));
+
         if (!$this->Agreement->saveDifferences()) {
             echo 'NOT DONE!';
         }
         echo 'DONE!';
     }
-    
+
     /**
      * lokalna metoda koja se koristi samo za poredjenje xmlova
      */
@@ -391,31 +391,80 @@ class AgreementsController extends AppController {
         $this->autoRender = false;
         $localPath1 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd1_ispravljeno.xml';
         $localPath2 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\dvd1_pravilan.xml';
-        
+
         $xml1 = Xml::build($localPath1);
         $xml2 = Xml::build($localPath2);
 
         $data1 = Xml::toArray($xml1);
         $data2 = Xml::toArray($xml2);
-        
+
         $names = array(
-            "narucilac", "dobavljac","predmet","price","datum","vrsta","path"
+            "narucilac", "dobavljac", "predmet", "price", "datum", "vrsta", "path"
         );
         $brojUkupan = count($data2['nabavke']['nabavka']);
         $brojPodredova = count($data1['nabavke']['nabavka'][0]);
         //debug($data1);
         for ($i = 0; $i < $brojUkupan; $i++) {
-            for ($j = 0; $j < $brojPodredova; $j++ ) {
+            for ($j = 0; $j < $brojPodredova; $j++) {
                 if ($data1['nabavke']['nabavka'][$i][$names[$j]] !== $data2['nabavke']['nabavka'][$i][$names[$j]]) {
                     print "{$names[$j]} = {$data1['nabavke']['nabavka'][$i][$names[$j]]} !== {$data2['nabavke']['nabavka'][$i][$names[$j]]} => {$data1['nabavke']['nabavka'][$i]['path']}<br>";
                 }
             }
-
         }
         echo 'DONE!';
     }
-    
-    
+
+    public function missing() {
+        $this->autoRender = false;
+        $localPath1 = 'D:\\ti-bih\\arhiva.ti-bih.org\\Javne nabavke\\XML1906\\word.xml';
+
+        $xml1 = Xml::build($localPath1);
+
+        $data1 = Xml::toArray($xml1);
+
+        $ugovori = $this->Agreement->find('all', array(
+            'conditions' => array(
+            //'Agreement.display' => 1
+            ),
+            'fields' => array(
+                'name', 'id'
+            )
+        ));
+
+        //debug($ugovori);
+        $res = Hash::format($ugovori, array('{n}.Agreement.id', '{n}.Agreement.name'), '%1$s, %2$s');
+        //$newArray = Hash::flatten($ugovori);
+        //debug($res);
+
+        //debug($this->strposa($ugovori, 'Ugovor o Izradi analize'));
+//        debug(in_array('Ugovor o Izradi analize', $newArray));
+        $flattened = Hash::flatten($data1['word']['text']);
+        debug($flattened);
+        $temp = array();
+//        foreach ($flattened as $v) {
+//            $ugovor = $this->strposa($res, $v);
+//
+//            if ($ugovor !== false) {
+//                $temp[] = $ugovor;
+//            }
+//
+//        }
+        //debug($temp);
+        echo 'DONE!';
+    }
+
+    private function strposa($haystack, $needle, $offset = 0) {
+        if (empty($needle)) {
+            return false;
+        }
+        foreach ($haystack as $v) {
+            if (strpos($v, $needle) !== false) {
+                return $v;
+            }
+        }
+        return false;
+    }
+
     public function testing() {
         $this->autoRender = false;
         echo $this->Manipulate->random_text();
