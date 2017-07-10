@@ -183,7 +183,7 @@ class CompaniesController extends AppController {
                 ),
                 'conditions' => array(
                     'Company.merged' => '0',
-                    'Company.name LIKE' => '%beg%'
+                    //'Company.name LIKE' => '%beg%'
                 )
             )));
             
