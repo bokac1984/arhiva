@@ -30,7 +30,8 @@
         <?php
         echo $this->Form->input('what', array(
             'label' => 'Pretraga',
-            'class' => 'form-control'
+            'class' => 'form-control',
+            'autocomplete' => 'off'
         ));
         ?>
         <div class="form-group">
