@@ -9,6 +9,8 @@ echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch', a
 echo $this->Html->css('/plugins/bootstrap-modal/css/bootstrap-modal', array('block' => 'css'));
 echo $this->Html->css('/plugins/iCheck/skins/square/blue', array('block' => 'css'));
 echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
+echo $this->Html->css('/css/institutions/spinner', array('block' => 'css'));    
+
 
 //debug($newData);
 ?>
@@ -58,7 +60,7 @@ echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
             <div class="col-md-6">
 
                 <p class="pull-right">
-                    <?php //print(count($newData)); ?>
+                    <?php echo "Broj slogova za spavanje ";print(count($newData)); ?>
                 </p>
             </div>
         </div>
@@ -97,10 +99,18 @@ echo $this->Html->css('/css/institutions/pregled', array('block' => 'css'));
     <!-- DIALOG -->
     <div id="merge-modal" class="modal fade" tabindex="-1" data-width="460" data-backdrop="static" data-keyboard="false" style="display: none;">
         <div class="modal-header" style="margin-bottom:0">
-            <h4>Spajanje</h4>
+            <h4 class="naslov">Spajanje</h4>
         </div>
-        <div class="modal-body" style="margin-bottom:0">
-            <h5>Da li ste sigurni da želite spojiti odabrane kompanije?</h5>
+        <div class="modal-body" style="margin-bottom:0;">
+            <div class="sk-folding-cube" style="display: none;">
+                <div class="sk-cube1 sk-cube"></div>
+                <div class="sk-cube2 sk-cube"></div>
+                <div class="sk-cube4 sk-cube"></div>
+                <div class="sk-cube3 sk-cube"></div>
+            </div> 
+            <div class="heading-title">
+                <h5>Da li ste sigurni da želite spojiti odabrane kompanije?</h5>
+            </div>
         </div>    
         <div class="modal-footer" style="margin-top:0">       
             <button id="btn-dialog-dismiss" class="btn btn-primary mergeConfirmed">

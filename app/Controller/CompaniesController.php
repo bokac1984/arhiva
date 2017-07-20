@@ -148,7 +148,6 @@ class CompaniesController extends AppController {
         $ids = isset($this->request->data['ids']) && !empty($this->request->data['ids']) ? $this->request->data['ids'] : array();
 
         $ids = $this->Company->prepareIds($ids);
-        //debug($ids);
 
         $answer = array(
             'status' => true,
@@ -161,10 +160,10 @@ class CompaniesController extends AppController {
                 $idss[] = $kompanije[$j];
             }
 
-            //if (!$this->Company->mergeCompanies($main, $idss)) {
+            if (!$this->Company->mergeCompanies($main, $idss)) {
                 $answer['status'] = false;
-                $answer['message'][$main] = false;
-            //}
+                $answer['message'][$main] = 'Not merged';
+            }
         }
         $this->set(compact('answer'));
     }
@@ -183,20 +182,15 @@ class CompaniesController extends AppController {
                 ),
                 'conditions' => array(
                     'Company.merged' => '0',
-                    //'Company.name LIKE' => '%beg%'
+                    //'Company.name LIKE' => '%jaj%'
                 )
             )));
             
-            //debug($names);
-            
-$starTime = microtime(true);
+$startTime = microtime(true);
             $newNames = $this->Prepare->prepareCompanyNames($names);
-            //debug($newNames);exit();
             $this->Prepare->prepareCompanies($names);
 
             $toBeMerged = $this->Prepare->exportedData;
-            //debug($this->Prepare->makeStringy);exit();
-            //debug($toBeMerged);
 echo '<!-- Exec time: ', microtime(true) - $startTime, ' -->';
             $newData = array();
             $i = 0;
@@ -207,43 +201,9 @@ echo '<!-- Exec time: ', microtime(true) - $startTime, ' -->';
                 }
                 $i++;
             }
-            //debug(count($newData));
-            //debug($newData);
 
             $this->set(compact('newData'));
-        } else {
-            
         }
-
-
-
-
-
-
-//        foreach ($newData as $kk => $company) {
-//            //debug($company);
-//            foreach ($company as $k => $v) {
-//                $data = array(
-//                  'Prepare' => array(
-//                      'company' => $k,
-//                      'name' => $v,
-//                      'parent' => $kk
-//                  )  
-//                );
-//                $this->Prepare->create($data);
-//                $this->Prepare->save($data);               
-//            }
-//
-//        }
-        //exit();
-//        foreach ($toBeMerged as $kompanije) {
-//            $main = $kompanije[0];
-//            $ids = array();
-//            for ($j = 1; $j < count($kompanije); $j++) {
-//                $ids[] = $kompanije[$j];
-//            }
-//            $this->Company->mergeCompanies($main, $ids);
-//        }
     }
 
     /**
