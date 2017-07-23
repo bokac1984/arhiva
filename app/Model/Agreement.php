@@ -382,5 +382,60 @@ class Agreement extends AppModel {
             );           
         }
     }
+    
+    public function purchaseAgreements($idCompany) {
+        $joinField = 'purchase_id';
+        $searchField = 'supplier_id';
+        /**
+         * Ako je pretraga za supplier onda cemo da obrnemo ove parametre
+         * i na taj nacin trazimo samo supplier firme
+         */
+        if ($this->alias == 'PurchaseAgreement') {
+            $joinField = 'supplier_id';
+            $searchField = 'purchase_id';
+        }
+        $options['joins'] = array(
+            array('table' => 'companies',
+                'alias' => 'Company',
+                'type' => 'left',
+                'conditions' => array(
+                    "{$this->alias}.$joinField = Company.id"
+                )
+            ),
+            array('table' => 'agreement_types',
+                'alias' => 'AgreementType',
+                'type' => 'left',
+                'conditions' => array(
+                    $this->alias.".agreement_type_id = AgreementType.id"
+                )
+            )            
+        );
+        $options['conditions'] = array(
+            "{$this->alias}.purchase_id <> {$this->alias}.supplier_id",
+            "{$this->alias}.$searchField" => $idCompany
+        );
+        $options['order'] = array(
+            'Company.name' => 'ASC'
+        );
+        $options['fields'] = array(
+            'Company.id', 'Company.name',
+            $this->alias.'.id',
+            $this->alias.'.name',
+            $this->alias.'.price',
+            $this->alias.'.contract_date',
+            $this->alias.'.new_file_name',
+            $this->alias.'.agreement_type_id',
+            $this->alias.'.supplier_id',
+            $this->alias.'.path',
+            'AgreementType.id', 'AgreementType.name'
+        );        
+        $result = Cache::read('pregled_kompanije_' . $idCompany . "_{$this->alias}", 'default');
+        if (!$result) {
+            Debugger::log('Nema kesirano ' . $idCompany . "_{$this->alias}");
+            $result = $this->find('all', $options);
+            Cache::write('pregled_kompanije_' . $idCompany . "_{$this->alias}", $result, 'default');
+        }
+        return $result;         
+    }
 
 }

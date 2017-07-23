@@ -188,6 +188,8 @@ class AppModel extends Model {
      * 
      * Vrati sumu i broj ugovora za odredjeni tip kompanije
      * 
+     * NOT USED ANY LONGER
+     * 
      * @param string $groupByColumn Moze biti: naruciclas | dobavljac
      * @param int $id
      * @return array
@@ -213,6 +215,24 @@ class AppModel extends Model {
        }
        
        return $temp;
+    }
+    
+    /**
+     * Prebroj sume i broj kandidata
+     * 
+     * @param type $data
+     */
+    public function getSumAndCountFromData($data = array()) {
+        $return = array(
+            'Suma' => 0,
+            'brojUgovora' => count($data)
+        );
+        
+        foreach ($data as $u) {
+            $return['Suma'] += $u[$this->alias]['price'];
+        }
+        
+        return $return;
     }
 
 }

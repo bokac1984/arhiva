@@ -83,8 +83,8 @@ class Company extends AppModel {
      * @return type
      */
     public function companyAgreements($id) {
-        $options = array('conditions' =>
-            array(
+        $options = array(
+            'conditions' => array(
                 'Company.' . $this->primaryKey => $id
             ),
             'contain' => array(
@@ -99,9 +99,6 @@ class Company extends AppModel {
                             'id', 'name',
                         )
                     ),
-                    'order' => array(
-                        'PurchaseAgreement.name' => 'asc'
-                    )
                 ),
                 'SupplierAgreement' => array(
                     'AgreementType' => array(
@@ -114,19 +111,21 @@ class Company extends AppModel {
                             'id', 'name'
                         )
                     ),
-                    'order' => array(
-                        'SupplierAgreement.name' => 'asc'
-                    )
                 )
+            ),
+            'order' => array(
+                'Company.name' => 'asc'
             )
         );
+        
 
-        $result = Cache::read('pregled_kompanije_' . $id, 'default');
-        if (!$result) {
-            Debugger::log('Nema kesirano ' . $id);
+
+//        $result = Cache::read('pregled_kompanije_' . $id, 'default');
+//        if (!$result) {
+//            Debugger::log('Nema kesirano ' . $id);
             $result = $this->find('first', $options);
-            Cache::write('pregled_kompanije' . $id, $result, 'default');
-        }
+//            Cache::write('pregled_kompanije' . $id, $result, 'default');
+//        }
         return $result;
     }
 
