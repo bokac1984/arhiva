@@ -74,5 +74,11 @@ class AppController extends Controller {
         $this->Auth->flash['element'] = "flash_error";
         
         $this->layout = 'arhiva';
+        
+        if ($this->Session->read('Auth.User')) {
+            $this->set('admin', true);
+        } else {
+            $this->set('admin', false);
+        }
     }
 }
