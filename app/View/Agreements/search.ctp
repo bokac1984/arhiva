@@ -1,5 +1,20 @@
 <?php
 echo $this->Html->css('search', array('block' => 'css'));
+echo $this->Html->script('/plugins/bootstrap3-editable/js/bootstrap-editable.min', array('block' => 'scriptBottom'));
+echo $this->Html->css('/plugins/bootstrap3-editable/css/bootstrap-editable', array('block' => 'css'));
+
+echo $this->Html->script('/js/agreements/search', array('block' => 'scriptBottom'));
+
+$var = "var types = [";
+$varValues = array();
+foreach($types as $k=>$v) {
+    $varValues[] = "{value: $k, text: '$v'}";
+}
+
+$var .= implode(",", $varValues). "];";
+
+echo $this->Html->scriptBlock("$var; searchFun.init();", array('block' => 'scriptBottom'));
+
 ?>
 <?php echo $this->element('search'); ?>
 <div class="row">
@@ -28,9 +43,11 @@ echo $this->Html->css('search', array('block' => 'css'));
                                 <?php
                                 echo $this->Html->link($this->Time->format($agreement['Agreement']['contract_date'], '%d.%m.%Y'), '#', array(
                                     'data-pk' => $agreement['Agreement']['id'],
-                                    'data-url' => '/Agreements/editable',
-                                    'data-type' => 'text',
-                                    'class' => 'contract_date'
+                                    'data-type' => 'date',
+                                    'class' => 'contract_date',
+                                    'data-url' => Router::url(array('controller' => 'agreements', 'action' => 'editable')),
+                                    'data-title' => 'Odaberi datum',
+                                    'data-name' => 'contract_date'
                                 ));
                                 ?>                                
                                 &nbsp;</td>
@@ -41,7 +58,17 @@ echo $this->Html->css('search', array('block' => 'css'));
                                 <?php echo $this->Html->link($agreement['Supplier']['name'], array('controller' => 'companies', 'action' => 'view', $agreement['Supplier']['id'])); ?>
                             </td>  
                             <td>
-                                <?php echo $this->Html->link($agreement['AgreementType']['name'], array('controller' => 'agreement_types', 'action' => 'view', $agreement['AgreementType']['id'])); ?>
+                                <?php echo $this->Html->link(
+                                        $agreement['AgreementType']['name'], 
+                                        '#',
+                                        array(
+                                            'data-pk' => $agreement['AgreementType']['id'],
+                                            'data-type' => 'select',
+                                            'class' => 'agreement-type',
+                                            'data-url' => Router::url(array('controller' => 'agreements', 'action' => 'editable')),
+                                            'data-title' => 'Odaberi tip',
+                                            'data-name' => 'agreement_type_id'
+                                        )); ?>
                             </td> 
                             <td><?php echo h($agreement['Agreement']['new_file_name']); ?>&nbsp;</td>  
                             <td><?php echo h($agreement['Agreement']['path']); ?>&nbsp;</td>  

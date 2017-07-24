@@ -202,10 +202,10 @@ class AgreementsController extends AppController {
         }
         if ($this->request->is(array('post', 'put'))) {
             if ($this->Agreement->save($this->request->data)) {
-                $this->Flash->success(__('The agreement has been saved.'));
+                $this->Flash->success(__('Sacuvana promjena na ugovoru.'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Flash->error(__('The agreement could not be saved. Please, try again.'));
+                $this->Flash->error(__('Promjena nije sacuvana, pokusajte opnovo.'));
             }
         } else {
             $options = array('conditions' => array('Agreement.' . $this->Agreement->primaryKey => $id));
@@ -265,15 +265,18 @@ class AgreementsController extends AppController {
                 ),
                 'fields' => $fields
             );
-
             $this->set('agreements', $this->Paginator->paginate());
         }
+
+        $this->set('types', $this->Agreement->AgreementType->find('list', array(
+            'order' => 'AgreementType.name'
+        )));
     }
 
     public function agreement() {
         $this->viewClass = 'Json';
         $letter = $this->request->data['letter'];
-        //debug($this->request);exit();
+        
         $supplier = isset($this->request->data['company']) ? 'supplier_id' : 'purchase_id';
         $agreements = $this->Agreement->vratiPodatkeZaPregled($letter, $supplier);
         $this->set(compact('agreements'));
@@ -322,6 +325,19 @@ class AgreementsController extends AppController {
 
         // Return response object to prevent controller from trying to render
         // a view
+        return $this->response;
+    }
+    
+    /**
+     * Obavlja funkciju editable
+     * 
+     * @return void
+     */
+    public function editable() {
+        $code = $this->Agreement->processEditable($this->request->data);
+        
+        $this->response->statusCode($code);
+        
         return $this->response;
     }
 
@@ -715,5 +731,4 @@ class AgreementsController extends AppController {
         }
         echo "Ukupno je bilo $i";
     }
-
 }

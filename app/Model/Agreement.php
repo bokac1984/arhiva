@@ -437,5 +437,34 @@ class Agreement extends AppModel {
         }
         return $result;         
     }
+    
+    
+    public function processEditable($data) {
+        $type = isset($data['name']) ? $data['name'] : '';
+        $newValue = isset($data['value']) ? $data['value'] : '';
+        $id = isset($data['pk']) ? $data['pk'] : '';
+        
+        $this->id = $id;
+        if (!$this->exists()) {
+            return 400;
+        }        
+        
+        if ($type === '' || $newValue === '' || $id === '') {
+            return 400;
+        }
+        
+        $dataToSave = array(
+            'Agreement' => array(
+                'id' => $id,
+                $type => $newValue
+            )
+        );
+        
+        if (!$this->save($dataToSave)) {
+            return 400;
+        }
+         
+        return 200;
+    }    
 
 }
