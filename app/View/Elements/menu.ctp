@@ -88,6 +88,14 @@ $url = $this->request->here;
                 <a href="/companies/merger">
                     Spajanje kompanija
                 </a>
+            </li>
+                        <li>
+                <a href="<?php echo Router::url(array(
+                    'controller' => 'agreement_types',
+                    'action' => 'index'
+                    )); ?>">
+                    Pregled postupaka
+                </a>
             </li> 
         </ul>
     </li> 
