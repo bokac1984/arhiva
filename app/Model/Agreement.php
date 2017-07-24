@@ -36,7 +36,9 @@ class Agreement extends AppModel {
         'AgreementType' => array(
             'className' => 'AgreementType',
             'foreignKey' => 'agreement_type_id',
-            'conditions' => '',
+            'conditions' => array(
+                'AgreementType.active' => 1
+            ),
             'fields' => '',
             'order' => ''
         ),

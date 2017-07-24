@@ -32,7 +32,6 @@ class AgreementType extends AppModel {
             'conditions' => array(
                 'Agreement.display' => '1'
             ),
-            'fields' => '',
             'order' => '',
             'limit' => '',
             'offset' => '',
@@ -84,4 +83,48 @@ class AgreementType extends AppModel {
         return 0;
     }
 
+    /**
+     * Spoji sve tipove i zatim uradi ubdate u agreements
+     * 
+     * @param array Data from ajax
+     * @return int status code for controller
+     */
+    public function mergeTypes($data) {
+        $ds = $this->getDataSource();
+        
+        // pocni transakciju
+        $ds->begin();
+        
+        $main = isset($data['main']) ? $data['main'] : '';
+        $ids = isset($data['ids']) ? $data['ids'] : array();
+        
+        if ($main === '' || empty($ids)) {
+            return 404;
+        }
+        
+        $savedAgreements = $this->Agreement->updateAll(
+            array('Agreement.agreement_type_id' => $main), 
+            array('Agreement.agreement_type_id' => $ids)
+        );
+        
+        if ($savedAgreements) {
+            foreach ($ids as $id) {
+                $dataToSave[] = array(
+                    'AgreementType' => array(
+                        'id' => $id,
+                        'active' => 0
+                    )
+                );
+            }
+            
+            if ($this->saveMany($dataToSave, array('deep' => true))) {
+                $ds->commit();
+                return 200;
+            }
+        }
+        
+        // ako smo dosli dovdje onda uradi rollback
+        $ds->rollback();        
+        return 404;
+    }
 }

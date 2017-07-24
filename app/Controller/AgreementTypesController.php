@@ -35,6 +35,12 @@ class AgreementTypesController extends AppController {
      */
     public function index() {
         $this->AgreementType->recursive = 0;
+        $this->Paginator->settings = array(
+            'order' => array(
+                'AgreementType.active' => 'DESC',
+                'AgreementType.name' => 'ASC'
+            )
+        );        
         $this->set('agreementTypes', $this->Paginator->paginate());
     }
 
@@ -125,4 +131,10 @@ class AgreementTypesController extends AppController {
         return $this->redirect(array('action' => 'index'));
     }
 
+    public function merge() {
+        $code = $this->AgreementType->mergeTypes($this->request->data);
+        $this->response->statusCode($code);
+        
+        return $this->response;
+    }
 }

@@ -269,7 +269,8 @@ class AgreementsController extends AppController {
         }
 
         $this->set('types', $this->Agreement->AgreementType->find('list', array(
-            'order' => 'AgreementType.name'
+            'order' => 'AgreementType.name',
+            'conditions' => array('AgreementType.active' => 1)
         )));
     }
 
