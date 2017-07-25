@@ -320,7 +320,7 @@ class Agreement extends AppModel {
         );
 
         $result = Cache::read('pregled_podaci_for_letter_' . $letter, 'default');
-        if (!$result) {
+        if ($result === false) {
             Debugger::log($options);
             $result = $this->find('all', $options);
             Cache::write('pregled_podaci_for_letter_' . $letter, $result, 'default');
@@ -384,6 +384,12 @@ class Agreement extends AppModel {
         }
     }
 
+    /**
+     * Get data agreements for company, with regards to supplier or purchaser
+     * 
+     * @param int $idCompany
+     * @return array Containing results either from cache or from db
+     */
     public function purchaseAgreements($idCompany) {
         $joinField = 'purchase_id';
         $searchField = 'supplier_id';
@@ -431,7 +437,7 @@ class Agreement extends AppModel {
             'AgreementType.id', 'AgreementType.name'
         );
         $result = Cache::read('pregled_kompanije_' . $idCompany . "_{$this->alias}", 'default');
-        if (!$result) {
+        if ($result === false) {
             Debugger::log('Nema kesirano ' . $idCompany . "_{$this->alias}");
             $result = $this->find('all', $options);
             Cache::write('pregled_kompanije_' . $idCompany . "_{$this->alias}", $result, 'default');
