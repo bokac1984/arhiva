@@ -319,12 +319,11 @@ class Agreement extends AppModel {
             'Company.name'
         );
 
-        Cache::clear();
-        $result = Cache::read('pregled_podaci', 'default');
+        $result = Cache::read('pregled_podaci_for_letter_' . $letter, 'default');
         if (!$result) {
         Debugger::log($options);
         $result = $this->find('all', $options);
-        Cache::write('pregled_podaci', $result, 'default');
+        Cache::write('pregled_podaci_for_letter_' . $letter, $result, 'default');
         }
         return $result;
     }
