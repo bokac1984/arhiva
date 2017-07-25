@@ -17,7 +17,7 @@ class Agreement extends AppModel {
      * @var string
      */
     public $displayField = 'name';
-    
+
     /**
      *
      * @var array Razlika u nizovima podataka iz baze i onih iz ispravljenog Excela/XML 
@@ -90,7 +90,7 @@ class Agreement extends AppModel {
 
         return 0;
     }
-    
+
     /**
      * nakon sto nadjemo razlike pokusaj da ih ispravish
      * 
@@ -106,13 +106,13 @@ class Agreement extends AppModel {
                 'id' => $agreement_id,
                 'agreement_type_id' => $typeId
             );
-                    
+
             if (!$this->save($dataToSave)) {
                 debug($dataToSave);
                 return false;
-            }      
+            }
         }
-        
+
         return true;
     }
 
@@ -211,7 +211,7 @@ class Agreement extends AppModel {
             $ugovor['Agreement']['dvd'] = $dvd;
 
             $typeId = $this->AgreementType->checkAndSave(trim($v['vrsta']));
-            
+
             if ($typeId !== 0) {
                 $ugovor['Agreement']['agreement_type_id'] = $typeId;
             } else {
@@ -321,9 +321,9 @@ class Agreement extends AppModel {
 
         $result = Cache::read('pregled_podaci_for_letter_' . $letter, 'default');
         if (!$result) {
-        Debugger::log($options);
-        $result = $this->find('all', $options);
-        Cache::write('pregled_podaci_for_letter_' . $letter, $result, 'default');
+            Debugger::log($options);
+            $result = $this->find('all', $options);
+            Cache::write('pregled_podaci_for_letter_' . $letter, $result, 'default');
         }
         return $result;
     }
@@ -359,7 +359,7 @@ class Agreement extends AppModel {
 
         return $this->find('all', $options);
     }
-    
+
     /**
      * 
      * Pogledaj ima li razlike izmedju dve vriejdnosti
@@ -380,10 +380,10 @@ class Agreement extends AppModel {
                     'name' => $original['VrstaPostupka']['name']
                 ),
                 'path' => $edited['path']
-            );           
+            );
         }
     }
-    
+
     public function purchaseAgreements($idCompany) {
         $joinField = 'purchase_id';
         $searchField = 'supplier_id';
@@ -407,9 +407,9 @@ class Agreement extends AppModel {
                 'alias' => 'AgreementType',
                 'type' => 'left',
                 'conditions' => array(
-                    $this->alias.".agreement_type_id = AgreementType.id"
+                    $this->alias . ".agreement_type_id = AgreementType.id"
                 )
-            )            
+            )
         );
         $options['conditions'] = array(
             "{$this->alias}.purchase_id <> {$this->alias}.supplier_id",
@@ -420,52 +420,51 @@ class Agreement extends AppModel {
         );
         $options['fields'] = array(
             'Company.id', 'Company.name',
-            $this->alias.'.id',
-            $this->alias.'.name',
-            $this->alias.'.price',
-            $this->alias.'.contract_date',
-            $this->alias.'.new_file_name',
-            $this->alias.'.agreement_type_id',
-            $this->alias.'.supplier_id',
-            $this->alias.'.path',
+            $this->alias . '.id',
+            $this->alias . '.name',
+            $this->alias . '.price',
+            $this->alias . '.contract_date',
+            $this->alias . '.new_file_name',
+            $this->alias . '.agreement_type_id',
+            $this->alias . '.supplier_id',
+            $this->alias . '.path',
             'AgreementType.id', 'AgreementType.name'
-        );        
+        );
         $result = Cache::read('pregled_kompanije_' . $idCompany . "_{$this->alias}", 'default');
         if (!$result) {
             Debugger::log('Nema kesirano ' . $idCompany . "_{$this->alias}");
             $result = $this->find('all', $options);
             Cache::write('pregled_kompanije_' . $idCompany . "_{$this->alias}", $result, 'default');
         }
-        return $result;         
+        return $result;
     }
-    
-    
+
     public function processEditable($data) {
         $type = isset($data['name']) ? $data['name'] : '';
         $newValue = isset($data['value']) ? $data['value'] : '';
         $id = isset($data['pk']) ? $data['pk'] : '';
-        
+
         $this->id = $id;
         if (!$this->exists()) {
             return 400;
-        }        
-        
+        }
+
         if ($type === '' || $newValue === '' || $id === '') {
             return 400;
         }
-        
+
         $dataToSave = array(
             'Agreement' => array(
                 'id' => $id,
                 $type => $newValue
             )
         );
-        
+
         if (!$this->save($dataToSave)) {
             return 400;
         }
-         
+
         return 200;
-    }    
+    }
 
 }
