@@ -321,6 +321,7 @@ class Agreement extends AppModel {
 
         $result = Cache::read('pregled_podaci_for_letter_' . $letter, 'default');
         if ($result === false) {
+            Debugger::log($letter);
             Debugger::log($options);
             $result = $this->find('all', $options);
             Cache::write('pregled_podaci_for_letter_' . $letter, $result, 'default');
