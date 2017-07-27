@@ -98,12 +98,24 @@ $url = $this->request->here;
                 </a>
             </li> 
         </ul>
-    </li> 
-    <li class="<?php echo (preg_match("/(\/settings)/", $url))? 'active' : ''?>">
-        <a href="/settings">
-            Podešavanja
+    </li>
+    <li class="dropdown <?php echo (preg_match("/(\/setting|Podešavanja)/", $url))? 'active' : ''?>">
+        <a class="dropdown-toggle" href="#" data-toggle="dropdown" data-hover="dropdown">
+            Podešavanja <b class="caret"></b>
         </a>
-    </li>  
+        <ul class="dropdown-menu">
+            <li>
+                <a href="/settings/index">
+                    Pregled
+                </a>
+            </li>             
+            <li>
+                <a href="/settings/clear_cache">
+                    Keš
+                </a>
+            </li>
+        </ul>
+    </li>      
     <li><?php echo $this->Link->cLink("Logovi", array('plugin' => 'error_manager', 'controller' => 'error_logs', 'action' => 'index')); ?></li>
     <li><?php echo $this->Link->cLink("Kontakti", array('plugin' => null, 'controller' => 'contacts', 'action' => 'index')); ?></li>
     <?php endif; ?>

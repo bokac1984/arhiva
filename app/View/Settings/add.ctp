@@ -1,21 +1,34 @@
-<div class="settings form">
-<?php echo $this->Form->create('Setting'); ?>
-	<fieldset>
-		<legend><?php echo __('Add Setting'); ?></legend>
-	<?php
-		echo $this->Form->input('section_id');
-		echo $this->Form->input('name');
-		echo $this->Form->input('value');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<div class="row settings form">
+    <div class="col-md-6">
+        <?php
+        echo $this->Form->create('Setting');
 
-		<li><?php echo $this->Html->link(__('List Settings'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Sections'), array('controller' => 'sections', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Section'), array('controller' => 'sections', 'action' => 'add')); ?> </li>
-	</ul>
+        $this->Form->inputDefaults(array(
+            'error' => array(
+                'attributes' => array(
+                    'wrap' => 'div',
+                    'class' => 'label label-warning'
+                )
+            ),
+            'div' => 'form-group',
+            'class' => 'form-control'
+                )
+        );
+        ?>
+        <fieldset>
+            <?php
+            echo $this->Form->input('setting_section_id');
+            echo $this->Form->input('name');
+            echo $this->Form->input('value');
+            ?>
+        </fieldset>
+        <div class="form-group">
+            <div class="col-sm-6 col-sm-offset-6">
+                <button class="btn btn-blue btn-block" type="submit"> 
+                    Sačuvaj <i class="fa fa-arrow-circle-right"></i> 
+                </button>
+            </div>
+        </div>          
+        <?php echo $this->Form->end(); ?>
+    </div>
 </div>

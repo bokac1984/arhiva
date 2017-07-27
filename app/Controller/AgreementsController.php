@@ -269,15 +269,15 @@ class AgreementsController extends AppController {
         }
 
         $this->set('types', $this->Agreement->AgreementType->find('list', array(
-            'order' => 'AgreementType.name',
-            'conditions' => array('AgreementType.active' => 1)
+                    'order' => 'AgreementType.name',
+                    'conditions' => array('AgreementType.active' => 1)
         )));
     }
 
     public function agreement() {
         $this->viewClass = 'Json';
         $letter = $this->request->data['letter'];
-        
+
         $supplier = isset($this->request->data['company']) ? 'supplier_id' : 'purchase_id';
         $agreements = $this->Agreement->vratiPodatkeZaPregled($letter, $supplier);
         $this->set(compact('agreements'));
@@ -328,7 +328,7 @@ class AgreementsController extends AppController {
         // a view
         return $this->response;
     }
-    
+
     /**
      * Obavlja funkciju editable
      * 
@@ -336,9 +336,9 @@ class AgreementsController extends AppController {
      */
     public function editable() {
         $code = $this->Agreement->processEditable($this->request->data);
-        
+
         $this->response->statusCode($code);
-        
+
         return $this->response;
     }
 
@@ -452,7 +452,6 @@ class AgreementsController extends AppController {
         $res = Hash::format($ugovori, array('{n}.Agreement.id', '{n}.Agreement.name'), '%1$s, %2$s');
         //$newArray = Hash::flatten($ugovori);
         //debug($res);
-
         //debug($this->strposa($ugovori, 'Ugovor o Izradi analize'));
 //        debug(in_array('Ugovor o Izradi analize', $newArray));
         $flattened = Hash::flatten($data1['word']['text']);
@@ -732,4 +731,5 @@ class AgreementsController extends AppController {
         }
         echo "Ukupno je bilo $i";
     }
+
 }

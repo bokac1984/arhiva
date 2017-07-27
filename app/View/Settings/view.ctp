@@ -6,9 +6,9 @@
 			<?php echo h($setting['Setting']['id']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Section'); ?></dt>
+		<dt><?php echo __('Setting Section'); ?></dt>
 		<dd>
-			<?php echo $this->Html->link($setting['Section']['name'], array('controller' => 'sections', 'action' => 'view', $setting['Section']['id'])); ?>
+			<?php echo $this->Html->link($setting['SettingSection']['name'], array('controller' => 'setting_sections', 'action' => 'view', $setting['SettingSection']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Name'); ?></dt>
@@ -30,7 +30,7 @@
 		<li><?php echo $this->Form->postLink(__('Delete Setting'), array('action' => 'delete', $setting['Setting']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $setting['Setting']['id']))); ?> </li>
 		<li><?php echo $this->Html->link(__('List Settings'), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Setting'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Sections'), array('controller' => 'sections', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Section'), array('controller' => 'sections', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Setting Sections'), array('controller' => 'setting_sections', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Setting Section'), array('controller' => 'setting_sections', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
