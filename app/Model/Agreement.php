@@ -321,7 +321,7 @@ class Agreement extends AppModel {
 
         $result = Cache::read('pregled_podaci_for_letter' . $letter . $type, 'default');
         if ($result === false) {
-            $this->log("Nema ga u kesu! -> $letter", 'debug');
+            $this->log("Nema ga u kesu! -> $letter -> $type", 'debug');
             $result = $this->find('all', $options);
             Cache::write('pregled_podaci_for_letter' . $letter . $type, $result, 'default');
         }
