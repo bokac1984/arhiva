@@ -13,4 +13,5 @@ Header set Cache-Control "max-age=31536000, public"
 # One month for css and js
 <filesMatch ".(css|js)$">
 Header set Cache-Control "max-age=2628000, public"
+Header append Vary: Accept-Encoding
 </filesMatch>
