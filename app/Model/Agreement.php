@@ -438,7 +438,7 @@ class Agreement extends AppModel {
         );
         $result = Cache::read('pregled_kompanije_' . $idCompany . "_{$this->alias}", 'default');
         if ($result === false) {
-            Debugger::log('Nema kesirano ' . $idCompany . "_{$this->alias}");
+            $this->log('Nema kesirano ' . $idCompany . "_{$this->alias}", 'debug');
             $result = $this->find('all', $options);
             Cache::write('pregled_kompanije_' . $idCompany . "_{$this->alias}", $result, 'default');
         }
