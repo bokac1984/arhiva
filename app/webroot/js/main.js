@@ -587,7 +587,7 @@ var Main = function () {
             animateElements();
             setSearchMenu();
             runDropdownToggle();
-            runFlexSlider();
+            //runFlexSlider();
             sticky_navigation();
             setAnimations();
             runImageOverlay();

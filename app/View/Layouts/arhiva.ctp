@@ -196,9 +196,6 @@
         <script src="/js/main.js"></script>
         <!-- end: MAIN JAVASCRIPTS -->
         <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
-        <script src="/plugins/revolution_slider/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
-        <script src="/plugins/revolution_slider/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-        <script src="/plugins/flex-slider/jquery.flexslider.js"></script>
         <script src="/plugins/stellar.js/jquery.stellar.min.js"></script>
         <script src="/plugins/colorbox/jquery.colorbox-min.js"></script>
         <script src="/js/index.js"></script>
